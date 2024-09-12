@@ -1279,17 +1279,17 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v11.22.0",
-            "version_normalized": "11.22.0.0",
+            "version": "v11.23.2",
+            "version_normalized": "11.23.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "868c75beacc47d0f361b919bbc155c0b619bf3d5"
+                "reference": "d38bf0fd3a8936e1cb9ca8eb8d7304a564f790f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/868c75beacc47d0f361b919bbc155c0b619bf3d5",
-                "reference": "868c75beacc47d0f361b919bbc155c0b619bf3d5",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/d38bf0fd3a8936e1cb9ca8eb8d7304a564f790f3",
+                "reference": "d38bf0fd3a8936e1cb9ca8eb8d7304a564f790f3",
                 "shasum": ""
             },
             "require": {
@@ -1351,6 +1351,7 @@
                 "illuminate/bus": "self.version",
                 "illuminate/cache": "self.version",
                 "illuminate/collections": "self.version",
+                "illuminate/concurrency": "self.version",
                 "illuminate/conditionable": "self.version",
                 "illuminate/config": "self.version",
                 "illuminate/console": "self.version",
@@ -1393,7 +1394,7 @@
                 "league/flysystem-sftp-v3": "^3.0",
                 "mockery/mockery": "^1.6",
                 "nyholm/psr7": "^1.2",
-                "orchestra/testbench-core": "^9.1.5",
+                "orchestra/testbench-core": "^9.4.0",
                 "pda/pheanstalk": "^5.0",
                 "phpstan/phpstan": "^1.11.5",
                 "phpunit/phpunit": "^10.5|^11.0",
@@ -1439,7 +1440,7 @@
                 "symfony/postmark-mailer": "Required to enable support for the Postmark mail transport (^7.0).",
                 "symfony/psr-http-message-bridge": "Required to use PSR-7 bridging features (^7.0)."
             },
-            "time": "2024-09-03T15:27:15+00:00",
+            "time": "2024-09-11T21:59:23+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1453,6 +1454,7 @@
                     "src/Illuminate/Events/functions.php",
                     "src/Illuminate/Filesystem/functions.php",
                     "src/Illuminate/Foundation/helpers.php",
+                    "src/Illuminate/Log/functions.php",
                     "src/Illuminate/Support/helpers.php"
                 ],
                 "psr-4": {
@@ -1618,17 +1620,17 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.31.3",
-            "version_normalized": "1.31.3.0",
+            "version": "v1.32.0",
+            "version_normalized": "1.32.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "0a7e2891a85eba2d448a9ffc6fc5ce367e924bc1"
+                "reference": "4a7e41d280861ca7e35710cea011a07669b4003b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/0a7e2891a85eba2d448a9ffc6fc5ce367e924bc1",
-                "reference": "0a7e2891a85eba2d448a9ffc6fc5ce367e924bc1",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/4a7e41d280861ca7e35710cea011a07669b4003b",
+                "reference": "4a7e41d280861ca7e35710cea011a07669b4003b",
                 "shasum": ""
             },
             "require": {
@@ -1643,7 +1645,7 @@
                 "orchestra/testbench": "^7.0|^8.0|^9.0",
                 "phpstan/phpstan": "^1.10"
             },
-            "time": "2024-09-03T20:05:33+00:00",
+            "time": "2024-09-11T20:14:29+00:00",
             "bin": [
                 "bin/sail"
             ],
@@ -1684,17 +1686,17 @@
         },
         {
             "name": "laravel/scout",
-            "version": "v10.11.2",
-            "version_normalized": "10.11.2.0",
+            "version": "v10.11.3",
+            "version_normalized": "10.11.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "74f007d0f5b78f589014899094f7ddb4855b771d"
+                "reference": "642b4750127b5242a089571c9314037a7453cc0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/74f007d0f5b78f589014899094f7ddb4855b771d",
-                "reference": "74f007d0f5b78f589014899094f7ddb4855b771d",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/642b4750127b5242a089571c9314037a7453cc0a",
+                "reference": "642b4750127b5242a089571c9314037a7453cc0a",
                 "shasum": ""
             },
             "require": {
@@ -1723,7 +1725,7 @@
                 "meilisearch/meilisearch-php": "Required to use the Meilisearch engine (^1.0).",
                 "typesense/typesense-php": "Required to use the Typesense engine (^4.9)."
             },
-            "time": "2024-09-03T15:30:25+00:00",
+            "time": "2024-09-11T21:32:42+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -3123,6 +3125,76 @@
             "install-path": "../orchid/blade-icons"
         },
         {
+            "name": "orchid/crud",
+            "version": "4.3.0",
+            "version_normalized": "4.3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/orchidsoftware/crud.git",
+                "reference": "9535e7f44f3a038f8b6fd8c9197d45d54b0ab965"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/orchidsoftware/crud/zipball/9535e7f44f3a038f8b6fd8c9197d45d54b0ab965",
+                "reference": "9535e7f44f3a038f8b6fd8c9197d45d54b0ab965",
+                "shasum": ""
+            },
+            "require": {
+                "orchid/platform": "^14.0"
+            },
+            "conflict": {
+                "orchid/blade-icons": "<4.2",
+                "orchid/platform": "<14.34"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^8.0 || ^9.0",
+                "phpunit/phpunit": "^10.0 || ^11.0"
+            },
+            "time": "2024-09-08T20:32:15+00:00",
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Orchid\\Crud\\CrudServiceProvider"
+                    ]
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Orchid\\Crud\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexandr Chernyaev",
+                    "email": "bliz48rus@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Build CRUD apps in fewer lines of code for Laravel Orchid.",
+            "homepage": "https://github.com/orchid/crud",
+            "keywords": [
+                "crud",
+                "orchid"
+            ],
+            "support": {
+                "issues": "https://github.com/orchidsoftware/crud/issues",
+                "source": "https://github.com/orchidsoftware/crud/tree/4.3.0"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/orchid",
+                    "type": "open_collective"
+                }
+            ],
+            "install-path": "../orchid/crud"
+        },
+        {
             "name": "orchid/platform",
             "version": "14.35.1",
             "version_normalized": "14.35.1.0",
@@ -4206,23 +4278,23 @@
         },
         {
             "name": "psr/log",
-            "version": "3.0.1",
-            "version_normalized": "3.0.1.0",
+            "version": "3.0.2",
+            "version_normalized": "3.0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "79dff0b268932c640297f5208d6298f71855c03e"
+                "reference": "f16e1d5863e37f8d8c2a01719f5b34baa2b714d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/79dff0b268932c640297f5208d6298f71855c03e",
-                "reference": "79dff0b268932c640297f5208d6298f71855c03e",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/f16e1d5863e37f8d8c2a01719f5b34baa2b714d3",
+                "reference": "f16e1d5863e37f8d8c2a01719f5b34baa2b714d3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0.0"
             },
-            "time": "2024-08-21T13:31:24+00:00",
+            "time": "2024-09-11T13:17:53+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -4253,7 +4325,7 @@
                 "psr-3"
             ],
             "support": {
-                "source": "https://github.com/php-fig/log/tree/3.0.1"
+                "source": "https://github.com/php-fig/log/tree/3.0.2"
             },
             "install-path": "../psr/log"
         },
@@ -4808,17 +4880,17 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "6.0.2",
-            "version_normalized": "6.0.2.0",
+            "version": "6.1.0",
+            "version_normalized": "6.1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "450d8f237bd611c45b5acf0733ce43e6bb280f81"
+                "reference": "fa37b9e2ca618cb051d71b60120952ee8ca8b03d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/450d8f237bd611c45b5acf0733ce43e6bb280f81",
-                "reference": "450d8f237bd611c45b5acf0733ce43e6bb280f81",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/fa37b9e2ca618cb051d71b60120952ee8ca8b03d",
+                "reference": "fa37b9e2ca618cb051d71b60120952ee8ca8b03d",
                 "shasum": ""
             },
             "require": {
@@ -4829,13 +4901,13 @@
                 "sebastian/exporter": "^6.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^11.0"
+                "phpunit/phpunit": "^11.3"
             },
-            "time": "2024-08-12T06:07:25+00:00",
+            "time": "2024-09-11T15:42:56+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "6.0-dev"
+                    "dev-main": "6.1-dev"
                 }
             },
             "installation-source": "dist",
@@ -4876,7 +4948,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/comparator/issues",
                 "security": "https://github.com/sebastianbergmann/comparator/security/policy",
-                "source": "https://github.com/sebastianbergmann/comparator/tree/6.0.2"
+                "source": "https://github.com/sebastianbergmann/comparator/tree/6.1.0"
             },
             "funding": [
                 {

@@ -8,7 +8,6 @@ use Orchid\Platform\Dashboard;
 use Orchid\Platform\ItemPermission;
 use Orchid\Platform\OrchidServiceProvider;
 use Orchid\Screen\Actions\Menu;
-use Orchid\Support\Color;
 
 class PlatformProvider extends OrchidServiceProvider
 {
@@ -34,22 +33,17 @@ class PlatformProvider extends OrchidServiceProvider
     public function menu(): array
     {
         return [
-            Menu::make('Get Started')
+            /*Menu::make('Get Started')
                 ->icon('bs.book')
                 ->title('Navigation')
                 ->route(config('platform.index')),
 
-            Menu::make('Sample Screen')
+            /*Menu::make('Sample Screen')
                 ->icon('bs.collection')
                 ->route('platform.example')
-                ->badge(fn () => 6),
+                ->badge(fn () => 6),*/
 
-            Menu::make('Form Elements')
-                ->icon('bs.card-list')
-                ->route('platform.example.fields')
-                ->active('*/examples/form/*'),
-
-            Menu::make('Overview Layouts')
+            /*Menu::make('Overview Layouts')
                 ->icon('bs.window-sidebar')
                 ->route('platform.example.layouts'),
 
@@ -66,18 +60,6 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.example.cards')
                 ->divider(),
 
-            Menu::make(__('Users'))
-                ->icon('bs.people')
-                ->route('platform.systems.users')
-                ->permission('platform.systems.users')
-                ->title(__('Access Controls')),
-
-            Menu::make(__('Roles'))
-                ->icon('bs.shield')
-                ->route('platform.systems.roles')
-                ->permission('platform.systems.roles')
-                ->divider(),
-
             Menu::make('Documentation')
                 ->title('Docs')
                 ->icon('bs.box-arrow-up-right')
@@ -88,7 +70,19 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.box-arrow-up-right')
                 ->url('https://github.com/orchidsoftware/platform/blob/master/CHANGELOG.md')
                 ->target('_blank')
-                ->badge(fn () => Dashboard::version(), Color::DARK),
+                ->badge(fn () => Dashboard::version(), Color::DARK),*/
+
+            Menu::make(__('Users'))
+                ->icon('bs.people')
+                ->route('platform.systems.users')
+                ->permission('platform.systems.users')
+                ->title(__('Control de Acceso')),
+
+            Menu::make(__('Roles'))
+                ->icon('bs.shield')
+                ->route('platform.systems.roles')
+                ->permission('platform.systems.roles')
+                ->divider(),              
         ];
     }
 
@@ -102,7 +96,8 @@ class PlatformProvider extends OrchidServiceProvider
         return [
             ItemPermission::group(__('System'))
                 ->addPermission('platform.systems.roles', __('Roles'))
-                ->addPermission('platform.systems.users', __('Users')),
+                ->addPermission('platform.systems.users', __('Users'))
+                ->addPermission('vehiculo-resources', __('Vehiculos')),
         ];
     }
 }
