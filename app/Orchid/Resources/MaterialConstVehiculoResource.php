@@ -107,14 +107,14 @@ class MaterialConstVehiculoResource extends Resource
                 ->sort()
                 ->filter(Input::make()),                 
 
-            TD::make('created_at', 'Date of creation')
+            TD::make('created_at', 'Fecha de creación')
                 ->sort()
                 ->filter(Input::make())
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();
                 }),
 
-            TD::make('updated_at', 'Update date')
+            TD::make('updated_at', 'Fecha de actualización')
                 ->sort()
                 ->filter(Input::make())
                 ->render(function ($model) {
