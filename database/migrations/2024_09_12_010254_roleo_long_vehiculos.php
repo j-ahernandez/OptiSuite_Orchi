@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roleo_long_vechiculos', function (Blueprint $table): void {
+        Schema::create('roleo_long_vehiculos', function (Blueprint $table): void {
             $table->increments('id');
             $table->string('milimetros', 25);  // Esto creará un VARCHAR(255)
             $table->string('pulgadas', 25);  // Esto creará un VARCHAR(255)
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roleo_long_vechiculos');
+        Schema::dropIfExists('roleo_long_vehiculos');
     }
 };
