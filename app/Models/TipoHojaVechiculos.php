@@ -7,6 +7,9 @@ use Orchid\Attachment\Attachable;
 use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 use Illuminate\Database\Eloquent\Model;
+use Orchid\Attachment\Models\Attachment;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class TipoHojaVechiculos extends Model
 {
@@ -15,6 +18,6 @@ class TipoHojaVechiculos extends Model
     // Especifica los campos que se pueden rellenar masivamente
     protected $fillable = [
         'tipo_hoja',
-        'foto_hoja',
+        'upload',
     ];
 }

@@ -6,6 +6,7 @@ use Orchid\Crud\Resource;
 use Orchid\Screen\TD;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
+use Orchid\Screen\Fields\Upload;
 
 class TipoHojaVechiculosResource extends Resource
 {
@@ -25,10 +26,19 @@ class TipoHojaVechiculosResource extends Resource
     {
         return [
             Input::make('tipo_hoja')
-            ->title('Tipo Hoja')
-            ->placeholder('Ingrese el tipo de la hoja')
-            ->autofocus()
-            ->required(),           
+                ->title('Tipo Hoja')
+                ->placeholder('Ingrese el tipo de la hoja')
+                ->autofocus()
+                ->required(),   
+            
+            Upload::make('upload')
+                ->acceptedFiles('image/*')  // Solo acepta imágenes
+                ->maxFiles(1)               // Opcional: Limita la carga a un solo archivo
+                ->maxSize(10 * 1024)        // Opcional: Limita el tamaño del archivo a 10 MB (ajusta según sea necesario)
+                ->help('Sólo se permiten imágenes (JPG, PNG, GIF). Solo puede cargar un archivo, su tamaño debe ser 10 * 1024')  // Mensaje opcional para el usuario
+                ->disk('public')  // Asegúrate de definir el disco de almacenamiento si es necesario
+                ->path('uploads') // Define una ruta de almacenamiento si es necesario
+                ->required(),
         ];
     }
 
@@ -44,9 +54,17 @@ class TipoHojaVechiculosResource extends Resource
                 ->sort()
                 ->filter(Input::make()),
 
-            TD::make('tipo_hoja', 'Tipo de Hoja')
+            TD::make('upload', 'Tipo de Hoja')
                 ->sort()
-                ->filter(Input::make()),                
+                ->filter(Input::make()),  
+                
+            TD::make('foto_hoja', 'Imagen')
+                ->render(function ($model) {
+                    if ($model->upload) {
+                        return "<img src='" . asset('storage/' . $model->upload) . "' style='width: 100px; height: auto;' />";
+                    }
+                    return 'No Image';
+                }),                
 
             TD::make('created_at', 'Fecha de creación')
                 ->sort()
@@ -74,6 +92,15 @@ class TipoHojaVechiculosResource extends Resource
         return [
             Sight::make('id'),
             Sight::make('tipo_hoja', 'Tipo la hoja'),
+
+            Sight::make('upload', 'Imagen')
+            ->render(function ($model) {
+                if ($model->upload) {
+                    return "<img src='" . asset('storage/' . $model->upload) . "' style='width: 100px; height: auto;' />";
+                }
+                return 'No Image';
+            }),
+                        
             Sight::make('created_at', 'Fecha de actualización')
             ->render(function ($model) {
                 return $model->created_at->toDateTimeString();
