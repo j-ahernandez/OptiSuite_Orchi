@@ -6,6 +6,7 @@ use Orchid\Crud\Resource;
 use Orchid\Screen\TD;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
+use Orchid\Screen\Fields\Group;
 
 class YearVehiculoResource extends Resource
 {
@@ -24,12 +25,14 @@ class YearVehiculoResource extends Resource
     public function fields(): array
     {
         return [
-            Input::make('year_vh')
+            Group::make([
+                Input::make('year_vh')
                 ->title('Año del Vehículo')
                 ->type(value: 'number')  // Definir que el campo es numérico
                 ->placeholder('Ingrese el año del vehículo')
                 ->autofocus()
-                ->required(),
+                ->required(),                        
+            ]),
         ];
     }
 

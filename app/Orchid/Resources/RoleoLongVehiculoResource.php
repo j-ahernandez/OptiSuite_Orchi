@@ -5,6 +5,7 @@ use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
 use Orchid\Crud\Resource;
 use Orchid\Screen\TD;
+use Orchid\Screen\Fields\Group;
 
 class RoleoLongVehiculoResource extends Resource
 {
@@ -23,19 +24,21 @@ class RoleoLongVehiculoResource extends Resource
     public function fields(): array
     {
         return [ 
-            Input::make('milimetros')
-                ->title('Milimetros')
-                ->type('text')
-                ->placeholder('Ingrese los Milimetros')
-                ->autofocus()
-                ->required(),
+            Group::make([
+                Input::make('milimetros')
+                    ->title('Milimetros')
+                    ->type('text')
+                    ->placeholder('Ingrese los Milimetros')
+                    ->autofocus()
+                    ->required(),
 
-            Input::make('pulgadas')
-                ->title('Pulgadas')
-                ->type('text')
-                ->placeholder('Ingrese las Pulgadas')
-                ->required(),
-             ];
+                Input::make('pulgadas')
+                    ->title('Pulgadas')
+                    ->type('text')
+                    ->placeholder('Ingrese las Pulgadas')
+                    ->required(),                      
+            ]),
+        ];
     }
 
     /**

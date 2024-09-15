@@ -7,6 +7,7 @@ use Orchid\Screen\TD;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
 use Orchid\Screen\Fields\Upload;
+use Orchid\Screen\Fields\Group;
 
 class TipoHojaVechiculosResource extends Resource
 {
@@ -25,20 +26,22 @@ class TipoHojaVechiculosResource extends Resource
     public function fields(): array
     {
         return [
-            Input::make('tipo_hoja')
-                ->title('Tipo Hoja')
-                ->placeholder('Ingrese el tipo de la hoja')
-                ->autofocus()
-                ->required(),   
+            Group::make([
+                Input::make('tipo_hoja')
+                    ->title('Tipo Hoja')
+                    ->placeholder('Ingrese el tipo de la hoja')
+                    ->autofocus()
+                    ->required(),   
             
-            Upload::make('upload')
-                ->acceptedFiles('image/*')  // Solo acepta imágenes
-                ->maxFiles(1)               // Opcional: Limita la carga a un solo archivo
-                ->maxSize(10 * 1024)        // Opcional: Limita el tamaño del archivo a 10 MB (ajusta según sea necesario)
-                ->help('Sólo se permiten imágenes (JPG, PNG, GIF). Solo puede cargar un archivo, su tamaño debe ser 10 * 1024')  // Mensaje opcional para el usuario
-                ->disk('public')  // Asegúrate de definir el disco de almacenamiento si es necesario
-                ->path('uploads') // Define una ruta de almacenamiento si es necesario
-                ->required(),
+                Upload::make('upload')
+                    ->acceptedFiles('image/*')  // Solo acepta imágenes
+                    ->maxFiles(1)               // Opcional: Limita la carga a un solo archivo
+                    ->maxSize(10 * 1024)        // Opcional: Limita el tamaño del archivo a 10 MB (ajusta según sea necesario)
+                    ->help('Sólo se permiten imágenes (JPG, PNG, GIF). Solo puede cargar un archivo, su tamaño debe ser 10 * 1024')  // Mensaje opcional para el usuario
+                    ->disk('public')  // Asegúrate de definir el disco de almacenamiento si es necesario
+                    ->path('uploads') // Define una ruta de almacenamiento si es necesario
+                    ->required(),                     
+            ]),
         ];
     }
 

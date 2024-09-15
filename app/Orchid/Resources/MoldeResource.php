@@ -6,6 +6,7 @@ use Orchid\Crud\Resource;
 use Orchid\Screen\TD;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
+use Orchid\Screen\Fields\Group;
 
 class MoldeResource extends Resource
 {
@@ -24,12 +25,14 @@ class MoldeResource extends Resource
     public function fields(): array
     {
         return [
-            Input::make('descripcion_molde')
-                ->title('Descripcion del Molde')
-                ->type(value: 'text')  // Definir que el campo es numérico
-                ->placeholder('Ingrese el Molde')
-                ->autofocus()
-                ->required(),
+            Group::make([
+                Input::make('descripcion_molde')
+                    ->title('Descripcion del Molde')
+                    ->type(value: 'text')  // Definir que el campo es numérico
+                    ->placeholder('Ingrese el Molde')
+                    ->autofocus()
+                    ->required(),                        
+            ]),
         ];
     }
 

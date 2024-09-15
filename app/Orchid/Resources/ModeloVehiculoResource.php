@@ -7,6 +7,7 @@ use Orchid\Screen\TD;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
 use Orchid\Screen\Fields\Select;
+use Orchid\Screen\Fields\Group;
 
 class ModeloVehiculoResource extends Resource
 {
@@ -25,18 +26,20 @@ class ModeloVehiculoResource extends Resource
     public function fields(): array
     {
         return [
-            Select::make('idVehiculo')
-                ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
-                ->title('Seleccione un Vehículo')
-                ->help('Permite buscar vehículos')
-                ->empty('') // Mensaje si no hay opciones disponibles
-                ->searchable(),  // Hacer que el select sea "searchable"
+            Group::make([
+                Select::make('idVehiculo')
+                    ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->title('Seleccione un Vehículo')
+                    ->help('Permite buscar vehículos')
+                    ->empty('') // Mensaje si no hay opciones disponibles
+                    ->searchable(),  // Hacer que el select sea "searchable"
 
-            Input::make('modelo_detalle')
-                ->title('Modelo')
-                ->type(value: 'text')  // Definir que el campo es numérico
-                ->placeholder('Ingrese el modelo del vehículo')
-                ->required()        
+                Input::make('modelo_detalle')
+                    ->title('Modelo')
+                    ->type(value: 'text')  // Definir que el campo es numérico
+                    ->placeholder('Ingrese el modelo del vehículo')
+                    ->required()                              
+            ]),       
         ];
     }
 

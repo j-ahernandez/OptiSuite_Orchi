@@ -6,6 +6,7 @@ use Orchid\Crud\Resource;
 use Orchid\Screen\TD;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
+use Orchid\Screen\Fields\Group;
 
 class VehiculoResource extends Resource
 {
@@ -24,16 +25,23 @@ class VehiculoResource extends Resource
     public function fields(): array
     {
         return [
-            Input::make('descripcionvehiculo')
-                ->title('Descripción del Vehículo')
-                ->placeholder('Ingrese la descripción del vehículo')
-                ->autofocus()
-                ->required(),
+            Group::make([
+                Input::make('descripcionvehiculo')
+                    ->title('Descripción del Vehículo')
+                    ->placeholder('Ingrese la descripción del vehículo')
+                    ->autofocus()
+                    ->required(),
 
-            Input::make('nombrecorto')
-                ->title('Nombre Corto')
-                ->placeholder('Ingrese el nombre corto del vehículo')
-                ->required(),
+                Input::make('nombrecorto')
+                    ->title('Nombre Corto')
+                    ->placeholder('Ingrese el nombre corto del vehículo')
+                    ->required(),
+
+                Input::make('numero')
+                    ->title('Número')
+                    ->placeholder('Ingrese el número')
+                    ->required(),                           
+            ]),           
         ];
     }
 
@@ -55,7 +63,11 @@ class VehiculoResource extends Resource
                 
             TD::make('nombrecorto' , 'Nombre Corto')
                 ->sort()
-                ->filter(Input::make()),                   
+                ->filter(Input::make()),                 
+                
+            TD::make('numero' , 'Número')
+                ->sort()
+                ->filter(Input::make()),                 
 
             TD::make('created_at', 'Fecha de creación', )
                 ->sort()
@@ -84,6 +96,7 @@ class VehiculoResource extends Resource
             Sight::make('id'),
             Sight::make('descripcionvehiculo', 'Descripción del Vehículo'),
             Sight::make('nombrecorto', 'Nombre corto'),
+            Sight::make('numero', title: 'Número'),
             Sight::make('created_at', 'Fecha de actualización')
             ->render(function ($model) {
                 return $model->created_at->toDateTimeString();

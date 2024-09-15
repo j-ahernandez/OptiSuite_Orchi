@@ -6,6 +6,7 @@ use Orchid\Crud\Resource;
 use Orchid\Screen\TD;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
+use Orchid\Screen\Fields\Group;
 
 class RefTensadoVehiculoResource extends Resource
 {
@@ -24,17 +25,19 @@ class RefTensadoVehiculoResource extends Resource
     public function fields(): array
     {
         return [
-            Input::make('letra')
-                ->title('Letra')
-                ->placeholder('Ingrese la Letra')
-                ->autofocus()
-                ->required(),
+            Group::make([
+                Input::make('letra')
+                    ->title('Letra')
+                    ->placeholder('Ingrese la Letra')
+                    ->autofocus()
+                    ->required(),
 
-            Input::make('Descripcion')
-                ->title('Descripción')
-                ->placeholder('Ingrese la Descripción')
-                ->required(),
-            ];
+                Input::make('Descripcion')
+                    ->title('Descripción')
+                    ->placeholder('Ingrese la Descripción')
+                    ->required(),                        
+            ]),
+        ];
     }
 
     /**

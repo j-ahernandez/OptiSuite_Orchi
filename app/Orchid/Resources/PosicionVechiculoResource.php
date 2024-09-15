@@ -6,6 +6,7 @@ use Orchid\Crud\Resource;
 use Orchid\Screen\TD;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
+use Orchid\Screen\Fields\Group;
 
 class PosicionVechiculoResource extends Resource
 {
@@ -24,11 +25,13 @@ class PosicionVechiculoResource extends Resource
     public function fields(): array
     {
         return [
-            Input::make('posicion')
-                ->title('Posición')
-                ->placeholder('Ingrese la posición')
-                ->autofocus()
-                ->required(),
+            Group::make([
+                Input::make('posicion')
+                    ->title('Posición')
+                    ->placeholder('Ingrese la posición')
+                    ->autofocus()
+                    ->required(),                       
+            ]),
         ];
     }
 
