@@ -6,6 +6,7 @@ use Orchid\Crud\Resource;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Select;
+use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
 
@@ -38,7 +39,11 @@ class DescriptionPartResource extends Resource
                     ->type(value: 'text')
                     ->placeholder('Descripción'),
                 Select::make('abraztipoid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->options([
+                        0 => '',
+                        1 => 'Tornillo',
+                        2 => 'Doblada',
+                    ])
                     ->title('Seleccione un Abraz Tipo')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
@@ -203,36 +208,28 @@ class DescriptionPartResource extends Resource
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
                 Select::make('2porcenroleo')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->options([
+                        0 => '0%',
+                        1 => '25%',
+                        2 => '75%',
+                        3 => '100%',
+                    ])
                     ->title('Seleccione un 2% Roleo')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
-                Select::make('moldeid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
-                    ->title('Seleccione un Molde')
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
-            ]),
-            // Fila 12
-            Group::make([
                 Select::make('materialid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione un Material')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
+            ]),
+            // Fila 12
+            Group::make([
                 Select::make('diambocadoid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione un Diam Bocado')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
-                Select::make('formaid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
-                    ->title('Seleccione una Forma')
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
-            ]),
-            // Fila 13
-            Group::make([
                 Input::make('anchomm')
                     ->title('Ancho MM')
                     ->type(value: 'text')
@@ -242,13 +239,8 @@ class DescriptionPartResource extends Resource
                     ->title('Seleccione un Anco TE')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
-                Select::make('interiorid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
-                    ->title('Seleccione una Interior')
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
             ]),
-            // Fila 14
+            // Fila 13
             Group::make([
                 Input::make('gruesomm')
                     ->title('Grueso MM')
@@ -259,29 +251,38 @@ class DescriptionPartResource extends Resource
                     ->title('Seleccione un Destaje')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
-                Select::make('roscaid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
-                    ->title('Seleccione una Rosca')
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
-            ]),
-            // Fila 15
-            Group::make([
                 Input::make('longit')
                     ->title('Longit CM')
                     ->type(value: 'text')
                     ->placeholder('Longit MM'),
                 /* ->rules('required|numeric|min:10|max:180') */
                 // Añade las reglas de validación aquí,
+            ]),
+            // Fila 14
+            Group::make([
                 Select::make('porcendespunte')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->options([
+                        0 => '0%',
+                        1 => '25%',
+                        2 => '75%',
+                        3 => '100%',
+                    ])
                     ->title('Seleccione un % Despunte')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
-                Input::make('notas')
-                    ->title('Notas')
+                Input::make('rosca')
+                    ->title('Rosca')
                     ->type(value: 'text')
-                    ->placeholder('Notas'),
+                    ->placeholder('Rosca'),
+                /* ->rules('required|numeric|min:10|max:180') */
+                // Añade las reglas de validación aquí,
+            ]),
+            // Fila 15
+            Group::make([
+                TextArea::make('notas')
+                    ->title('Notas')
+                    ->rows(5)
+                    ->width('100%'),  // Asegúrate de que el ancho sea el 100% del contenedor
             ]),
         ];
     }
@@ -468,11 +469,6 @@ class DescriptionPartResource extends Resource
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->2porcenroleo;
             }*/
-            TD::make('moldeid'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->moldeid;
-            }*/
             // Fila 12
             TD::make('materialid'),
             /*->render(function ($model) {
@@ -483,11 +479,6 @@ class DescriptionPartResource extends Resource
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->diambocadoid;
-            }*/
-            TD::make('formaid'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->formaid;
             }*/
             // Fila 13
             TD::make('anchomm'),
@@ -500,11 +491,6 @@ class DescriptionPartResource extends Resource
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->anchoteid;
             }*/
-            TD::make('interiorid'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->interiorid;
-            }*/
             // Fila 14
             TD::make('gruesomm'),
             /*->render(function ($model) {
@@ -515,11 +501,6 @@ class DescriptionPartResource extends Resource
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->destajeid;
-            }*/
-            TD::make('roscaid'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->roscaid;
             }*/
             // Fila 15
             TD::make('longit'),
@@ -724,11 +705,6 @@ class DescriptionPartResource extends Resource
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->2porcenroleo;
             })*/
-            Sight::make('moldeid'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->moldeid;
-            })*/
             // Fila 12
             Sight::make('materialid'),
             /*->render(function ($model) {
@@ -739,11 +715,6 @@ class DescriptionPartResource extends Resource
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->diambocadoid;
-            })*/
-            Sight::make('formaid'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->formaid;
             })*/
             // Fila 13
             Sight::make('anchomm'),
@@ -756,11 +727,6 @@ class DescriptionPartResource extends Resource
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->anchoteid;
             })*/
-            Sight::make('interiorid'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->interiorid;
-            })*/
             // Fila 14
             Sight::make('gruesomm'),
             /*->render(function ($model) {
@@ -771,11 +737,6 @@ class DescriptionPartResource extends Resource
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->destajeid;
-            })*/
-            Sight::make('roscaid'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->roscaid;
             })*/
             // Fila 15
             Sight::make('longit'),
