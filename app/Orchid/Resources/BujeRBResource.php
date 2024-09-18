@@ -35,55 +35,46 @@ class BujeRBResource extends Resource
                 Input::make('dia_cpo_PI')
                     ->title('Descripcion del Dia CPO PI')
                     ->type(value: 'text')  // Definir que el campo es numérico
-                    ->autofocus()
                     ->required(),
             ]),
             Group::make([
                 Input::make('long_cpo_PI')
                     ->title('Descripcion del Long CPO PI')
                     ->type(value: 'text')  // Definir que el campo es numérico
-                    ->autofocus()
                     ->required(),
                 Input::make('long_tot_PI')
                     ->title('Descripcion del Long TOT PI')
                     ->type(value: 'text')  // Definir que el campo es numérico
-                    ->autofocus()
                     ->required(),
             ]),
             Group::make([
                 Input::make('dian_int_PI')
                     ->title('Descripcion del Dian INT PI')
                     ->type(value: 'text')  // Definir que el campo es numérico
-                    ->autofocus()
                     ->required(),
                 Input::make('dia_cpo_MM')
                     ->title('Descripcion del Dian CPO MM')
                     ->type(value: 'text')  // Definir que el campo es numérico
-                    ->autofocus()
                     ->required(),
             ]),
             Group::make([
                 Input::make('long_cpo_MM')
                     ->title('Descripcion del Long CPO MM')
                     ->type(value: 'text')  // Definir que el campo es numérico
-                    ->autofocus()
                     ->required(),
                 Input::make('long_tot_MM')
                     ->title('Descripcion del Long TOT MM')
                     ->type(value: 'text')  // Definir que el campo es numérico
-                    ->autofocus()
                     ->required(),
             ]),
             Group::make([
                 Input::make('dian_int_MM')
                     ->title('Descripcion del Dian INT MM')
                     ->type(value: 'text')  // Definir que el campo es numérico
-                    ->autofocus()
                     ->required(),
                 Input::make('remarks')
                     ->title('Descripcion del Remarks')
-                    ->type(value: 'text')  // Definir que el campo es numérico
-                    ->autofocus(),
+                    ->type(value: 'text'),  // Definir que el campo es numérico
             ]),
         ];
     }

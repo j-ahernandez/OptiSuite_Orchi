@@ -8,7 +8,7 @@ use Orchid\Attachment\Attachable;
 use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 
-class BujeRB extends Model
+class BujeLC extends Model
 {
     use HasFactory, AsSource, Filterable, Attachable;
 
