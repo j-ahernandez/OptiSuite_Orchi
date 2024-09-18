@@ -12,9 +12,6 @@ class RoleoLongVehiculo extends Model
 {
     use HasFactory, AsSource, Filterable, Attachable;
 
-    // Especifica los campos que se pueden rellenar masivamente
-    protected $fillable = [
-        'milimetros', 
-        'pulgadas',
-    ];
+    // Dejar $guarded vacío significa que todos los campos son asignables en masa
+    protected $guarded = [''];
 }
