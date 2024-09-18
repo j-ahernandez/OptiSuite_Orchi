@@ -147,36 +147,16 @@ class BujeRBResource extends Resource
     {
         return [
             Sight::make('id'),
-            Sight::make('bujeRBNum')->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
-            Sight::make('dia_cpo_PI')->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
-            Sight::make('long_cpo_PI')->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
-            Sight::make('long_tot_PI')->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
-            Sight::make('dian_int_PI')->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
-            Sight::make('dia_cpo_MM')->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
-            Sight::make('long_cpo_MM')->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
-            Sight::make('long_tot_MM')->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
-            Sight::make('dian_int_MM')->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
-            Sight::make('remarks')->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
+            Sight::make('bujeRBNum'),
+            Sight::make('dia_cpo_PI'),
+            Sight::make('long_cpo_PI'),
+            Sight::make('long_tot_PI'),
+            Sight::make('dian_int_PI'),
+            Sight::make('dia_cpo_MM'),
+            Sight::make('long_cpo_MM'),
+            Sight::make('long_tot_MM'),
+            Sight::make('dian_int_MM'),
+            Sight::make('remarks'),
             Sight::make('created_at', 'Fecha de creación')
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();
