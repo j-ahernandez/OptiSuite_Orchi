@@ -19,6 +19,40 @@ class MaterialGrapaResource extends Resource
     public static $model = \App\Models\MaterialGrapa::class;
 
     /**
+     * Get the label for the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        // Este método define el nombre que aparecerá en el menú para este recurso.
+        return __('Material Grapa');
+    }
+
+    /**
+     * Get the title for the resource.
+     *
+     * @return string
+     */
+    public function title(): string
+    {
+        // Este método define el título que se mostrará en la vista de detalles del recurso.
+        return __('Material Grapa');
+    }
+
+    /**
+     * Get the icon for the resource.
+     *
+     * @return string
+     */
+    public static function icon(): string
+    {
+        // Este método define el icono que se usará en el menú para este recurso.
+        // Aquí estamos usando un icono de Font Awesome.
+        return 'fa.book';
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @return array
