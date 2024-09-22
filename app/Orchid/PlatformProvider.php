@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Orchid;
 
@@ -37,8 +35,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.collection')
                 ->title('Dashboard')
                 ->route('platform.example')
-                ->badge(fn () => 6),
-                
+                ->badge(fn() => 6),
             /*Menu::make('Get Started')
                 ->icon('bs.book')
                 ->title('Navigation')
@@ -48,7 +45,6 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.collection')
                 ->route('platform.example')
                 ->badge(fn () => 6),*/
-
             /*Menu::make('Overview Layouts')
                 ->icon('bs.window-sidebar')
                 ->route('platform.example.layouts'),
@@ -77,18 +73,16 @@ class PlatformProvider extends OrchidServiceProvider
                 ->url('https://github.com/orchidsoftware/platform/blob/master/CHANGELOG.md')
                 ->target('_blank')
                 ->badge(fn () => Dashboard::version(), Color::DARK),*/
-
             Menu::make(__('Users'))
                 ->icon('bs.people')
                 ->route('platform.systems.users')
                 ->permission('platform.systems.users')
                 ->title(__('Control de Acceso')),
-
             Menu::make(__('Roles'))
                 ->icon('bs.shield')
                 ->route('platform.systems.roles')
                 ->permission('platform.systems.roles')
-                ->divider(),              
+                ->divider(),
         ];
     }
 

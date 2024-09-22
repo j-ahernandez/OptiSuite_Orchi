@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Orchid\Resources;
+
+use Orchid\Crud\Resource;
+use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
-use Orchid\Crud\Resource;
 use Orchid\Screen\TD;
-use Orchid\Screen\Fields\Group;
 
 class RoleoLongVehiculoResource extends Resource
 {
@@ -17,13 +18,47 @@ class RoleoLongVehiculoResource extends Resource
     public static $model = \App\Models\RoleoLongVehiculo::class;
 
     /**
+     * Get the label for the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        // Este método define el nombre que aparecerá en el menú para este recurso.
+        return __('Roleo Long');
+    }
+
+    /**
+     * Get the title for the resource.
+     *
+     * @return string
+     */
+    public function title(): string
+    {
+        // Este método define el título que se mostrará en la vista de detalles del recurso.
+        return __('Roleo Long');
+    }
+
+    /**
+     * Get the icon for the resource.
+     *
+     * @return string
+     */
+    public static function icon(): string
+    {
+        // Este método define el icono que se usará en el menú para este recurso.
+        // Aquí estamos usando un icono de Font Awesome.
+        return 'fa.book';
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @return array
      */
     public function fields(): array
     {
-        return [ 
+        return [
             Group::make([
                 Input::make('milimetros')
                     ->title('Milimetros')
@@ -31,12 +66,11 @@ class RoleoLongVehiculoResource extends Resource
                     ->placeholder('Ingrese los Milimetros')
                     ->autofocus()
                     ->required(),
-
                 Input::make('pulgadas')
                     ->title('Pulgadas')
                     ->type('text')
                     ->placeholder('Ingrese las Pulgadas')
-                    ->required(),                      
+                    ->required(),
             ]),
         ];
     }
@@ -52,22 +86,18 @@ class RoleoLongVehiculoResource extends Resource
             TD::make('id')
                 ->sort()
                 ->filter(Input::make()),
-
             TD::make('milimetros', 'Milemetros')
-            ->sort()
-            ->filter(Input::make()),
-            
+                ->sort()
+                ->filter(Input::make()),
             TD::make('pulgadas', 'Pulgadas')
-            ->sort()
-            ->filter(Input::make()),
-
+                ->sort()
+                ->filter(Input::make()),
             TD::make('created_at', 'Fecha de creación')
                 ->sort()
                 ->filter(Input::make())
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();
                 }),
-
             TD::make('updated_at', 'Fecha de actualización')
                 ->sort()
                 ->filter(Input::make())
@@ -89,13 +119,13 @@ class RoleoLongVehiculoResource extends Resource
             Sight::make('milimetros', 'Milemetros'),
             Sight::make('pulgadas', 'Pulgadas'),
             Sight::make('created_at', 'Fecha de actualización')
-            ->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
             Sight::make('updated_at', 'Fecha de actualización')
-            ->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
         ];
     }
 

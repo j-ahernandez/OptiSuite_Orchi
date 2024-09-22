@@ -3,10 +3,10 @@
 namespace App\Orchid\Resources;
 
 use Orchid\Crud\Resource;
-use Orchid\Screen\TD;
+use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
-use Orchid\Screen\Fields\Group;
+use Orchid\Screen\TD;
 
 class PosicionVechiculoResource extends Resource
 {
@@ -16,6 +16,40 @@ class PosicionVechiculoResource extends Resource
      * @var string
      */
     public static $model = \App\Models\PosicionVechiculo::class;
+
+    /**
+     * Get the label for the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        // Este método define el nombre que aparecerá en el menú para este recurso.
+        return __('Posición Vehículo');
+    }
+
+    /**
+     * Get the title for the resource.
+     *
+     * @return string
+     */
+    public function title(): string
+    {
+        // Este método define el título que se mostrará en la vista de detalles del recurso.
+        return __('Posición Veículo');
+    }
+
+    /**
+     * Get the icon for the resource.
+     *
+     * @return string
+     */
+    public static function icon(): string
+    {
+        // Este método define el icono que se usará en el menú para este recurso.
+        // Aquí estamos usando un icono de Font Awesome.
+        return 'fa.book';
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -30,7 +64,7 @@ class PosicionVechiculoResource extends Resource
                     ->title('Posición')
                     ->placeholder('Ingrese la posición')
                     ->autofocus()
-                    ->required(),                       
+                    ->required(),
             ]),
         ];
     }
@@ -46,21 +80,18 @@ class PosicionVechiculoResource extends Resource
             TD::make('id')
                 ->sort()
                 ->filter(Input::make()),
-
             TD::make('posicion', 'Posición')
                 ->sort()
-                ->filter(Input::make()), 
-
+                ->filter(Input::make()),
             TD::make('created_at', 'Fecha de creación')
                 ->sort()
                 ->filter(Input::make())
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();
                 }),
-
             TD::make('updated_at', 'Fecha de actualización')
                 ->sort()
-                ->filter(Input::make())            
+                ->filter(Input::make())
                 ->render(function ($model) {
                     return $model->updated_at->toDateTimeString();
                 }),
@@ -78,13 +109,13 @@ class PosicionVechiculoResource extends Resource
             Sight::make('id'),
             Sight::make('posicion', 'Posición'),
             Sight::make('created_at', 'Fecha de actualización')
-            ->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
             Sight::make('updated_at', 'Fecha de actualización')
-            ->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
         ];
     }
 

@@ -3,11 +3,11 @@
 namespace App\Orchid\Resources;
 
 use Orchid\Crud\Resource;
-use Orchid\Screen\TD;
-use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Sight;
-use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\Group;
+use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Select;
+use Orchid\Screen\Sight;
+use Orchid\Screen\TD;
 
 class ModeloVehiculoResource extends Resource
 {
@@ -19,6 +19,40 @@ class ModeloVehiculoResource extends Resource
     public static $model = \App\Models\ModeloVehiculo::class;
 
     /**
+     * Get the label for the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        // Este método define el nombre que aparecerá en el menú para este recurso.
+        return __('Modelo Vehículos');
+    }
+
+    /**
+     * Get the title for the resource.
+     *
+     * @return string
+     */
+    public function title(): string
+    {
+        // Este método define el título que se mostrará en la vista de detalles del recurso.
+        return __('Modelo Vehículos');
+    }
+
+    /**
+     * Get the icon for the resource.
+     *
+     * @return string
+     */
+    public static function icon(): string
+    {
+        // Este método define el icono que se usará en el menú para este recurso.
+        // Aquí estamos usando un icono de Font Awesome.
+        return 'fa.book';
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @return array
@@ -28,18 +62,17 @@ class ModeloVehiculoResource extends Resource
         return [
             Group::make([
                 Select::make('idVehiculo')
-                    ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id')  // Usar el modelo Vehiculo
                     ->title('Seleccione un Vehículo')
                     ->help('Permite buscar vehículos')
-                    ->empty('') // Mensaje si no hay opciones disponibles
+                    ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
-
                 Input::make('modelo_detalle')
                     ->title('Modelo')
                     ->type(value: 'text')  // Definir que el campo es numérico
                     ->placeholder('Ingrese el modelo del vehículo')
-                    ->required()                              
-            ]),       
+                    ->required()
+            ]),
         ];
     }
 
@@ -54,32 +87,27 @@ class ModeloVehiculoResource extends Resource
             TD::make('id')
                 ->sort()
                 ->filter(Input::make()),
-
             TD::make('vehiculo.descripcionvehiculo', 'Nombre del Vehículo')
                 ->sort()
                 ->filter(Input::make())
                 ->render(function ($model) {
                     return $model->vehiculo ? $model->vehiculo->descripcionvehiculo : 'N/A';
-                }),                    
-
+                }),
             TD::make('vehiculo.descripcionvehiculo', 'Nombre del Vehículo')
                 ->sort()
                 ->filter(Input::make())
                 ->render(function ($model) {
                     return $model->vehiculo->descripcionvehiculo;
-                }),                
-
+                }),
             TD::make('modelo_detalle')
                 ->sort()
-                ->filter(Input::make()),                
-
+                ->filter(Input::make()),
             TD::make('created_at', 'Fecha de creación')
                 ->sort()
                 ->filter(Input::make())
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();
                 }),
-
             TD::make('updated_at', 'Fecha de actualización')
                 ->sort()
                 ->filter(Input::make())
@@ -99,18 +127,18 @@ class ModeloVehiculoResource extends Resource
         return [
             Sight::make('id'),
             Sight::make('vehiculo.descripcionvehiculo', 'Nombre del Vehículo')
-            ->render(function ($model) {
-                return $model->vehiculo ? $model->vehiculo->descripcionvehiculo : 'N/A';
-            }),
+                ->render(function ($model) {
+                    return $model->vehiculo ? $model->vehiculo->descripcionvehiculo : 'N/A';
+                }),
             Sight::make('modelo_detalle', 'Modelo'),
             Sight::make('created_at', 'Fecha de actualización')
-            ->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
             Sight::make('updated_at', 'Fecha de actualización')
-            ->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
         ];
     }
 

@@ -20,6 +20,40 @@ class DescriptionPartResource extends Resource
     public static $model = \App\Models\DescriptionPart::class;
 
     /**
+     * Get the label for the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        // Este método define el nombre que aparecerá en el menú para este recurso.
+        return __('Descripción de Partes');
+    }
+
+    /**
+     * Get the title for the resource.
+     *
+     * @return string
+     */
+    public function title(): string
+    {
+        // Este método define el título que se mostrará en la vista de detalles del recurso.
+        return __('Descripción de Partes');
+    }
+
+    /**
+     * Get the icon for the resource.
+     *
+     * @return string
+     */
+    public static function icon(): string
+    {
+        // Este método define el icono que se usará en el menú para este recurso.
+        // Aquí estamos usando un icono de Font Awesome.
+        return 'fa.book';
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @return array
@@ -296,276 +330,276 @@ class DescriptionPartResource extends Resource
             TD::make('id')
                 ->sort()
                 ->filter(Input::make()),
-            TD::make('code')
+            TD::make('code', 'Código')
                 ->sort()
                 ->filter(Input::make()),
-            TD::make('typeid')
-                ->sort()
-                ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->vehiculoid;
-            }*/
-            TD::make('vehiculoid')
+            TD::make('typeid', 'Tipo')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->vehiculoid;
             }*/
-            TD::make('modelid')
+            TD::make('vehiculoid', 'Vehiculo')
+                ->sort()
+                ->filter(Input::make()),
+            /*->render(function ($model) {
+                // Aquí puedes personalizar cómo mostrar el valor
+                return $model->vehiculoid;
+            }*/
+            TD::make('modelid', 'Modelo')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->modelid;
             }*/
-            TD::make('apodo')
+            TD::make('apodo', 'Apodo')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->apodo;
             }*/
-            TD::make('yearid')
+            TD::make('yearid', 'Año')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->yearid;
             }*/
-            TD::make('positionid')
+            TD::make('positionid', 'Posición')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->positionid;
             }*/
-            TD::make('dlttrsid')
+            TD::make('dlttrsid', 'Dlt/Trs')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->dlttrsid;
             }*/
-            TD::make('identidad')
+            TD::make('identidad', 'Identidad')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->identidad;
             }*/
-            TD::make('refauxid')
+            TD::make('refauxid', 'Ref/Aux')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->refauxid;
             }*/
-            TD::make('materialgrapaid')
+            TD::make('materialgrapaid', 'Material Grapa')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->materialgrapaid;
             }*/
-            TD::make('anchomm')
+            TD::make('anchomm', 'Ancho')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->anchomm;
             }*/
-            TD::make('gruesomm')
+            TD::make('gruesomm', 'Grueso (mm)')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->gruesomm;
             }*/
-            TD::make('longit')
+            TD::make('longit', 'Longit (mm)')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->longit;
             }*/
-            TD::make('description')
+            TD::make('description', 'Descripción')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->description;
             }*/
-            TD::make('tipohojaid')
+            TD::make('tipohojaid', 'Tipo Hoja')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->tipohojaid;
             }*/
-            TD::make('cortecm')
+            TD::make('cortecm', 'Corte (cm)')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->cortecm;
             }*/
-            TD::make('distcccm')
+            TD::make('distcccm', 'DistCC (cm)')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->distcccm;
             }*/
-            TD::make('lccm')
+            TD::make('lccm', 'LC (cm)')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->lccm;
             }*/
-            TD::make('llcm')
+            TD::make('llcm', 'LL (cm)')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->llcm;
             }*/
-            TD::make('roleolcid')
+            TD::make('roleolcid', 'RoleoLC')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->roleolcid;
             }*/
-            TD::make('roleollid')
+            TD::make('roleollid', 'Roleo LL')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->roleollid;
             }*/
-            TD::make('2roleolc')
+            TD::make('2roleolc', '2RoleoLL')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->2roleolc;
             }*/
-            TD::make('2roleoll')
+            TD::make('2roleoll', '2RoleoLC')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->2roleollllcm;
             }*/
-            TD::make('2porcenroleo')
+            TD::make('2porcenroleo', '2% Roleo')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->2porcenroleo;
             }*/
-            TD::make('diambocadoid')
+            TD::make('diambocadoid', 'Diam Bocado')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->diambocadoid;
             }*/
-            TD::make('anchoteid')
+            TD::make('anchoteid', 'Ancho TE')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->anchoteid;
             }*/
-            TD::make('destajeid')
+            TD::make('destajeid', 'Destaje')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->destajeid;
             }*/
-            TD::make('porcendespunte')
+            TD::make('porcendespunte', '% Despunte')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->destajeid;
             }*/
-            TD::make('abraztipoid')
+            TD::make('abraztipoid', 'Abraz-Tipo')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->abraztipoid;
             }*/
-            TD::make('abrazmasterid')
+            TD::make('abrazmasterid', 'Abraz-Master')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->abrazmasterid;
             }*/
-            TD::make('abrazlongcm')
+            TD::make('abrazlongcm', 'Abrazad-Long (cm)')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->abrazlongcm;
             }*/
-            TD::make('diatcid')
+            TD::make('diatcid', 'DiaTC')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->diatcid;
             }*/
-            TD::make('tiposbujesid')
+            TD::make('tiposbujesid', 'Tipos de Buje')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->tiposbujesid;
             }*/
-            TD::make('bujelcid')
+            TD::make('bujelcid', 'Buje LC')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->bujelcid;
             }*/
-            TD::make('bujellid')
+            TD::make('bujellid', 'Buje LL')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->bujellid;
             }*/
-            TD::make('brioid')
+            TD::make('brioid', 'Brio (cm)')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->brioid;
             }*/
-            TD::make('pesokg')
+            TD::make('pesokg', 'Peso (kg)')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->pesokg;
             }*/
-            TD::make('observacion')
+            TD::make('observacion', 'Observación')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->observacion;
             }*/
-            TD::make('rosca')
+            TD::make('rosca', 'Rosca')
                 ->sort()
                 ->filter(Input::make()),
             /*->render(function ($model) {
@@ -597,194 +631,199 @@ class DescriptionPartResource extends Resource
         return [
             Sight::make('id'),
             // Fila 1
-            Sight::make('code'),
+            Sight::make('code', 'Código'),
             Sight::make('typeid'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->typeid;
             })*/
-            Sight::make('vehiculoid'),
+            Sight::make('vehiculoid', 'Vehiculo'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->vehiculoid;
             })*/
-            Sight::make('modelid'),
+            Sight::make('modelid', 'Modelo'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->modelid;
             })*/
-            Sight::make('apodo'),
+            Sight::make('apodo', 'Apodo'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->apodo;
             })*/
-            Sight::make('yearid'),
+            Sight::make('yearid', 'Año'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->yearid;
             })*/
-            Sight::make('positionid'),
+            Sight::make('positionid', 'Posición'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->positionid;
             })*/
-            Sight::make('dlttrsid'),
+            Sight::make('dlttrsid', 'Dlt/Trs'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->dlttrsid;
             })*/
-            Sight::make('identidad'),
+            Sight::make('identidad', 'Identidad'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->identidad;
             })*/
-            Sight::make('refauxid'),
+            Sight::make('refauxid', 'Ref/Aux'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->refauxid;
             })*/
-            Sight::make('materialgrapaid'),
+            Sight::make('materialgrapaid', 'Material Grapa'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->materialgrapaid;
             })*/
-            Sight::make('materialid'),
+            Sight::make('materialid', 'Material'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->materialid;
             })*/
-            Sight::make('anchomm'),
+            Sight::make('anchomm', 'Ancho (mm)'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->anchomm;
             })*/
-            Sight::make('gruesomm'),
+            Sight::make('gruesomm', 'Grueso (mm)'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->gruesomm;
             })*/
-            Sight::make('longit'),
+            Sight::make('longit', 'Longit (cm)'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->longit;
             })*/
-            Sight::make('description'),
-            Sight::make('tipohojaid'),
+            Sight::make('description', 'Descripción'),
+            Sight::make('tipohojaid', 'Tipo Hoja'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->tipohojaid;
             })*/
-            Sight::make('cortecm'),
+            Sight::make('cortecm', 'Corte (cm)'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->cortecm;
             })*/
-            Sight::make('distcccm'),
+            Sight::make('distcccm', 'DistCC (cm)'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->distcccm;
             })*/
-            Sight::make('lccm'),
+            Sight::make('lccm', 'LC (cm)'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->lccm;
             })*/
-            Sight::make('llcm'),
+            Sight::make('llcm', 'LL (cm)'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->llcm;
             })*/
-            Sight::make('roleolcid'),
+            Sight::make('roleolcid', 'RoleoLC'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->roleolcid;
             })*/
-            Sight::make('2roleolc'),
+            Sight::make('roleollid', 'RoleoLL'),
+            /*->render(function ($model) {
+                // Aquí puedes personalizar cómo mostrar el valor
+                return $model->roleolcid;
+            })*/
+            Sight::make('2roleolc', '2Roleo LC'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->2roleolc;
             })*/
-            Sight::make('2roleoll'),
+            Sight::make('2roleoll', '2Roleo LL'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->2roleollllcm;
             })*/
-            Sight::make('2porcenroleo'),
+            Sight::make('2porcenroleo', '2% Roleo'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->2porcenroleo;
             })*/
-            Sight::make('diambocadoid'),
+            Sight::make('diambocadoid', 'Diam Bocado'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->diambocadoid;
             })*/
-            Sight::make('anchoteid'),
+            Sight::make('anchoteid', 'Ancho TE'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->anchoteid;
             })*/
-            Sight::make('destajeid'),
+            Sight::make('destajeid', 'Destaje'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->destajeid;
             })*/
-            Sight::make('porcendespunte'),
+            Sight::make('porcendespunte', '% Despunte'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->porcendespunte;
             })*/
-            Sight::make('abraztipoid'),
+            Sight::make('abraztipoid', 'Abraz-Tipo'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->abraztipoid;
             })*/
-            Sight::make('abrazmasterid'),
+            Sight::make('abrazmasterid', 'Abraz-Master'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->abrazmasterid;
             })*/
-            Sight::make('abrazlongcm'),
+            Sight::make('abrazlongcm', 'Abraz-Long (cm)'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->abrazlongcm;
             })*/
-            Sight::make('diatcid'),
+            Sight::make('diatcid', 'DiaTC'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->diatcid;
             })*/
-            Sight::make('tiposbujesid'),
+            Sight::make('tiposbujesid', 'Tipos de Buje'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->tiposbujesid;
             })*/
-            Sight::make('bujelcid'),
+            Sight::make('bujelcid', 'Buje LC'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->bujelcid;
             })*/
-            Sight::make('bujellid'),
+            Sight::make('bujellid', 'Buje LL'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->bujellid;
             })*/
-            Sight::make('brioid'),
+            Sight::make('brioid', 'Brio (cm)'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->brioid;
             })*/
-            Sight::make('pesokg'),
+            Sight::make('pesokg', 'Peso (kg)'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->pesokg;
             })*/
-            Sight::make('observacion'),
+            Sight::make('observacion', 'Observación'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->observacion;
             })*/
-            Sight::make('roscaid'),
+            Sight::make('roscaid', 'Rosca'),
             /*->render(function ($model) {
                 // Aquí puedes personalizar cómo mostrar el valor
                 return $model->roleollid;

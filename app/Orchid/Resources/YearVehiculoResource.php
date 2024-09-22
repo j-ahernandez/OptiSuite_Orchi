@@ -3,10 +3,10 @@
 namespace App\Orchid\Resources;
 
 use Orchid\Crud\Resource;
-use Orchid\Screen\TD;
+use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
-use Orchid\Screen\Fields\Group;
+use Orchid\Screen\TD;
 
 class YearVehiculoResource extends Resource
 {
@@ -18,6 +18,40 @@ class YearVehiculoResource extends Resource
     public static $model = \App\Models\YearVehiculo::class;
 
     /**
+     * Get the label for the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        // Este método define el nombre que aparecerá en el menú para este recurso.
+        return __('Año');
+    }
+
+    /**
+     * Get the title for the resource.
+     *
+     * @return string
+     */
+    public function title(): string
+    {
+        // Este método define el título que se mostrará en la vista de detalles del recurso.
+        return __('Año');
+    }
+
+    /**
+     * Get the icon for the resource.
+     *
+     * @return string
+     */
+    public static function icon(): string
+    {
+        // Este método define el icono que se usará en el menú para este recurso.
+        // Aquí estamos usando un icono de Font Awesome.
+        return 'fa.book';
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @return array
@@ -27,11 +61,11 @@ class YearVehiculoResource extends Resource
         return [
             Group::make([
                 Input::make('year_vh')
-                ->title('Año del Vehículo')
-                ->type(value: 'number')  // Definir que el campo es numérico
-                ->placeholder('Ingrese el año del vehículo')
-                ->autofocus()
-                ->required(),                        
+                    ->title('Año del Vehículo')
+                    ->type(value: 'number')  // Definir que el campo es numérico
+                    ->placeholder('Ingrese el año del vehículo')
+                    ->autofocus()
+                    ->required(),
             ]),
         ];
     }
@@ -47,18 +81,15 @@ class YearVehiculoResource extends Resource
             TD::make('id')
                 ->sort()
                 ->filter(Input::make()),
-
             TD::make('year_vh', 'Año del Vehículo')
                 ->sort()
-                ->filter(Input::make()), 
-
+                ->filter(Input::make()),
             TD::make('created_at', 'Fecha de creación')
                 ->sort()
                 ->filter(Input::make())
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();
                 }),
-
             TD::make('updated_at', 'Fecha de actualización')
                 ->sort()
                 ->filter(Input::make())
@@ -79,13 +110,13 @@ class YearVehiculoResource extends Resource
             Sight::make('id'),
             Sight::make('year_vh', 'Año'),
             Sight::make('created_at', 'Fecha de actualización')
-            ->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
             Sight::make('updated_at', 'Fecha de actualización')
-            ->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
         ];
     }
 
