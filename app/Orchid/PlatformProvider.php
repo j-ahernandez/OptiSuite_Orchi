@@ -46,6 +46,10 @@ class PlatformProvider extends OrchidServiceProvider
                         ->icon('fa.book')
                         ->route('platform.resource.list', ['resource' => 'abraz-resources'])
                         ->permission('platform.abraz'),
+                    Menu::make('Brios')
+                        ->icon('fa.book')
+                        ->route('platform.resource.list', ['resource' => 'brio-resources'])
+                        ->permission(permission: 'platform.brio'),
                     Menu::make('Buje LC')
                         ->icon('fa.book')
                         ->route('platform.resource.list', ['resource' => 'buje-l-c-resources'])
@@ -138,7 +142,8 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.tipo.hoja.vehiculo', __('Tipo Hoja Vehiculo'))
                 ->addPermission('platform.vehiculo', __('Tipo Vehiculo'))
                 ->addPermission('platform.year.vehiculo', __('Año Vehiculo'))
-                ->addPermission('platform.abraz', __('Abrazaderas')),
+                ->addPermission('platform.abraz', __('Abrazaderas'))
+                ->addPermission('platform.brio', __('Brios')),
         ];
     }
 }

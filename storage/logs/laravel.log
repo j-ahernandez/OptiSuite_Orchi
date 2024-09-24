@@ -4245,3 +4245,31 @@
 #26 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\artisan(13): Illuminate\\Foundation\\Application->handleCommand(Object(Symfony\\Component\\Console\\Input\\ArgvInput))
 #27 {main}
 "} 
+[2024-09-24 17:37:22] local.ERROR: Cannot use Illuminate\Database\Eloquent\Model as Model because the name is already in use {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot use Illuminate\\Database\\Eloquent\\Model as Model because the name is already in use at C:\\Users\\lenovo\\source\\GitHub\\OptiSuite_Orchi\\OptiSuite_Orchi\\app\\Models\\Brio.php:7)
+[stacktrace]
+#0 {main}
+"} 
+[2024-09-24 17:37:30] local.ERROR: Cannot use Illuminate\Database\Eloquent\Model as Model because the name is already in use {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot use Illuminate\\Database\\Eloquent\\Model as Model because the name is already in use at C:\\Users\\lenovo\\source\\GitHub\\OptiSuite_Orchi\\OptiSuite_Orchi\\app\\Models\\Brio.php:7)
+[stacktrace]
+#0 {main}
+"} 
+[2024-09-24 17:37:30] local.ERROR: Cannot use Illuminate\Database\Eloquent\Model as Model because the name is already in use {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot use Illuminate\\Database\\Eloquent\\Model as Model because the name is already in use at C:\\Users\\lenovo\\source\\GitHub\\OptiSuite_Orchi\\OptiSuite_Orchi\\app\\Models\\Brio.php:7)
+[stacktrace]
+#0 {main}
+"} 
+[2024-09-24 17:37:33] local.ERROR: Cannot use Illuminate\Database\Eloquent\Model as Model because the name is already in use {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot use Illuminate\\Database\\Eloquent\\Model as Model because the name is already in use at C:\\Users\\lenovo\\source\\GitHub\\OptiSuite_Orchi\\OptiSuite_Orchi\\app\\Models\\Brio.php:7)
+[stacktrace]
+#0 {main}
+"} 
+[2024-09-24 17:37:33] local.ERROR: Cannot use Illuminate\Database\Eloquent\Model as Model because the name is already in use {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot use Illuminate\\Database\\Eloquent\\Model as Model because the name is already in use at C:\\Users\\lenovo\\source\\GitHub\\OptiSuite_Orchi\\OptiSuite_Orchi\\app\\Models\\Brio.php:7)
+[stacktrace]
+#0 {main}
+"} 
+[2024-09-24 17:37:47] local.ERROR: Trait "App\Models\AsSource" not found {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Trait \"App\\Models\\AsSource\" not found at C:\\Users\\lenovo\\source\\GitHub\\OptiSuite_Orchi\\OptiSuite_Orchi\\app\\Models\\Brio.php:10)
+[stacktrace]
+#0 {main}
+"} 
+[2024-09-24 17:37:47] local.ERROR: Trait "App\Models\AsSource" not found {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Trait \"App\\Models\\AsSource\" not found at C:\\Users\\lenovo\\source\\GitHub\\OptiSuite_Orchi\\OptiSuite_Orchi\\app\\Models\\Brio.php:10)
+[stacktrace]
+#0 {main}
+"} 
