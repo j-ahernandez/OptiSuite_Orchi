@@ -42,6 +42,10 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('fa.gear')  // Asegúrate de que el nombre del icono sea correcto
                 ->title(__('Configuración'))
                 ->list([
+                    Menu::make('Abrazadera')
+                        ->icon('fa.book')
+                        ->route('platform.resource.list', ['resource' => 'abraz-resources'])
+                        ->permission('platform.abraz'),
                     Menu::make('Buje LC')
                         ->icon('fa.book')
                         ->route('platform.resource.list', ['resource' => 'buje-l-c-resources'])
@@ -133,7 +137,8 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.roleo.long.vehiculo', __('Roleo Long Vehiculo'))
                 ->addPermission('platform.tipo.hoja.vehiculo', __('Tipo Hoja Vehiculo'))
                 ->addPermission('platform.vehiculo', __('Tipo Vehiculo'))
-                ->addPermission('platform.year.vehiculo', __('Año Vehiculo')),
+                ->addPermission('platform.year.vehiculo', __('Año Vehiculo'))
+                ->addPermission('platform.abraz', __('Abrazaderas')),
         ];
     }
 }
