@@ -19,6 +19,17 @@ class AbrazResource extends Resource
     public static $model = \App\Models\Abraz::class;
 
     /**
+     * Get the label for the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        // Este método define el nombre que aparecerá en el menú para este recurso.
+        return __('Abrazaderas');
+    }
+
+    /**
      * Get the title for the resource.
      *
      * @return string
@@ -27,6 +38,36 @@ class AbrazResource extends Resource
     {
         // Este método define el título que se mostrará en la vista de detalles del recurso.
         return __('Abrazaderas');
+    }
+
+    /**
+     * Get the singular name of the resource.
+     *
+     * @return string
+     */
+    public static function singular(): string
+    {
+        return __('Abrazadera');
+    }
+
+    /**
+     * Get the plural name of the resource.
+     *
+     * @return string
+     */
+    public static function plural(): string
+    {
+        return __('Abrazaderas');
+    }
+
+    /**
+     * Get the description of the resource.
+     *
+     * @return string
+     */
+    public static function description(): string
+    {
+        return __('Gestión de Abrazaderas');
     }
 
     /**
