@@ -8,6 +8,8 @@
     @endauth
 
     <p class="my-0 {{ auth()->check() ? 'd-none d-xl-block' : '' }}">
-        <!--<{{ config('app.name') }}--> Fast Solutions
-    </p>
+        <!--<{{ config('app.name') }}--> 
+        Fast Solutions
+         
+    </p> 
 </div>
