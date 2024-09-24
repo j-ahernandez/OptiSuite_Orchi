@@ -37,15 +37,33 @@ class BujeLLResource extends Resource
     }
 
     /**
-     * Get the icon for the resource.
+     * Get the singular name of the resource.
      *
      * @return string
      */
-    public static function icon(): string
+    public static function singular(): string
     {
-        // Este método define el icono que se usará en el menú para este recurso.
-        // Aquí estamos usando un icono de Font Awesome.
-        return 'fa.book';
+        return __('Buje LL');
+    }
+
+    /**
+     * Get the plural name of the resource.
+     *
+     * @return string
+     */
+    public static function plural(): string
+    {
+        return __('Bujes Ll');
+    }
+
+    /**
+     * Get the description of the resource.
+     *
+     * @return string
+     */
+    public static function description(): string
+    {
+        return __('Gestión de Bujes LL.');
     }
 
     /**

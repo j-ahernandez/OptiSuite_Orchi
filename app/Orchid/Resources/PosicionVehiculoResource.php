@@ -8,7 +8,7 @@ use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
 
-class PosicionVechiculoResource extends Resource
+class PosicionVehiculoResource extends Resource
 {
     /**
      * The model the resource corresponds to.
@@ -36,19 +36,37 @@ class PosicionVechiculoResource extends Resource
     public function title(): string
     {
         // Este método define el título que se mostrará en la vista de detalles del recurso.
-        return __('Posición Veículo');
+        return __('Posición Vehículo');
     }
 
     /**
-     * Get the icon for the resource.
+     * Get the singular name of the resource.
      *
      * @return string
      */
-    public static function icon(): string
+    public static function singular(): string
     {
-        // Este método define el icono que se usará en el menú para este recurso.
-        // Aquí estamos usando un icono de Font Awesome.
-        return 'fa.book';
+        return __('Posición Vehículo');
+    }
+
+    /**
+     * Get the plural name of the resource.
+     *
+     * @return string
+     */
+    public static function plural(): string
+    {
+        return __('Posiciones Vehículo');
+    }
+
+    /**
+     * Get the description of the resource.
+     *
+     * @return string
+     */
+    public static function description(): string
+    {
+        return __('Gestión de Posición de Vehículos');
     }
 
     /**
@@ -64,7 +82,8 @@ class PosicionVechiculoResource extends Resource
                     ->title('Posición')
                     ->placeholder('Ingrese la posición')
                     ->autofocus()
-                    ->required(),
+                    ->required()
+                    ->autocomplete(false),  // Desactiva el autocompletado
             ]),
         ];
     }
