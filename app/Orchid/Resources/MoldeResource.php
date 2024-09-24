@@ -3,10 +3,10 @@
 namespace App\Orchid\Resources;
 
 use Orchid\Crud\Resource;
-use Orchid\Screen\TD;
+use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
-use Orchid\Screen\Fields\Group;
+use Orchid\Screen\TD;
 
 class MoldeResource extends Resource
 {
@@ -65,7 +65,7 @@ class MoldeResource extends Resource
                     ->type(value: 'text')  // Definir que el campo es numérico
                     ->placeholder('Ingrese el Molde')
                     ->autofocus()
-                    ->required(),                        
+                    ->required(),
             ]),
         ];
     }
@@ -79,18 +79,15 @@ class MoldeResource extends Resource
     {
         return [
             TD::make('id'),
-
             TD::make('descripcion_molde', 'Descripcion del Vehículo')
                 ->sort()
                 ->filter(Input::make()),
-
             TD::make('created_at', 'Fecha de creación')
                 ->sort()
                 ->filter(Input::make())
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();
                 }),
-
             TD::make('updated_at', 'Fecha de actualización')
                 ->sort()
                 ->filter(Input::make())
@@ -111,14 +108,13 @@ class MoldeResource extends Resource
             Sight::make('id'),
             Sight::make('descripcion_molde', 'Descripcion del Molde'),
             Sight::make('created_at', 'Fecha de creación')
-            ->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
             Sight::make('updated_at', 'Fecha de actualización')
-            ->render(function ($model) {
-                return $model->created_at->toDateTimeString();
-            }),
-
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
         ];
     }
 
@@ -130,5 +126,18 @@ class MoldeResource extends Resource
     public function filters(): array
     {
         return [];
+    }
+
+    /**
+     * Determine if the resource should be displayed in the navigation menu.
+     *
+     * This method controls whether the resource will appear in the navigation menu.
+     * Returning false means the resource will not be automatically added to the menu.
+     *
+     * @return bool
+     */
+    public static function displayInNavigation(): bool
+    {
+        return false;
     }
 }

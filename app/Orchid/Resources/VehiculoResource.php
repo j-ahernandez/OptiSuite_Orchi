@@ -147,4 +147,17 @@ class VehiculoResource extends Resource
     {
         return [];
     }
+
+    /**
+     * Determine if the resource should be displayed in the navigation menu.
+     *
+     * This method controls whether the resource will appear in the navigation menu.
+     * Returning false means the resource will not be automatically added to the menu.
+     *
+     * @return bool
+     */
+    public static function displayInNavigation(): bool
+    {
+        return false;
+    }
 }

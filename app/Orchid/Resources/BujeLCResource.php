@@ -19,17 +19,6 @@ class BujeLCResource extends Resource
     public static $model = \App\Models\BujeLC::class;
 
     /**
-     * Get the label for the resource.
-     *
-     * @return string
-     */
-    public static function label(): string
-    {
-        // Este método define el nombre que aparecerá en el menú para este recurso.
-        return __('Buje LC');
-    }
-
-    /**
      * Get the title for the resource.
      *
      * @return string
@@ -40,18 +29,6 @@ class BujeLCResource extends Resource
         return __('Buje LC');
     }
 
-    /**
-     * Get the icon for the resource.
-     *
-     * @return string
-     */
-    public static function icon(): string
-    {
-        // Este método define el icono que se usará en el menú para este recurso.
-        // Aquí estamos usando un icono de Font Awesome.
-        return 'fa.book';
-    }
-    
     /**
      * Get the fields displayed by the resource.
      *
@@ -152,5 +129,18 @@ class BujeLCResource extends Resource
     public function filters(): array
     {
         return [];
+    }
+
+    /**
+     * Determine if the resource should be displayed in the navigation menu.
+     *
+     * This method controls whether the resource will appear in the navigation menu.
+     * Returning false means the resource will not be automatically added to the menu.
+     *
+     * @return bool
+     */
+    public static function displayInNavigation(): bool
+    {
+        return false;
     }
 }

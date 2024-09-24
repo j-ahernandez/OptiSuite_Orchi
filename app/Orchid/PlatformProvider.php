@@ -31,48 +31,71 @@ class PlatformProvider extends OrchidServiceProvider
     public function menu(): array
     {
         return [
-            Menu::make('Sample Screen')
-                ->icon('bs.collection')
-                ->title('Dashboard')
-                ->route('platform.example')
-                ->badge(fn() => 6),
-            /*Menu::make('Get Started')
-                ->icon('bs.book')
-                ->title('Navigation')
-                ->route(config('platform.index')),
-
-            /*Menu::make('Sample Screen')
-                ->icon('bs.collection')
-                ->route('platform.example')
-                ->badge(fn () => 6),*/
-            /*Menu::make('Overview Layouts')
-                ->icon('bs.window-sidebar')
-                ->route('platform.example.layouts'),
-
-            Menu::make('Grid System')
-                ->icon('bs.columns-gap')
-                ->route('platform.example.grid'),
-
-            Menu::make('Charts')
-                ->icon('bs.bar-chart')
-                ->route('platform.example.charts'),
-
-            Menu::make('Cards')
-                ->icon('bs.card-text')
-                ->route('platform.example.cards')
-                ->divider(),
-
-            Menu::make('Documentation')
-                ->title('Docs')
-                ->icon('bs.box-arrow-up-right')
-                ->url('https://orchid.software/en/docs')
-                ->target('_blank'),
-
-            Menu::make('Changelog')
-                ->icon('bs.box-arrow-up-right')
-                ->url('https://github.com/orchidsoftware/platform/blob/master/CHANGELOG.md')
-                ->target('_blank')
-                ->badge(fn () => Dashboard::version(), Color::DARK),*/
+            // MapOPRh
+            Menu::make('Descripción de Partes')
+                ->icon('fa.book')
+                ->route('platform.resource.list', ['resource' => 'description-part-resources'])
+                ->permission('platform.descriptionpart')
+                ->title(__('MapOPRh')),
+            // CONFIGURACIÓN
+            Menu::make('Configuración')
+                ->icon('fa.gear')  // Asegúrate de que el nombre del icono sea correcto
+                ->title(__('Configuración'))
+                ->list([
+                    Menu::make('Buje LC')
+                        ->icon('fa.book')
+                        ->route('platform.resource.list', ['resource' => 'buje-l-c-resources'])
+                        ->permission('platform.bujelc'),
+                    Menu::make('Buje LL')
+                        ->icon('fa.book')
+                        ->route('platform.resource.list', ['resource' => 'buje-l-l-resources'])
+                        ->permission('platform.bujell'),
+                    Menu::make('Buje RB')
+                        ->icon('fa.book')
+                        ->route('platform.resource.list', ['resource' => 'buje-r-b-s-resources'])
+                        ->permission('platform.bujerb'),
+                    Menu::make('Material Construcción')
+                        ->icon('fa.book')
+                        ->route('platform.resource.list', ['resource' => 'material-const-vehiculo-resources'])
+                        ->permission('platform.material.const.vehiculo'),
+                    Menu::make('Material Grapas')
+                        ->icon('fa.book')
+                        ->route('platform.resource.list', ['resource' => 'material-grapa-resources'])
+                        ->permission('platform.material.grapa'),
+                    Menu::make('Modelo Vehiculos')
+                        ->icon('fa.book')
+                        ->route('platform.resource.list', ['resource' => 'modelo-vehiculo-resources'])
+                        ->permission('platform.modelo.vehiculo'),
+                    Menu::make('Molde')
+                        ->icon('fa.book')
+                        ->route('platform.resource.list', ['resource' => 'molde-resources'])
+                        ->permission('platform.molde'),
+                    Menu::make('Posicion Vehiculo')
+                        ->icon('fa.book')
+                        ->route('platform.resource.list', ['resource' => 'posicion-vehiculo-resources'])
+                        ->permission('platform.posicion.vehiculo'),
+                    Menu::make('Referencia Tensado Vehiculo')
+                        ->icon('fa.book')
+                        ->route('platform.resource.list', ['resource' => 'ref-tensado-vehiculo-resources'])
+                        ->permission('platform.ref.tensado.vehiculo'),
+                    Menu::make('Roleo Long Vehiculo')
+                        ->icon('fa.book')
+                        ->route('platform.resource.list', ['resource' => 'roleo.long.vehiculo-resources'])
+                        ->permission('platform.roleo.long.vehiculo'),
+                    Menu::make('Tipo Hoja Vehiculo')
+                        ->icon('fa.book')
+                        ->route('platform.resource.list', ['resource' => 'tipo-hoja-vehiculo-resources'])
+                        ->permission('platform.tipo.hoja.vehiculo'),
+                    Menu::make('Vehiculo')
+                        ->icon('fa.book')
+                        ->route('platform.resource.list', ['resource' => 'vehiculo-resources'])
+                        ->permission('platform.vehiculo'),
+                    Menu::make('Año Vehiculo')
+                        ->icon('fa.book')
+                        ->route('platform.resource.list', ['resource' => 'year-vehiculo-resources'])
+                        ->permission('platform.year.vehiculo'),
+                ]),
+            // CONTROL DE ACCESO
             Menu::make(__('Users'))
                 ->icon('bs.people')
                 ->route('platform.systems.users')
@@ -97,7 +120,20 @@ class PlatformProvider extends OrchidServiceProvider
             ItemPermission::group(__('System'))
                 ->addPermission('platform.systems.roles', __('Roles'))
                 ->addPermission('platform.systems.users', __('Users'))
-                ->addPermission('vehiculo-resources', __('Vehiculos')),
+                ->addPermission('platform.descriptionpart', __('Descripción de Partes'))
+                ->addPermission('platform.bujelc', __('Buje LC'))
+                ->addPermission('platform.bujell', __('Buje LL'))
+                ->addPermission('platform.bujerb', __('Buje LB'))
+                ->addPermission('platform.material.const.vehiculo', __('Material Construcción Vehiculo'))
+                ->addPermission('platform.material.grapa', __('Material Grapa'))
+                ->addPermission('platform.modelo.vehiculo', __('Modelo Vehiculos'))
+                ->addPermission('platform.molde', __('Molde'))
+                ->addPermission('platform.posicion.vehiculo', __('Posicion Vehiculo'))
+                ->addPermission('platform.ref.tensado.vehiculo', __('Referencia Tensado Vehiculo'))
+                ->addPermission('platform.roleo.long.vehiculo', __('Roleo Long Vehiculo'))
+                ->addPermission('platform.tipo.hoja.vehiculo', __('Tipo Hoja Vehiculo'))
+                ->addPermission('platform.vehiculo', __('Tipo Vehiculo'))
+                ->addPermission('platform.year.vehiculo', __('Año Vehiculo')),
         ];
     }
 }
