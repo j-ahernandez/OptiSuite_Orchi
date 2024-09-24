@@ -30,6 +30,36 @@ class BujeLCResource extends Resource
     }
 
     /**
+     * Get the singular name of the resource.
+     *
+     * @return string
+     */
+    public static function singular(): string
+    {
+        return __('Buje LC');
+    }
+
+    /**
+     * Get the plural name of the resource.
+     *
+     * @return string
+     */
+    public static function plural(): string
+    {
+        return __('Bujes LC');
+    }
+
+    /**
+     * Get the description of the resource.
+     *
+     * @return string
+     */
+    public static function description(): string
+    {
+        return __('Gestión de Buje LC.');
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @return array

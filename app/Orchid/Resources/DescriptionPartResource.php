@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Resources;
 
+use Illuminate\Support\Facades\DB;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
@@ -42,15 +43,33 @@ class DescriptionPartResource extends Resource
     }
 
     /**
-     * Get the icon for the resource.
+     * Get the singular name of the resource.
      *
      * @return string
      */
-    public static function icon(): string
+    public static function singular(): string
     {
-        // Este método define el icono que se usará en el menú para este recurso.
-        // Aquí estamos usando un icono de Font Awesome.
-        return 'fa.book';
+        return __('Descripción de Parte');
+    }
+
+    /**
+     * Get the plural name of the resource.
+     *
+     * @return string
+     */
+    public static function plural(): string
+    {
+        return __('Descripción de Partes');
+    }
+
+    /**
+     * Get the description of the resource.
+     *
+     * @return string
+     */
+    public static function description(): string
+    {
+        return __('Gestión de Descripciones de Partes');
     }
 
     /**
@@ -72,45 +91,54 @@ class DescriptionPartResource extends Resource
             // Fila 1
             Group::make([
                 Select::make('typeid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
-                    ->title('Seleccione un Tipo')
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
-                Select::make('vehiculoid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
-                    ->title('Seleccione un Vehíulo')
+                    ->options([
+                        0 => 'VEHICULO (01-99)',
+                        1 => 'TRAMO TERMINADO (9T -- TrT',
+                        2 => 'TRAMO RECTO (9TR -- TrR)',
+                        3 => 'GRAPA',
+                    ])
+                    ->title('Tipo Vehículo')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
                 Select::make('modelid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
-                    ->title('Seleccione un Modelo')
+                    ->options(function () {
+                        // Realiza un JOIN entre 'vehiculos' y 'modelo_vehiculos' para obtener la información combinada
+                        return DB::table('modelo_vehiculos')
+                            ->join('vehiculos', 'modelo_vehiculos.idVehiculo', '=', 'vehiculos.id')
+                            ->select(
+                                'modelo_vehiculos.id',
+                                DB::raw("CONCAT(vehiculos.descripcionvehiculo, ' - ', modelo_vehiculos.modelo_detalle) as vehiculo_y_modelo")
+                            )
+                            ->pluck('vehiculo_y_modelo', 'modelo_vehiculos.id');
+                    })
+                    ->title('Seleccione un Vehículo con su Modelo')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
-            ]),
-            // Fila 2
-            Group::make([
                 Input::make('apodo')
                     ->title('Apodo')
                     ->type(value: 'text')
                     ->placeholder('Apodo'),
+            ]),
+            // Fila 2
+            Group::make([
                 Select::make('yearid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->fromModel(\App\Models\YearVehiculo::class, 'year_vh', 'id')  // Usar el modelo Vehiculo
                     ->title('Seleccione un año')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
                 Select::make('positionid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->fromModel(\App\Models\PosicionVechiculo::class, 'posicion', 'id')  // Usar el modelo Vehiculo
                     ->title('Seleccione una posición')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
-            ]),
-            // Fila 3
-            Group::make([
                 Select::make('dlttrsid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione una Dlt/Trs')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
+            ]),
+            // Fila 3
+            Group::make([
                 Input::make('identidad')
                     ->title('Identidad')
                     ->type(value: 'text')
@@ -121,14 +149,14 @@ class DescriptionPartResource extends Resource
                     ->title('Seleccione un Ref/Aux')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
-            ]),
-            // Fila 4
-            Group::make([
                 Select::make('materialgrapaid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione un Material Grapa')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
+            ]),
+            // Fila 4
+            Group::make([
                 Select::make('materialid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione un Material')
@@ -138,13 +166,13 @@ class DescriptionPartResource extends Resource
                     ->title('Ancho MM')
                     ->type(value: 'text')
                     ->placeholder('Ancho MM'),
-            ]),
-            // Fila 5
-            Group::make([
                 Input::make('gruesomm')
                     ->title('Grueso MM')
                     ->type(value: 'text')
                     ->placeholder('Grueso MM'),
+            ]),
+            // Fila 5
+            Group::make([
                 Input::make('longit')
                     ->title('Longit CM')
                     ->type(value: 'text')
@@ -155,14 +183,14 @@ class DescriptionPartResource extends Resource
                     ->title('Descripción')
                     ->type(value: 'text')
                     ->placeholder('Descripción'),
-            ]),
-            // Fila 6
-            Group::make([
                 Select::make('tipohojaid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione un Tipo de Hoja')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
+            ]),
+            // Fila 6
+            Group::make([
                 Input::make('cortecm')
                     ->title('Corte Cm')
                     ->type(value: 'text')
@@ -171,13 +199,13 @@ class DescriptionPartResource extends Resource
                     ->title('Distcc CM')
                     ->type(value: 'text')
                     ->placeholder('Distcc CM'),
-            ]),
-            // Fila 7
-            Group::make([
                 Input::make('lccm')
                     ->title('LC CM')
                     ->type(value: 'text')
                     ->placeholder('LC CM'),
+            ]),
+            // Fila 7
+            Group::make([
                 Input::make('llcm')
                     ->title('LL CM')
                     ->type(value: 'text')
@@ -187,14 +215,14 @@ class DescriptionPartResource extends Resource
                     ->title('Seleccione una Roleo LC')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
-            ]),
-            // Fila 8
-            Group::make([
                 Select::make('roleollid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione una Roleo LL')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
+            ]),
+            // Fila 8
+            Group::make([
                 Input::make('2roleolc')
                     ->title('2Roleo LC')
                     ->type(value: 'text')
@@ -203,9 +231,6 @@ class DescriptionPartResource extends Resource
                     ->title('2Roleo LL')
                     ->type(value: 'text')
                     ->placeholder('2Roleo LL'),
-            ]),
-            // Fila 9
-            Group::make([
                 Select::make('2porcenroleo')
                     ->options([
                         0 => '0%',
@@ -216,14 +241,34 @@ class DescriptionPartResource extends Resource
                     ->title('Seleccione un 2% Roleo')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
+            ]),
+            // Fila 9
+            Group::make([
                 Select::make('diambocadoid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione un Diam Bocado')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
                 Select::make('anchoteid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->options(value: [
+                        0 => '1.0"',
+                        1 => '1.25"',
+                        2 => '1.50"',
+                        3 => '1.75"',
+                        4 => '2.0"',
+                        5 => '2.25"',
+                    ])
                     ->title('Seleccione un Ancho TE')
+                    ->empty('')  // Mensaje si no hay opciones disponibles
+                    ->searchable(),  // Hacer que el select sea "searchable"
+                Select::make('destajeid')
+                    ->options(value: [
+                        0 => 'SiLC -- NoLL',
+                        1 => 'No',
+                        2 => 'SiLL -- NoLC',
+                        3 => 'SiLL -- SiLC',
+                    ])
+                    ->title('Seleccione un Destaje')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
             ]),
@@ -266,8 +311,37 @@ class DescriptionPartResource extends Resource
                     ->type(value: 'text')
                     ->placeholder('Abraz Long CM'),
                 Select::make('diatcid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
-                    ->title('Seleccione un DiaTc')
+                    ->options([
+                        0 => '',
+                        1 => '6',
+                        2 => '7',
+                        3 => '8',
+                        4 => '8.5',
+                        5 => '9',
+                        6 => '9.5',
+                        7 => '10',
+                        8 => '10.5',
+                        9 => '11',
+                        10 => '11.5',
+                        11 => '12',
+                        12 => '12.5',
+                        13 => '13',
+                        14 => '13.5',
+                        15 => '14',
+                        16 => '14.5',
+                        17 => '15',
+                        18 => '15.5',
+                        19 => '16',
+                        20 => '16.5',
+                        21 => '19',
+                        22 => '19.5',
+                        23 => '20',
+                        24 => '22',
+                        25 => '23',
+                        26 => '25',
+                        27 => '26',
+                    ])
+                    ->title('Seleccione un Dia TC')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"
             ]),
@@ -300,9 +374,6 @@ class DescriptionPartResource extends Resource
                     ->title('Peso KG')
                     ->type(value: 'text')
                     ->placeholder('Peso KG'),
-            ]),
-            // Fila 14
-            Group::make([
                 Select::make('roscaid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione una Rosca')
