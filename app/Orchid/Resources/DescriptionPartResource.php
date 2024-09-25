@@ -73,6 +73,96 @@ class DescriptionPartResource extends Resource
     }
 
     /**
+     * Get the text for the list breadcrumbs.
+     *
+     * @return string
+     */
+    public static function listBreadcrumbsMessage(): string
+    {
+        return static::label();
+    }
+
+    /**
+     * Get the text for the create breadcrumbs.
+     *
+     * @return string
+     */
+    public static function createBreadcrumbsMessage(): string
+    {
+        return __('Nuevo :resource', ['resource' => static::singular()]);
+    }
+
+    /**
+     * Get the text for the edit breadcrumbs.
+     *
+     * @return string
+     */
+    public static function editBreadcrumbsMessage(): string
+    {
+        return __('Editar :resource', ['resource' => static::singular()]);
+    }
+
+    /**
+     * Get the text for the create resource button.
+     *
+     * @return string|null
+     */
+    public static function createButtonLabel(): string
+    {
+        return __('Crear :resource', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the create resource toast.
+     *
+     * @return string
+     */
+    public static function createToastMessage(): string
+    {
+        return __(':resource fue creado!', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the update resource button.
+     *
+     * @return string|null
+     */
+    public static function updateButtonLabel(): string
+    {
+        return __('Actualizar :resource', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the update resource toast.
+     *
+     * @return string
+     */
+    public static function updateToastMessage(): string
+    {
+        return __(':resource fue actualizado!', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the delete resource button.
+     *
+     * @return string|null
+     */
+    public static function deleteButtonLabel(): string
+    {
+        return __('Eliminar :resource', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @return array
@@ -366,7 +456,15 @@ class DescriptionPartResource extends Resource
             // Fila 13
             Group::make([
                 Select::make('brioid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->options(function () {
+                        // Selecciona los campos 'cm' e 'inches' y los concatena
+                        return DB::table('brios')
+                            ->select(
+                                'id',
+                                DB::raw("CONCAT(cm, ' - ', inches) as cm_and_inches")
+                            )
+                            ->pluck('cm_and_inches', 'id');
+                    })
                     ->title('Seleccione un Brio CM')
                     ->empty('')  // Mensaje si no hay opciones disponibles
                     ->searchable(),  // Hacer que el select sea "searchable"

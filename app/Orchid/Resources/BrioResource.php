@@ -71,6 +71,96 @@ class BrioResource extends Resource
     }
 
     /**
+     * Get the text for the list breadcrumbs.
+     *
+     * @return string
+     */
+    public static function listBreadcrumbsMessage(): string
+    {
+        return static::label();
+    }
+
+    /**
+     * Get the text for the create breadcrumbs.
+     *
+     * @return string
+     */
+    public static function createBreadcrumbsMessage(): string
+    {
+        return __('Nuevo :resource', ['resource' => static::singular()]);
+    }
+
+    /**
+     * Get the text for the edit breadcrumbs.
+     *
+     * @return string
+     */
+    public static function editBreadcrumbsMessage(): string
+    {
+        return __('Editar :resource', ['resource' => static::singular()]);
+    }
+
+    /**
+     * Get the text for the create resource button.
+     *
+     * @return string|null
+     */
+    public static function createButtonLabel(): string
+    {
+        return __('Crear :resource', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the create resource toast.
+     *
+     * @return string
+     */
+    public static function createToastMessage(): string
+    {
+        return __(':resource fue creado!', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the update resource button.
+     *
+     * @return string|null
+     */
+    public static function updateButtonLabel(): string
+    {
+        return __('Actualizar :resource', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the update resource toast.
+     *
+     * @return string
+     */
+    public static function updateToastMessage(): string
+    {
+        return __(':resource fue actualizado!', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the delete resource button.
+     *
+     * @return string|null
+     */
+    public static function deleteButtonLabel(): string
+    {
+        return __('Eliminar :resource', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @return array
@@ -86,13 +176,15 @@ class BrioResource extends Resource
         return [
             Group::make([
                 Input::make('cm')
-                    ->title('cm')
-                    ->type('text')  // Corregido
+                    ->title('Centimetros')
+                    ->type('text')
+                    ->id('cmInput')  // Agrega el ID aquí
                     ->autofocus()
                     ->required(),
                 Input::make('inches')
-                    ->title('inches')
-                    ->type('text'),
+                    ->title('Pulgadas')
+                    ->type('text')
+                    ->id('inchesInput')  // Agrega el ID aquí
             ]),
         ];
     }

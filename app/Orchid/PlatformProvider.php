@@ -104,7 +104,7 @@ class PlatformProvider extends OrchidServiceProvider
                         ->permission('platform.year.vehiculo'),
                 ]),
             // CONTROL DE ACCESO
-            Menu::make(__('Users'))
+            Menu::make(__('Usuarios'))
                 ->icon('bs.people')
                 ->route('platform.systems.users')
                 ->permission('platform.systems.users')
@@ -127,7 +127,7 @@ class PlatformProvider extends OrchidServiceProvider
         return [
             ItemPermission::group(__('System'))
                 ->addPermission('platform.systems.roles', __('Roles'))
-                ->addPermission('platform.systems.users', __('Users'))
+                ->addPermission('platform.systems.users', __('Usuarios'))
                 ->addPermission('platform.descriptionpart', __('Descripción de Partes'))
                 ->addPermission('platform.bujelc', __('Buje LC'))
                 ->addPermission('platform.bujell', __('Buje LL'))

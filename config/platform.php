@@ -132,7 +132,9 @@ return [
      * | Example: ['resources/css/app.css', 'resources/js/app.js']
      * |
      */
-    'vite' => [],
+    'vite' => [
+        'resources/js/app.js',
+    ],
 
     /*
      * |--------------------------------------------------------------------------
