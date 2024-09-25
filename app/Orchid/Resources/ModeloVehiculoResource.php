@@ -174,7 +174,8 @@ class ModeloVehiculoResource extends Resource
                     ->title('Seleccione un Vehículo')
                     ->help('Permite buscar vehículos')
                     ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->searchable()  // Hacer que el select sea "searchable"
+                    ->set('class', 'selectpicker'),
                 Input::make('modelo_detalle')
                     ->title('Modelo')
                     ->type(value: 'text')  // Definir que el campo es numérico

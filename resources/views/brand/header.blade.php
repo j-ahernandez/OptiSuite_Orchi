@@ -1,8 +1,13 @@
 @push('head')
     <link href="/favicon.ico" id="favicon" rel="icon">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    {{-- //AREA CSS --}}
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+    {{--  AREA DE JS --}}
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/utility.js') }}" defer></script>
     <script src="{{ asset('js/brio.js') }}" defer></script>
 @endpush
 
