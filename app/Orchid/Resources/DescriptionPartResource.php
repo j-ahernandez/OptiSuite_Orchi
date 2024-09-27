@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Sight;
@@ -175,9 +176,9 @@ class DescriptionPartResource extends Resource
                 Input::make('code')
                     ->title('Código')
                     ->type(value: 'text')
-                    ->id('CódigoInput')  // Agrega el ID aquí
+                    ->id('CódigoInput')
                     ->placeholder('Código')
-                    ->autofocus(),
+                    ->readonly(),
             ]),
             // Fila 1
             Group::make([
@@ -189,89 +190,106 @@ class DescriptionPartResource extends Resource
                         3 => 'GRAPA',
                     ])
                     ->title('Tipo Vehículo')
-                    ->id('typeidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
-                Select::make('modelid')
-                    ->options(function () {
-                        // Realiza un JOIN entre 'vehiculos' y 'modelo_vehiculos' para obtener la información combinada
-                        return DB::table('modelo_vehiculos')
-                            ->join('vehiculos', 'modelo_vehiculos.idVehiculo', '=', 'vehiculos.id')
-                            ->select(
-                                'modelo_vehiculos.id',
-                                DB::raw("CONCAT(vehiculos.descripcionvehiculo, ' - ', modelo_vehiculos.modelo_detalle) as vehiculo_y_modelo")
-                            )
-                            ->pluck('vehiculo_y_modelo', 'modelo_vehiculos.id');
-                    })
+                    ->id('typeidInput')
+                    ->empty('')
+                    ->searchable()
+                    ->set('class', 'form-select'),
+                Relation::make('modelid')
+                    ->fromModel(\App\Models\ModeloVehiculo::class, 'modelo_detalle', 'id')  // Cambia a tu modelo
+                    ->displayAppend('vehiculo_y_modelo')  // Método en el modelo para concatenar la información
                     ->title('Seleccione un Vehículo con su Modelo')
-                    ->id('modelidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->empty('Seleccione una opción')
+                    ->id('modelidInput')
+                    ->set('class', 'form-select')
+                    ->disabled()
+                    ->help('Por favor seleccione el vehículo y modelo.'),
                 Input::make('apodo')
                     ->title('Apodo')
                     ->type(value: 'text')
-                    ->id('apodoInput')  // Agrega el ID aquí
+                    ->id(value: 'apodoInput')
+                    ->readonly()
                     ->placeholder('Apodo'),
             ]),
             // Fila 2
             Group::make([
-                Select::make('yearid')
-                    ->fromModel(\App\Models\YearVehiculo::class, 'year_vh', 'id')  // Usar el modelo Vehiculo
+                Relation::make('yearid')
+                    ->fromModel(\App\Models\YearVehiculo::class, 'year_vh', 'id')  // Usar el modelo YearVehiculo
                     ->title('Seleccione un año')
-                    ->id('yearidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
-                Select::make('positionid')
-                    ->fromModel(\App\Models\PosicionVechiculo::class, 'posicion', 'id')  // Usar el modelo Vehiculo
+                    ->id('yearidInput')
+                    ->empty('Seleccione un año')
+                    ->searchable()
+                    ->set('class', 'form-select')
+                    ->disabled()
+                    ->help('Por favor seleccione un año.'),
+                Relation::make('positionid')
+                    ->fromModel(\App\Models\PosicionVehiculo::class, 'posicion', 'id')  // Usar el modelo PosicionVehiculo
                     ->title('Seleccione una posición')
-                    ->id('positionidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
-                Select::make('dlttrsid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->id('positionidInput')
+                    ->empty('Seleccione una posición')
+                    ->searchable()
+                    ->set('class', 'form-select')
+                    ->disabled()
+                    ->help('Por favor seleccione una posición.'),
+                Relation::make('dlttrsid')
+                    ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id')  // Modelo Vehiculo (puedes cambiarlo si es otro)
                     ->title('Seleccione una Dlt/Trs')
-                    ->id('dlttrsidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->id('dlttrsidInput')
+                    ->empty('Seleccione una Dlt/Trs')
+                    ->searchable()
+                    ->set('class', 'form-select')
+                    ->disabled()
+                    ->help('Por favor seleccione una Dlt/Trs.'),
             ]),
             // Fila 3
             Group::make([
                 Input::make('identidad')
                     ->title('Identidad')
                     ->type(value: 'text')
-                    ->id('identidadInput')  // Agrega el ID aquí
-                    ->placeholder('Identidad')
-                    ->attributes(['maxlength' => '4']),
-                Select::make('refauxid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->id('identidadInput')
+                    ->readonly()
+                    ->placeholder('Identidad'),
+                Relation::make('refauxid')
+                    ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id')  // Cambia a tu modelo correspondiente
                     ->title('Seleccione un Ref/Aux')
-                    ->id('refauxidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
-                Select::make('materialgrapaid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->id('refauxidInput')
+                    ->empty('Seleccione una Ref/Aux')
+                    ->searchable()
+                    ->set('class', 'form-select')
+                    ->disabled()
+                    ->help('Por favor seleccione una Ref/Aux.'),
+                Relation::make('materialgrapaid')
+                    ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id')  // Cambia a tu modelo correspondiente
                     ->title('Seleccione un Material Grapa')
-                    ->id('materialgrapaidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->id('materialgrapaidInput')
+                    ->empty('Seleccione una opción')
+                    ->searchable()
+                    ->set('class', 'form-select')
+                    ->disabled()
+                    ->help('Por favor seleccione una Material Grapa.'),
             ]),
             // Fila 4
             Group::make([
                 Select::make('materialid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione un Material')
-                    ->id('materialidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->id('materialidInput')
+                    ->empty('')
+                    ->searchable()
+                    ->disabled()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione una Material.'),
                 Input::make('anchomm')
                     ->title('Ancho MM')
                     ->type(value: 'text')
-                    ->id('anchommInput')  // Agrega el ID aquí
+                    ->id('anchommInput')
+                    ->readonly()
                     ->placeholder('Ancho MM'),
                 Input::make('gruesomm')
                     ->title('Grueso MM')
                     ->type(value: 'text')
-                    ->id('gruesommInput')  // Agrega el ID aquí
+                    ->id('gruesommInput')
+                    ->readonly()
                     ->placeholder('Grueso MM'),
             ]),
             // Fila 5
@@ -279,38 +297,46 @@ class DescriptionPartResource extends Resource
                 Input::make('longit')
                     ->title('Longit CM')
                     ->type(value: 'text')
-                    ->id('longitInput')  // Agrega el ID aquí
+                    ->id('longitInput')
+                    ->readonly()
                     ->placeholder('Longit MM'),
                 /* ->rules('required|numeric|min:10|max:180') */
                 // Añade las reglas de validación aquí,
                 Input::make('description')
                     ->title('Descripción')
                     ->type(value: 'text')
-                    ->id('descriptionInput')  // Agrega el ID aquí
+                    ->id('descriptionInput')
+                    ->readonly()
                     ->placeholder('Descripción'),
                 Select::make('tipohojaid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione un Tipo de Hoja')
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->id('tipohojaidInput')  // Agrega el ID aquí
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->empty('')
+                    ->id('tipohojaidInput')
+                    ->searchable()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione un Tipo de Hoja.'),
             ]),
             // Fila 6
             Group::make([
                 Input::make('cortecm')
                     ->title('Corte Cm')
                     ->type(value: 'text')
-                    ->id('cortecmInput')  // Agrega el ID aquí
+                    ->id('cortecmInput')
+                    ->readonly()
                     ->placeholder('Corte CM'),
                 Input::make('distcccm')
                     ->title('Distcc CM')
                     ->type(value: 'text')
-                    ->id('distcccmInput')  // Agrega el ID aquí
+                    ->id('distcccmInput')
+                    ->readonly()
                     ->placeholder('Distcc CM'),
                 Input::make('lccm')
                     ->title('LC CM')
                     ->type(value: 'text')
-                    ->id('lccmInput')  // Agrega el ID aquí
+                    ->id('lccmInput')
+                    ->readonly()
                     ->placeholder('LC CM'),
             ]),
             // Fila 7
@@ -318,32 +344,41 @@ class DescriptionPartResource extends Resource
                 Input::make('llcm')
                     ->title('LL CM')
                     ->type(value: 'text')
-                    ->id('llcmInput')  // Agrega el ID aquí
+                    ->id('llcmInput')
+                    ->readonly()
                     ->placeholder('LL CM'),
                 Select::make('roleolcid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione una Roleo LC')
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->id('roleolcidInput')  // Agrega el ID aquí
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->empty('')
+                    ->id('roleolcidInput')
+                    ->searchable()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione un Roleo LC.'),
                 Select::make('roleollid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione una Roleo LL')
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->id('roleollidInput')  // Agrega el ID aquí
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->empty('')
+                    ->id('roleollidInput')
+                    ->searchable()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione un Roleo LL.'),
             ]),
             // Fila 8
             Group::make([
                 Input::make('2roleolc')
                     ->title('2Roleo LC')
                     ->type(value: 'text')
-                    ->id('2roleolcInput')  // Agrega el ID aquí
+                    ->id('2roleolcInput')
+                    ->readonly()
                     ->placeholder('2Roleo LC'),
                 Input::make(name: '2roleollllcm')
                     ->title('2Roleo LL')
                     ->type(value: 'text')
-                    ->id('2roleollllcmInput')  // Agrega el ID aquí
+                    ->id('2roleollllcmInput')
+                    ->readonly()
                     ->placeholder('2Roleo LL'),
                 Select::make('2porcenroleo')
                     ->options([
@@ -353,18 +388,24 @@ class DescriptionPartResource extends Resource
                         3 => '100%',
                     ])
                     ->title('Seleccione un 2% Roleo')
-                    ->id('2porcenroleoInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->id('2porcenroleoInput')
+                    ->empty('')
+                    ->searchable()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione un 2% Roleo.'),
             ]),
             // Fila 9
             Group::make([
                 Select::make('diambocadoid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione un Diam Bocado')
-                    ->id('diambocadoidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->id('diambocadoidInput')
+                    ->empty('')
+                    ->searchable()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione un Diam Bocado.'),
                 Select::make('anchoteid')
                     ->options(value: [
                         0 => '1.0"',
@@ -375,9 +416,13 @@ class DescriptionPartResource extends Resource
                         5 => '2.25"',
                     ])
                     ->title('Seleccione un Ancho TE')
-                    ->id('anchoteidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->id('anchoteidInput')
+                    ->empty('')
+                    ->searchable()
+                    ->disable()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione un Ancho TE.'),
                 Select::make('destajeid')
                     ->options(value: [
                         0 => 'SiLC -- NoLL',
@@ -386,18 +431,15 @@ class DescriptionPartResource extends Resource
                         3 => 'SiLL -- SiLC',
                     ])
                     ->title('Seleccione un Destaje')
-                    ->id('destajeidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->id('destajeidInput')
+                    ->empty('')
+                    ->searchable()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione un Destaje.'),
             ]),
             // Fila 10
             Group::make([
-                Select::make('destajeid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
-                    ->title('Seleccione un Destaje')
-                    ->id('destajeidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
                 Select::make('porcendespunte')
                     ->options([
                         0 => '0%',
@@ -406,9 +448,12 @@ class DescriptionPartResource extends Resource
                         3 => '100%',
                     ])
                     ->title('Seleccione un % Despunte')
-                    ->id('porcendespunteInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->id('porcendespunteInput')
+                    ->empty('')
+                    ->searchable()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione un % Despunte.'),
                 Select::make('abraztipoid')
                     ->options([
                         0 => '',
@@ -416,22 +461,29 @@ class DescriptionPartResource extends Resource
                         2 => 'Doblada',
                     ])
                     ->title('Seleccione un Abraz Tipo')
-                    ->id('abraztipoidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
-            ]),
-            // Fila 11
-            Group::make([
+                    ->id('abraztipoidInput')
+                    ->empty('')
+                    ->searchable()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione un Abraz Tipo.'),
                 Select::make('abrazmasterid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione un Abraz Master')
-                    ->id('abrazmasteridInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->id('abrazmasteridInput')
+                    ->empty('')
+                    ->searchable()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione un Abraz Master.'),
+            ]),
+            // Fila 11
+            Group::make([
                 Input::make('abrazlongcm')
                     ->title('Abraz Long CM')
                     ->type(value: 'text')
-                    ->id('abrazlongcmInput')  // Agrega el ID aquí
+                    ->id('abrazlongcmInput')
+                    ->readonly()
                     ->placeholder('Abraz Long CM'),
                 Select::make('diatcid')
                     ->options([
@@ -465,33 +517,42 @@ class DescriptionPartResource extends Resource
                         27 => '26',
                     ])
                     ->title('Seleccione un Dia TC')
-                    ->id('diatcidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
-            ]),
-            // Fila 12
-            Group::make([
+                    ->id('diatcidInput')
+                    ->empty('')
+                    ->searchable()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione un Dia TC.'),
                 Select::make('tiposbujesid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione un Tipo de Buje')
-                    ->id('tiposbujesidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->id('tiposbujesidInput')
+                    ->empty('')
+                    ->searchable()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione un Tipo de Buje.'),
+            ]),
+            // Fila 12
+            Group::make([
                 Select::make('bujelcid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione un Buje LC')
-                    ->id('bujelcidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->id('bujelcidInput')
+                    ->empty('')
+                    ->searchable()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione un Buje LC.'),
                 Select::make('bujellid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione un Buje LL')
-                    ->id('bujellidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
-            ]),
-            // Fila 13
-            Group::make([
+                    ->id('bujellidInput')
+                    ->empty('')
+                    ->searchable()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione un Buje LL.'),
                 Select::make('brioid')
                     ->options(function () {
                         // Selecciona los campos 'cm' e 'inches' y los concatena
@@ -503,26 +564,36 @@ class DescriptionPartResource extends Resource
                             ->pluck('cm_and_inches', 'id');
                     })
                     ->title('Seleccione un Brio CM')
-                    ->id('brioidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->id('brioidInput')
+                    ->empty('')
+                    ->searchable()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione un Brio CM.'),
+            ]),
+            // Fila 13
+            Group::make([
                 Input::make('pesokg')
                     ->title('Peso KG')
                     ->type(value: 'text')
-                    ->id('pesokgInput')  // Agrega el ID aquí
+                    ->id('pesokgInput')
+                    ->readonly()
                     ->placeholder('Peso KG'),
                 Select::make('roscaid')
                     // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
                     ->title('Seleccione una Rosca')
-                    ->id('roscaidInput')  // Agrega el ID aquí
-                    ->empty('')  // Mensaje si no hay opciones disponibles
-                    ->searchable(),  // Hacer que el select sea "searchable"
+                    ->id('roscaidInput')
+                    ->empty('')
+                    ->searchable()
+                    ->set('class', 'selectpicker')
+                    ->disabled()
+                    ->help('Por favor seleccione una Rosca.'),
             ]),
             // Fila 15
             Group::make([
                 TextArea::make('observacion')
                     ->title('Observación')
-                    ->id('observacionInput')  // Agrega el ID aquí
+                    ->id('observacionInput')
                     ->rows(5)
                     ->width('100%'),
             ]),

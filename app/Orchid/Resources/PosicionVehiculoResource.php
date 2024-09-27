@@ -15,7 +15,7 @@ class PosicionVehiculoResource extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\PosicionVechiculo::class;
+    public static $model = \App\Models\PosicionVehiculo::class;
 
     /**
      * Get the label for the resource.

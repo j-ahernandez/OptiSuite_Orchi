@@ -7,8 +7,9 @@
 
     {{--  AREA DE JS --}}
     <script src="{{ asset('js/jquery.js') }}"></script>
-    <script src="{{ asset('js/utility.js') }}" defer></script>
-    <script src="{{ asset('js/brio.js') }}" defer></script>
+    <script src="{{ asset('js/utility.js') }}" defer type="text/javascript"></script>
+    <script src="{{ asset('js/brio.js') }}" defer type="text/javascript"></script>
+    <script src="{{ asset('js/descriptionpart.js') }}" defer type="text/javascript"></script>
 @endpush
 
 <div class="h2 d-flex align-items-center">

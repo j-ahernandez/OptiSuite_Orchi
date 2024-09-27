@@ -1,16 +1,4 @@
 {
-  "public/css/style.css": {
-    "file": "assets/style-l0sNRNKZ.js",
-    "name": "style",
-    "src": "public/css/style.css",
-    "isEntry": true
-  },
-  "public/js/script.js": {
-    "file": "assets/script-Bi1QeALg.js",
-    "name": "script",
-    "src": "public/js/script.js",
-    "isEntry": true
-  },
   "resources/css/app.css": {
     "file": "assets/app-l0sNRNKZ.js",
     "name": "app",
