@@ -2,10 +2,10 @@
     <link href="/favicon.ico" id="favicon" rel="icon">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    {{-- //AREA CSS --}}
+    {{-- AREA CSS --}}
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-    {{--  AREA DE JS --}}
+    {{-- AREA DE JS --}}
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('js/utility.js') }}" defer type="text/javascript"></script>
     <script src="{{ asset('js/brio.js') }}" defer type="text/javascript"></script>
@@ -18,7 +18,6 @@
     @endauth
 
     <p class="my-0 {{ auth()->check() ? 'd-none d-xl-block' : '' }}">
-        <!--<{{ config('app.name') }}-->
-        Fast Solutions
+        {{ config('app.name') }}
     </p>
 </div>
