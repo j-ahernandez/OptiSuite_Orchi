@@ -60,7 +60,7 @@ class PlatformProvider extends OrchidServiceProvider
                         ->permission('platform.bujell'),
                     Menu::make('Buje RB')
                         ->icon('fa.book')
-                        ->route('platform.resource.list', ['resource' => 'buje-r-b-s-resources'])
+                        ->route('platform.resource.list', ['resource' => 'buje-r-b-resources'])
                         ->permission('platform.bujerb'),
                     Menu::make('Material Construcción')
                         ->icon('fa.book')
@@ -88,12 +88,12 @@ class PlatformProvider extends OrchidServiceProvider
                         ->permission('platform.ref.tensado.vehiculo'),
                     Menu::make('Roleo Long Vehiculo')
                         ->icon('fa.book')
-                        ->route('platform.resource.list', ['resource' => 'roleo.long.vehiculo-resources'])
+                        ->route('platform.resource.list', ['resource' => 'roleo-long-vehiculo-resources'])
                         ->permission('platform.roleo.long.vehiculo'),
                     Menu::make('Tipo Hoja Vehiculo')
                         ->icon('fa.book')
-                        ->route('platform.resource.list', ['resource' => 'tipo-hoja-vehiculo-resources'])
-                        ->permission('platform.tipo.hoja.vehiculo'),
+                        ->route('platform.resource.list', ['resource' => 'tipo-hoja-vechiculos-resources'])
+                        ->permission('platform.tipo.hoja.vechiculos'),
                     Menu::make('Vehiculo')
                         ->icon('fa.book')
                         ->route('platform.resource.list', ['resource' => 'vehiculo-resources'])
@@ -131,7 +131,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.descriptionpart', __('Descripción de Partes'))
                 ->addPermission('platform.bujelc', __('Buje LC'))
                 ->addPermission('platform.bujell', __('Buje LL'))
-                ->addPermission('platform.bujerb', __('Buje LB'))
+                ->addPermission('platform.bujerb', __('Buje RB'))
                 ->addPermission('platform.material.const.vehiculo', __('Material Construcción Vehiculo'))
                 ->addPermission('platform.material.grapa', __('Material Grapa'))
                 ->addPermission('platform.modelo.vehiculo', __('Modelo Vehiculos'))
@@ -139,7 +139,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.posicion.vehiculo', __('Posicion Vehiculo'))
                 ->addPermission('platform.ref.tensado.vehiculo', __('Referencia Tensado Vehiculo'))
                 ->addPermission('platform.roleo.long.vehiculo', __('Roleo Long Vehiculo'))
-                ->addPermission('platform.tipo.hoja.vehiculo', __('Tipo Hoja Vehiculo'))
+                ->addPermission('platform.tipo.hoja.vechiculos', __('Tipo Hoja Vehiculo'))
                 ->addPermission('platform.vehiculo', __('Tipo Vehiculo'))
                 ->addPermission('platform.year.vehiculo', __('Año Vehiculo'))
                 ->addPermission('platform.abraz', __('Abrazaderas'))
