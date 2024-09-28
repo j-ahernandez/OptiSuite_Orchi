@@ -2,6 +2,8 @@
 
 namespace App\Orchid\Resources;
 
+use App\Models\ModeloVehiculo;
+use App\Models\Vehiculo;
 use Illuminate\Support\Facades\DB;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Fields\Group;
@@ -11,6 +13,8 @@ use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
+use \App\Models\PosicionVehiculo;
+use \App\Models\YearVehiculo;
 
 class DescriptionPartResource extends Resource
 {
@@ -195,8 +199,8 @@ class DescriptionPartResource extends Resource
                     ->searchable()
                     ->set('class', 'form-select'),
                 Relation::make('modelid')
-                    ->fromModel(\App\Models\ModeloVehiculo::class, 'modelo_detalle', 'id')  // Cambia a tu modelo
-                    ->displayAppend('vehiculo_y_modelo')  // Método en el modelo para concatenar la información
+                    ->fromModel(ModeloVehiculo::class, 'modelo_detalle', 'id')
+                    ->displayAppend('vehiculo_y_modelo')  // Usa el nuevo atributo
                     ->title('Seleccione un Vehículo con su Modelo')
                     ->empty('Seleccione una opción')
                     ->id('modelidInput')
@@ -213,7 +217,7 @@ class DescriptionPartResource extends Resource
             // Fila 2
             Group::make([
                 Relation::make('yearid')
-                    ->fromModel(\App\Models\YearVehiculo::class, 'year_vh', 'id')  // Usar el modelo YearVehiculo
+                    ->fromModel(YearVehiculo::class, 'year_vh', 'id')  // Usar el modelo YearVehiculo
                     ->title('Seleccione un año')
                     ->id('yearidInput')
                     ->empty('Seleccione un año')
@@ -222,7 +226,7 @@ class DescriptionPartResource extends Resource
                     ->disabled()
                     ->help('Por favor seleccione un año.'),
                 Relation::make('positionid')
-                    ->fromModel(\App\Models\PosicionVehiculo::class, 'posicion', 'id')  // Usar el modelo PosicionVehiculo
+                    ->fromModel(PosicionVehiculo::class, 'posicion', 'id')  // Usar el modelo PosicionVehiculo
                     ->title('Seleccione una posición')
                     ->id('positionidInput')
                     ->empty('Seleccione una posición')
@@ -231,7 +235,7 @@ class DescriptionPartResource extends Resource
                     ->disabled()
                     ->help('Por favor seleccione una posición.'),
                 Relation::make('dlttrsid')
-                    ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id')  // Modelo Vehiculo (puedes cambiarlo si es otro)
+                    ->fromModel(Vehiculo::class, 'descripcionname: vehiculo', 'id')  // Modelo Vehiculo (puedes cambiarlo si es otro)
                     ->title('Seleccione una Dlt/Trs')
                     ->id('dlttrsidInput')
                     ->empty('Seleccione una Dlt/Trs')
@@ -249,7 +253,7 @@ class DescriptionPartResource extends Resource
                     ->readonly()
                     ->placeholder('Identidad'),
                 Relation::make('refauxid')
-                    ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id')  // Cambia a tu modelo correspondiente
+                    ->fromModel(Vehiculo::class, 'descripcionvehiculo', 'id')  // Cambia a tu modelo correspondiente
                     ->title('Seleccione un Ref/Aux')
                     ->id('refauxidInput')
                     ->empty('Seleccione una Ref/Aux')
@@ -258,7 +262,7 @@ class DescriptionPartResource extends Resource
                     ->disabled()
                     ->help('Por favor seleccione una Ref/Aux.'),
                 Relation::make('materialgrapaid')
-                    ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id')  // Cambia a tu modelo correspondiente
+                    ->fromModel(Vehiculo::class, 'descripcionvehiculo', 'id')  // Cambia a tu modelo correspondiente
                     ->title('Seleccione un Material Grapa')
                     ->id('materialgrapaidInput')
                     ->empty('Seleccione una opción')

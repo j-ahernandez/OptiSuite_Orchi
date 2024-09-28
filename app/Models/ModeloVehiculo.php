@@ -17,6 +17,11 @@ class ModeloVehiculo extends Model
 
     public function vehiculo()
     {
-        return $this->belongsTo(Vehiculo::class, 'idVehiculo', 'id');
+        return $this->belongsTo(Vehiculo::class, 'idVehiculo');
+    }
+
+    public function getVehiculoYModeloAttribute()
+    {
+        return $this->vehiculo ? "{$this->vehiculo->descripcionvehiculo} - {$this->modelo_detalle}" : $this->modelo_detalle;
     }
 }

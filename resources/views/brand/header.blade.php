@@ -3,7 +3,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     {{-- AREA CSS --}}
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}?v={{ time() }}" rel="stylesheet">
 
     {{-- AREA DE JS --}}
     <script src="{{ asset('js/jquery.js') }}?v={{ time() }}"></script>
