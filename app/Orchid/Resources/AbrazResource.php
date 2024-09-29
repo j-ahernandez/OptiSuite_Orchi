@@ -18,194 +18,6 @@ class AbrazResource extends Resource
     public static $model = \App\Models\Abraz::class;
 
     /**
-     * Get the label for the resource.
-     *
-     * @return string
-     */
-    public static function label(): string
-    {
-        // Este método define el nombre que aparecerá en el menú para este recurso.
-        return __('Abrazaderas');
-    }
-
-    /**
-     * Get the title for the resource.
-     *
-     * @return string
-     */
-    public function title(): string
-    {
-        // Este método define el título que se mostrará en la vista de detalles del recurso.
-        return __('Abrazaderas');
-    }
-
-    /**
-     * Get the singular name of the resource.
-     *
-     * @return string
-     */
-    public static function singular(): string
-    {
-        return __('Abrazadera');
-    }
-
-    /**
-     * Get the plural name of the resource.
-     *
-     * @return string
-     */
-    public static function plural(): string
-    {
-        return __('Abrazaderas');
-    }
-
-    /**
-     * Get the description of the resource.
-     *
-     * @return string
-     */
-    public static function description(): string
-    {
-        return __('Gestión de Abrazaderas');
-    }
-
-    /**
-     * Get the text for the list breadcrumbs.
-     *
-     * @return string
-     */
-    public static function listBreadcrumbsMessage(): string
-    {
-        return static::label();
-    }
-
-    /**
-     * Get the text for the create breadcrumbs.
-     *
-     * @return string
-     */
-    public static function createBreadcrumbsMessage(): string
-    {
-        return __('Nuevo :resource', ['resource' => static::singular()]);
-    }
-
-    /**
-     * Get the text for the edit breadcrumbs.
-     *
-     * @return string
-     */
-    public static function editBreadcrumbsMessage(): string
-    {
-        return __('Editar :resource', ['resource' => static::singular()]);
-    }
-
-    /**
-     * Get the text for the create resource button.
-     *
-     * @return string|null
-     */
-    public static function createButtonLabel(): string
-    {
-        return __('Crear :resource', [
-            'resource' => static::singular()
-        ]);
-    }
-
-    /**
-     * Get the text for the create resource toast.
-     *
-     * @return string
-     */
-    public static function createToastMessage(): string
-    {
-        return __(':resource fue creado!', [
-            'resource' => static::singular()
-        ]);
-    }
-
-    /**
-     * Get the text for the update resource button.
-     *
-     * @return string|null
-     */
-    public static function updateButtonLabel(): string
-    {
-        return __('Actualizar :resource', [
-            'resource' => static::singular()
-        ]);
-    }
-
-    /**
-     * Get the text for the update resource toast.
-     *
-     * @return string
-     */
-    public static function updateToastMessage(): string
-    {
-        return __(':resource fue actualizado!', [
-            'resource' => static::singular()
-        ]);
-    }
-
-    /**
-     * Get the text for the delete resource button.
-     *
-     * @return string|null
-     */
-    public static function deleteButtonLabel(): string
-    {
-        return __('Eliminar :resource', [
-            'resource' => static::singular()
-        ]);
-    }
-
-    /**
-     * Get the text for the delete resource toast.
-     *
-     * @return string
-     */
-    public static function deleteToastMessage(): string
-    {
-        return __(':resource fue eliminado!', [
-            'resource' => static::singular()
-        ]);
-    }
-
-    /**
-     * Get the number of models to return per page
-     *
-     * @return int
-     */
-    public static function perPage(): int
-    {
-        return 30;
-    }
-
-    /**
-     * Indicates whether should check for modifications
-     * between viewing and updating a resource.
-     *
-     * @return bool
-     */
-    public static function trafficCop(): bool
-    {
-        return true;  // Habilita la verificación de cambios
-    }
-
-    /**
-     * Determine if the resource should be displayed in the navigation menu.
-     *
-     * This method controls whether the resource will appear in the navigation menu.
-     * Returning false means the resource will not be automatically added to the menu.
-     *
-     * @return bool
-     */
-    public static function displayInNavigation(): bool
-    {
-        return false;
-    }
-
-    /**
      * Get the fields displayed by the resource.
      *
      * @return array
@@ -405,5 +217,193 @@ class AbrazResource extends Resource
     public function filters(): array
     {
         return [];
+    }
+
+    /**
+     * Get the label for the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        // Este método define el nombre que aparecerá en el menú para este recurso.
+        return __('Abrazaderas');
+    }
+
+    /**
+     * Get the title for the resource.
+     *
+     * @return string
+     */
+    public function title(): string
+    {
+        // Este método define el título que se mostrará en la vista de detalles del recurso.
+        return __('Abrazaderas');
+    }
+
+    /**
+     * Get the singular name of the resource.
+     *
+     * @return string
+     */
+    public static function singular(): string
+    {
+        return __('Abrazadera');
+    }
+
+    /**
+     * Get the plural name of the resource.
+     *
+     * @return string
+     */
+    public static function plural(): string
+    {
+        return __('Abrazaderas');
+    }
+
+    /**
+     * Get the description of the resource.
+     *
+     * @return string
+     */
+    public static function description(): string
+    {
+        return __('Gestión de Abrazaderas');
+    }
+
+    /**
+     * Get the text for the list breadcrumbs.
+     *
+     * @return string
+     */
+    public static function listBreadcrumbsMessage(): string
+    {
+        return static::label();
+    }
+
+    /**
+     * Get the text for the create breadcrumbs.
+     *
+     * @return string
+     */
+    public static function createBreadcrumbsMessage(): string
+    {
+        return __('Nuevo :resource', ['resource' => static::singular()]);
+    }
+
+    /**
+     * Get the text for the edit breadcrumbs.
+     *
+     * @return string
+     */
+    public static function editBreadcrumbsMessage(): string
+    {
+        return __('Editar :resource', ['resource' => static::singular()]);
+    }
+
+    /**
+     * Get the text for the create resource button.
+     *
+     * @return string|null
+     */
+    public static function createButtonLabel(): string
+    {
+        return __('Crear :resource', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the create resource toast.
+     *
+     * @return string
+     */
+    public static function createToastMessage(): string
+    {
+        return __(':resource fue creado!', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the update resource button.
+     *
+     * @return string|null
+     */
+    public static function updateButtonLabel(): string
+    {
+        return __('Actualizar :resource', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the update resource toast.
+     *
+     * @return string
+     */
+    public static function updateToastMessage(): string
+    {
+        return __(':resource fue actualizado!', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the delete resource button.
+     *
+     * @return string|null
+     */
+    public static function deleteButtonLabel(): string
+    {
+        return __('Eliminar :resource', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the delete resource toast.
+     *
+     * @return string
+     */
+    public static function deleteToastMessage(): string
+    {
+        return __(':resource fue eliminado!', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the number of models to return per page
+     *
+     * @return int
+     */
+    public static function perPage(): int
+    {
+        return 30;
+    }
+
+    /**
+     * Indicates whether should check for modifications
+     * between viewing and updating a resource.
+     *
+     * @return bool
+     */
+    public static function trafficCop(): bool
+    {
+        return true;  // Habilita la verificación de cambios
+    }
+
+    /**
+     * Determine if the resource should be displayed in the navigation menu.
+     *
+     * This method controls whether the resource will appear in the navigation menu.
+     * Returning false means the resource will not be automatically added to the menu.
+     *
+     * @return bool
+     */
+    public static function displayInNavigation(): bool
+    {
+        return false;
     }
 }
