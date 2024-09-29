@@ -71,6 +71,130 @@ class BujeRBResource extends Resource
     }
 
     /**
+     * Get the text for the list breadcrumbs.
+     *
+     * @return string
+     */
+    public static function listBreadcrumbsMessage(): string
+    {
+        return static::label();
+    }
+
+    /**
+     * Get the text for the create breadcrumbs.
+     *
+     * @return string
+     */
+    public static function createBreadcrumbsMessage(): string
+    {
+        return __('Nuevo :resource', ['resource' => static::singular()]);
+    }
+
+    /**
+     * Get the text for the edit breadcrumbs.
+     *
+     * @return string
+     */
+    public static function editBreadcrumbsMessage(): string
+    {
+        return __('Editar :resource', ['resource' => static::singular()]);
+    }
+
+    /**
+     * Get the text for the create resource button.
+     *
+     * @return string|null
+     */
+    public static function createButtonLabel(): string
+    {
+        return __('Crear :resource', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the create resource toast.
+     *
+     * @return string
+     */
+    public static function createToastMessage(): string
+    {
+        return __(':resource fue creado!', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the update resource button.
+     *
+     * @return string|null
+     */
+    public static function updateButtonLabel(): string
+    {
+        return __('Actualizar :resource', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the update resource toast.
+     *
+     * @return string
+     */
+    public static function updateToastMessage(): string
+    {
+        return __(':resource fue actualizado!', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the text for the delete resource button.
+     *
+     * @return string|null
+     */
+    public static function deleteButtonLabel(): string
+    {
+        return __('Eliminar :resource', [
+            'resource' => static::singular()
+        ]);
+    }
+
+    /**
+     * Get the number of models to return per page
+     *
+     * @return int
+     */
+    public static function perPage(): int
+    {
+        return 30;
+    }
+
+    /**
+     * Indicates whether should check for modifications
+     * between viewing and updating a resource.
+     *
+     * @return bool
+     */
+    public static function trafficCop(): bool
+    {
+        return true;  // Habilita la verificación de cambios
+    }
+
+    /**
+     * Determine if the resource should be displayed in the navigation menu.
+     *
+     * This method controls whether the resource will appear in the navigation menu.
+     * Returning false means the resource will not be automatically added to the menu.
+     *
+     * @return bool
+     */
+    public static function displayInNavigation(): bool
+    {
+        return false;
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @return array
@@ -219,18 +343,5 @@ class BujeRBResource extends Resource
     public function filters(): array
     {
         return [];
-    }
-
-    /**
-     * Determine if the resource should be displayed in the navigation menu.
-     *
-     * This method controls whether the resource will appear in the navigation menu.
-     * Returning false means the resource will not be automatically added to the menu.
-     *
-     * @return bool
-     */
-    public static function displayInNavigation(): bool
-    {
-        return false;
     }
 }

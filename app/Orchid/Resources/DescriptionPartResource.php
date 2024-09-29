@@ -6,6 +6,7 @@ use App\Models\ModeloVehiculo;
 use App\Models\Vehiculo;
 use Illuminate\Support\Facades\DB;
 use Orchid\Crud\Resource;
+use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Relation;
@@ -189,7 +190,7 @@ class DescriptionPartResource extends Resource
                 Select::make('typeid')
                     ->options([
                         0 => 'VEHICULO (01-99)',
-                        1 => 'TRAMO TERMINADO (9T -- TrT',
+                        1 => 'TRAMO TERMINADO (9T -- TrT)',
                         2 => 'TRAMO RECTO (9TR -- TrR)',
                         3 => 'GRAPA',
                     ])

@@ -160,6 +160,40 @@ class YearVehiculoResource extends Resource
     }
 
     /**
+     * Get the number of models to return per page
+     *
+     * @return int
+     */
+    public static function perPage(): int
+    {
+        return 30;
+    }
+
+    /**
+     * Indicates whether should check for modifications
+     * between viewing and updating a resource.
+     *
+     * @return bool
+     */
+    public static function trafficCop(): bool
+    {
+        return true;  // Habilita la verificación de cambios
+    }
+
+    /**
+     * Determine if the resource should be displayed in the navigation menu.
+     *
+     * This method controls whether the resource will appear in the navigation menu.
+     * Returning false means the resource will not be automatically added to the menu.
+     *
+     * @return bool
+     */
+    public static function displayInNavigation(): bool
+    {
+        return false;
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @return array
@@ -236,18 +270,5 @@ class YearVehiculoResource extends Resource
     public function filters(): array
     {
         return [];
-    }
-
-    /**
-     * Determine if the resource should be displayed in the navigation menu.
-     *
-     * This method controls whether the resource will appear in the navigation menu.
-     * Returning false means the resource will not be automatically added to the menu.
-     *
-     * @return bool
-     */
-    public static function displayInNavigation(): bool
-    {
-        return false;
     }
 }

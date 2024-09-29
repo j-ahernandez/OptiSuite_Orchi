@@ -1,9 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;  // Importar la facade de Auth
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-    // return redirect()->route('platform.login');
-    // return redirect('/admin/login');
+    // Redirigir solo si el usuario no está autenticado
+    return Auth::check() ? redirect('/admin/main') : redirect('/admin');
 });

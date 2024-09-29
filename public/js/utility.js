@@ -199,7 +199,6 @@ function clearAllInputFields(exceptions = []) {
     });
 }
 
-
 /**
  * Deshabilita todos los campos de entrada (<input>) en el formulario,
  * excepto los que se especifiquen en el array de excepciones.

@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Resources;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Fields\Group;
@@ -161,6 +162,77 @@ class MaterialConstVehiculoResource extends Resource
     }
 
     /**
+     * Get the number of models to return per page
+     *
+     * @return int
+     */
+    public static function perPage(): int
+    {
+        return 30;
+    }
+
+    /**
+     * Indicates whether should check for modifications
+     * between viewing and updating a resource.
+     *
+     * @return bool
+     */
+    public static function trafficCop(): bool
+    {
+        return true;  // Habilita la verificación de cambios
+    }
+
+    /**
+     * Determine if the resource should be displayed in the navigation menu.
+     *
+     * This method controls whether the resource will appear in the navigation menu.
+     * Returning false means the resource will not be automatically added to the menu.
+     *
+     * @return bool
+     */
+    public static function displayInNavigation(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'no_mat' => 'required|max:5',  // Regla de requerimiento y máximo de 5
+            'width_plg' => 'required',
+            'thick_plg' => 'required',
+            'width_mm' => 'required',
+            'thick_mm' => 'required',
+            'Grueso' => 'required',
+            'material_combinado' => 'required',
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'no_mat.required' => 'El número de material es obligatorio.',
+            'no_mat.max' => 'El número de material no puede tener más de 5 caracteres.',
+            'width_plg.required' => 'El ancho en pulgadas es obligatorio.',
+            'thick_plg.required' => 'El grosor en pulgadas es obligatorio.',
+            'width_mm.required' => 'El ancho en milímetros es obligatorio.',
+            'thick_mm.required' => 'El grosor en milímetros es obligatorio.',
+            'Grueso.required' => 'El grueso es obligatorio.',
+            'material_combinado.required' => 'El material combinado es obligatorio.',
+        ];
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @return array
@@ -292,18 +364,5 @@ class MaterialConstVehiculoResource extends Resource
     public function filters(): array
     {
         return [];
-    }
-
-    /**
-     * Determine if the resource should be displayed in the navigation menu.
-     *
-     * This method controls whether the resource will appear in the navigation menu.
-     * Returning false means the resource will not be automatically added to the menu.
-     *
-     * @return bool
-     */
-    public static function displayInNavigation(): bool
-    {
-        return false;
     }
 }
