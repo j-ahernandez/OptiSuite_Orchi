@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Resources;
 
+use Illuminate\Database\Eloquent\Model;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
@@ -17,6 +18,87 @@ class BrioResource extends Resource
      * @var string
      */
     public static $model = \App\Models\Brio::class;
+
+    /**
+     * Get the filters available for the resource.
+     *
+     * @return array
+     */
+    public function filters(): array
+    {
+        return [];
+    }
+
+    /**
+     * Get the fields displayed by the resource.
+     *
+     * @return array
+     */
+    public function fields(): array
+    {
+        return [
+            Group::make([
+                Input::make('cm')
+                    ->title('Centimetros')
+                    ->type('text')
+                    ->id('cmInput')  // Agrega el ID aquí
+                    ->autofocus()
+                    ->required(),
+                Input::make('inches')
+                    ->title('Pulgadas')
+                    ->type('text')
+                    ->id('inchesInput')  // Agrega el ID aquí
+            ]),
+        ];
+    }
+
+    /**
+     * Get the columns displayed by the resource.
+     *
+     * @return TD[]
+     */
+    public function columns(): array
+    {
+        return [
+            TD::make('id'),
+            TD::make('cm', 'CM')
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('inches', 'Inches')
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('created_at', 'Fecha de creación')
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
+            TD::make('updated_at', 'Fecha de actualización')
+                ->render(function ($model) {
+                    return $model->updated_at->toDateTimeString();
+                }),
+        ];
+    }
+
+    /**
+     * Get the sights displayed by the resource.
+     *
+     * @return Sight[]
+     */
+    public function legend(): array
+    {
+        return [
+            Sight::make('id'),
+            Sight::make('cm'),
+            Sight::make('inches'),
+            Sight::make('created_at', 'Fecha de creación')
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
+            Sight::make('updated_at', 'Fecha de actualización')
+                ->render(function ($model) {
+                    return $model->updated_at->toDateTimeString();  // Cambiado `created_at` por `updated_at`
+                }),
+        ];
+    }
 
     /**
      * Get the label for the resource.
@@ -182,13 +264,29 @@ class BrioResource extends Resource
     }
 
     /**
-     * Get the filters available for the resource.
+     * Get the validation rules that apply to save/update.
      *
      * @return array
      */
-    public function filters(): array
+    public function rules(Model $model): array
     {
-        return [];
+        return [
+            'cm' => 'required|max:10',  // Regla de requerimiento y máximo de 5
+            'inches' => 'required|max:10',
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'cm' => 'Los CM no puede tener más de 5 caracteres.',
+            'inches' => 'Las Pulgadas no puede tener más de 5 caracteres.',
+        ];
     }
 
     /**
@@ -204,80 +302,9 @@ class BrioResource extends Resource
         return false;
     }
 
-    /**
+    /*
      * Get the fields displayed by the resource.
      *
      * @return array
      */
-
-    /**
-     * Get the fields displayed by the resource.
-     *
-     * @return array
-     */
-    public function fields(): array
-    {
-        return [
-            Group::make([
-                Input::make('cm')
-                    ->title('Centimetros')
-                    ->type('text')
-                    ->id('cmInput')  // Agrega el ID aquí
-                    ->autofocus()
-                    ->required(),
-                Input::make('inches')
-                    ->title('Pulgadas')
-                    ->type('text')
-                    ->id('inchesInput')  // Agrega el ID aquí
-            ]),
-        ];
-    }
-
-    /**
-     * Get the columns displayed by the resource.
-     *
-     * @return TD[]
-     */
-    public function columns(): array
-    {
-        return [
-            TD::make('id'),
-            TD::make('cm', 'CM')
-                ->sort()
-                ->filter(Input::make()),
-            TD::make('inches', 'Inches')
-                ->sort()
-                ->filter(Input::make()),
-            TD::make('created_at', 'Fecha de creación')
-                ->render(function ($model) {
-                    return $model->created_at->toDateTimeString();
-                }),
-            TD::make('updated_at', 'Fecha de actualización')
-                ->render(function ($model) {
-                    return $model->updated_at->toDateTimeString();
-                }),
-        ];
-    }
-
-    /**
-     * Get the sights displayed by the resource.
-     *
-     * @return Sight[]
-     */
-    public function legend(): array
-    {
-        return [
-            Sight::make('id'),
-            Sight::make('cm'),
-            Sight::make('inches'),
-            Sight::make('created_at', 'Fecha de creación')
-                ->render(function ($model) {
-                    return $model->created_at->toDateTimeString();
-                }),
-            Sight::make('updated_at', 'Fecha de actualización')
-                ->render(function ($model) {
-                    return $model->updated_at->toDateTimeString();  // Cambiado `created_at` por `updated_at`
-                }),
-        ];
-    }
 }

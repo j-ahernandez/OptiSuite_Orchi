@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Resources;
 
+use Illuminate\Database\Eloquent\Model;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
@@ -16,6 +17,94 @@ class RoleoLongVehiculoResource extends Resource
      * @var string
      */
     public static $model = \App\Models\RoleoLongVehiculo::class;
+
+    /**
+     * Get the fields displayed by the resource.
+     *
+     * @return array
+     */
+    public function fields(): array
+    {
+        return [
+            Group::make([
+                Input::make('milimetros')
+                    ->title('Milimetros')
+                    ->type('text')
+                    ->placeholder('Ingrese los Milimetros')
+                    ->autofocus()
+                    ->required(),
+                Input::make('pulgadas')
+                    ->title('Pulgadas')
+                    ->type('text')
+                    ->placeholder('Ingrese las Pulgadas')
+                    ->required(),
+            ]),
+        ];
+    }
+
+    /**
+     * Get the columns displayed by the resource.
+     *
+     * @return TD[]
+     */
+    public function columns(): array
+    {
+        return [
+            TD::make('id')
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('milimetros', 'Milemetros')
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('pulgadas', 'Pulgadas')
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('created_at', 'Fecha de creación')
+                ->sort()
+                ->filter(Input::make())
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
+            TD::make('updated_at', 'Fecha de actualización')
+                ->sort()
+                ->filter(Input::make())
+                ->render(function ($model) {
+                    return $model->updated_at->toDateTimeString();
+                }),
+        ];
+    }
+
+    /**
+     * Get the sights displayed by the resource.
+     *
+     * @return Sight[]
+     */
+    public function legend(): array
+    {
+        return [
+            Sight::make('id'),
+            Sight::make('milimetros', 'Milemetros'),
+            Sight::make('pulgadas', 'Pulgadas'),
+            Sight::make('created_at', 'Fecha de actualización')
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
+            Sight::make('updated_at', 'Fecha de actualización')
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
+        ];
+    }
+
+    /**
+     * Get the filters available for the resource.
+     *
+     * @return array
+     */
+    public function filters(): array
+    {
+        return [];
+    }
 
     /**
      * Get the label for the resource.
@@ -181,6 +270,32 @@ class RoleoLongVehiculoResource extends Resource
     }
 
     /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'milimetros' => 'required|max:25',  // Regla de requerimiento y máximo de 5
+            'pulgadas' => 'required|max:25',  // Regla de requerimiento y máximo de 5
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'milimetros' => 'Los Milimetros no puede tener más de 25 caracteres.',
+            'pulgadas' => 'Las Pulgadas no puede tener más de 25 caracteres.',
+        ];
+    }
+
+    /**
      * Determine if the resource should be displayed in the navigation menu.
      *
      * This method controls whether the resource will appear in the navigation menu.
@@ -191,93 +306,5 @@ class RoleoLongVehiculoResource extends Resource
     public static function displayInNavigation(): bool
     {
         return false;
-    }
-
-    /**
-     * Get the fields displayed by the resource.
-     *
-     * @return array
-     */
-    public function fields(): array
-    {
-        return [
-            Group::make([
-                Input::make('milimetros')
-                    ->title('Milimetros')
-                    ->type('text')
-                    ->placeholder('Ingrese los Milimetros')
-                    ->autofocus()
-                    ->required(),
-                Input::make('pulgadas')
-                    ->title('Pulgadas')
-                    ->type('text')
-                    ->placeholder('Ingrese las Pulgadas')
-                    ->required(),
-            ]),
-        ];
-    }
-
-    /**
-     * Get the columns displayed by the resource.
-     *
-     * @return TD[]
-     */
-    public function columns(): array
-    {
-        return [
-            TD::make('id')
-                ->sort()
-                ->filter(Input::make()),
-            TD::make('milimetros', 'Milemetros')
-                ->sort()
-                ->filter(Input::make()),
-            TD::make('pulgadas', 'Pulgadas')
-                ->sort()
-                ->filter(Input::make()),
-            TD::make('created_at', 'Fecha de creación')
-                ->sort()
-                ->filter(Input::make())
-                ->render(function ($model) {
-                    return $model->created_at->toDateTimeString();
-                }),
-            TD::make('updated_at', 'Fecha de actualización')
-                ->sort()
-                ->filter(Input::make())
-                ->render(function ($model) {
-                    return $model->updated_at->toDateTimeString();
-                }),
-        ];
-    }
-
-    /**
-     * Get the sights displayed by the resource.
-     *
-     * @return Sight[]
-     */
-    public function legend(): array
-    {
-        return [
-            Sight::make('id'),
-            Sight::make('milimetros', 'Milemetros'),
-            Sight::make('pulgadas', 'Pulgadas'),
-            Sight::make('created_at', 'Fecha de actualización')
-                ->render(function ($model) {
-                    return $model->created_at->toDateTimeString();
-                }),
-            Sight::make('updated_at', 'Fecha de actualización')
-                ->render(function ($model) {
-                    return $model->created_at->toDateTimeString();
-                }),
-        ];
-    }
-
-    /**
-     * Get the filters available for the resource.
-     *
-     * @return array
-     */
-    public function filters(): array
-    {
-        return [];
     }
 }
