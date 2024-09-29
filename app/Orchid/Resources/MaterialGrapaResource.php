@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Resources;
 
+use Illuminate\Database\Eloquent\Model;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
@@ -17,6 +18,94 @@ class MaterialGrapaResource extends Resource
      * @var string
      */
     public static $model = \App\Models\MaterialGrapa::class;
+
+    /**
+     * Get the fields displayed by the resource.
+     *
+     * @return array
+     */
+    public function fields(): array
+    {
+        return [
+            Group::make([
+                Input::make('inches')
+                    ->title('Detalle de Pulgadas')
+                    ->type(value: 'text')  // Definir que el campo es numérico
+                    ->autofocus()
+                    ->required(),
+                Input::make('decimal')
+                    ->title('Decimal')
+                    ->type(value: 'text')  // Definir que el campo es numérico
+                    ->required(),
+                Input::make('mm')
+                    ->title('Descripcion de MM')
+                    ->type(value: 'text')  // Definir que el campo es numérico
+                    ->required(),
+            ]),
+        ];
+    }
+
+    /**
+     * Get the columns displayed by the resource.
+     *
+     * @return TD[]
+     */
+    public function columns(): array
+    {
+        return [
+            /* TD::make('id'), */
+            TD::make('inches', 'Detalle de Pulgadas')
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('decimal', 'Decimal')
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('mm', 'Descripcion de MM')
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('created_at', 'Date of creation')
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
+            TD::make('updated_at', 'Update date')
+                ->render(function ($model) {
+                    return $model->updated_at->toDateTimeString();
+                }),
+        ];
+    }
+
+    /**
+     * Get the sights displayed by the resource.
+     *
+     * @return Sight[]
+     */
+    public function legend(): array
+    {
+        return [
+            Sight::make('id'),
+            Sight::make('inches'),
+            Sight::make('decimal'),
+            Sight::make('mm'),
+            Sight::make('created_at', 'Fecha de creación')
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
+            Sight::make('updated_at', 'Fecha de actualización')
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
+        ];
+    }
+
+    /**
+     * Get the filters available for the resource.
+     *
+     * @return array
+     */
+    public function filters(): array
+    {
+        return [];
+    }
 
     /**
      * Get the label for the resource.
@@ -182,6 +271,34 @@ class MaterialGrapaResource extends Resource
     }
 
     /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'inches' => 'max:10',  // Regla de requerimiento y máximo de 5
+            'decimal' => 'max:10',
+            'mm' => 'max:10',
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'inches' => 'Las Pulgadas no puede tener más de 10 caracteres.',
+            'decimal' => 'Los decimales no puede tener más de 10 caracteres.',
+            'mm' => 'Los Milimetros no puede tener más de 10 caracteres.',
+        ];
+    }
+
+    /**
      * Determine if the resource should be displayed in the navigation menu.
      *
      * This method controls whether the resource will appear in the navigation menu.
@@ -192,93 +309,5 @@ class MaterialGrapaResource extends Resource
     public static function displayInNavigation(): bool
     {
         return false;
-    }
-
-    /**
-     * Get the fields displayed by the resource.
-     *
-     * @return array
-     */
-    public function fields(): array
-    {
-        return [
-            Group::make([
-                Input::make('inches')
-                    ->title('Detalle de Pulgadas')
-                    ->type(value: 'text')  // Definir que el campo es numérico
-                    ->autofocus()
-                    ->required(),
-                Input::make('decimal')
-                    ->title('Decimal')
-                    ->type(value: 'text')  // Definir que el campo es numérico
-                    ->required(),
-                Input::make('mm')
-                    ->title('Descripcion de MM')
-                    ->type(value: 'text')  // Definir que el campo es numérico
-                    ->required(),
-            ]),
-        ];
-    }
-
-    /**
-     * Get the columns displayed by the resource.
-     *
-     * @return TD[]
-     */
-    public function columns(): array
-    {
-        return [
-            /* TD::make('id'), */
-            TD::make('inches', 'Detalle de Pulgadas')
-                ->sort()
-                ->filter(Input::make()),
-            TD::make('decimal', 'Decimal')
-                ->sort()
-                ->filter(Input::make()),
-            TD::make('mm', 'Descripcion de MM')
-                ->sort()
-                ->filter(Input::make()),
-            TD::make('created_at', 'Date of creation')
-                ->render(function ($model) {
-                    return $model->created_at->toDateTimeString();
-                }),
-            TD::make('updated_at', 'Update date')
-                ->render(function ($model) {
-                    return $model->updated_at->toDateTimeString();
-                }),
-        ];
-    }
-
-    /**
-     * Get the sights displayed by the resource.
-     *
-     * @return Sight[]
-     */
-    public function legend(): array
-    {
-        return [
-            Sight::make('id'),
-            Sight::make('inches'),
-            Sight::make('decimal'),
-            Sight::make('mm'),
-            Sight::make('created_at', 'Fecha de creación')
-                ->render(function ($model) {
-                    return $model->created_at->toDateTimeString();
-                }),
-            Sight::make('updated_at', 'Fecha de actualización')
-                ->render(function ($model) {
-                    return $model->created_at->toDateTimeString();
-                }),
-        ];
-    }
-
-    /**
-     * Get the filters available for the resource.
-     *
-     * @return array
-     */
-    public function filters(): array
-    {
-        return [];
     }
 }
