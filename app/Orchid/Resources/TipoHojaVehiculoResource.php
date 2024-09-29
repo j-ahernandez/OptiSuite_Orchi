@@ -9,14 +9,14 @@ use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
 
-class TipoHojaVechiculosResource extends Resource
+class TipoHojaVehiculoResource extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\TipoHojaVechiculos::class;
+    public static $model = \App\Models\TipoHojaVehiculo::class;
 
     /**
      * Get the label for the resource.

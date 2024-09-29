@@ -11,7 +11,7 @@ use Orchid\Attachment\Attachable;
 use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 
-class TipoHojaVechiculos extends Model
+class TipoHojaVehiculo extends Model
 {
     use HasFactory, AsSource, Filterable, Attachable;
 
