@@ -2,12 +2,17 @@
 
 namespace App\Orchid\Resources;
 
+use App\Models\TipoHojaVehiculo;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Picture;
 use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
+use Orchid\Support\Facades\Toast;
 
 class TipoHojaVehiculoResource extends Resource
 {
@@ -16,7 +21,226 @@ class TipoHojaVehiculoResource extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\TipoHojaVehiculo::class;
+    public static $model = TipoHojaVehiculo::class;
+
+    /**
+     * Get the fields displayed by the resource.
+     *
+     * @return array
+     */
+    public function fields(): array
+    {
+        return [
+            Group::make([
+                Input::make('tipo_hoja')
+                    ->title('Tipo Hoja')
+                    ->placeholder('Ingrese el tipo de la hoja')
+                    ->autofocus()
+                    ->required(),
+            ]),
+            Group::make([
+                Input::make('upload')  // Este debe coincidir
+                    ->title('Seleccione una Imágen')
+                    ->placeholder('Seleccione una imágen JPG, JPEG, PNG')
+                    ->type('file')
+                    ->acceptedFiles('image/jpeg,image/png,image/jpg')
+                    ->autofocus()
+                    ->required(),
+            ]),
+        ];
+    }
+
+    /**
+     * Get the columns displayed by the resource.
+     *
+     * @return TD[]
+     */
+    public function columns(): array
+    {
+        return [
+            TD::make('id')
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('tipo_hoja', 'Tipo de Hoja')
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('upload', 'Imagen')
+                ->render(function ($model) {
+                    if ($model->upload) {
+                        // Construir la ruta a la imagen
+                        return "<img src='" . asset('storage/uploads/' . $model->upload) . "' style='width: 100px; height: auto;' />";
+                    }
+                    return 'No Image';
+                }),
+            TD::make('created_at', 'Fecha de creación')
+                ->sort()
+                ->filter(Input::make())
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
+            TD::make('updated_at', 'Fecha de actualización')
+                ->sort()
+                ->filter(Input::make())
+                ->render(function ($model) {
+                    return $model->updated_at->toDateTimeString();
+                }),
+        ];
+    }
+
+    /**
+     * Get the sights displayed by the resource.
+     *
+     * @return Sight[]
+     */
+    public function legend(): array
+    {
+        return [
+            Sight::make('id'),
+            Sight::make('tipo_hoja', 'Tipo la hoja'),
+            Sight::make('upload', 'Imagen')
+                ->render(function ($model) {
+                    if ($model->upload) {
+                        return "<img src='" . asset('storage/uploads/' . $model->upload) . "' style='width: 100px; height: auto;' />";
+                    }
+                    return 'No Image';
+                }),
+            Sight::make('created_at', 'Fecha de actualización')
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
+            Sight::make('updated_at', 'Fecha de actualización')
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
+        ];
+    }
+
+    /**
+     * Get the filters available for the resource.
+     *
+     * @return array
+     */
+    public function filters(): array
+    {
+        return [];
+    }
+
+    /**
+     * Save the uploaded image and store a copy in the public/uploads folder.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\TipoHojaVehiculo $tipoHojaVehiculo
+     * @return void
+     */
+    public function onSave(Request $request, TipoHojaVehiculo $tipoHojaVehiculo): void
+    {
+        // Validar los datos del request
+        $validatedData = $request->validate($this->rules($tipoHojaVehiculo), $this->messages());
+
+        // Guardar los datos del tipo de hoja
+        $tipoHojaVehiculo->tipo_hoja = $validatedData['tipo_hoja'];
+
+        // Procesar la carga del archivo
+        if ($request->hasFile('model.upload')) {  // Cambiar aquí para acceder correctamente
+            $file = $request->file('model.upload');
+
+            // Verifica si hay errores en el archivo
+            if ($file->getError() === UPLOAD_ERR_OK) {
+                $fileName = date('Ymd_His') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                // Guarda el archivo en el sistema de archivos
+                $file->storeAs('uploads', $fileName, 'public');
+                // Solo guarda el nombre del archivo en la base de datos
+                $tipoHojaVehiculo->upload = $fileName;  // Solo el nombre del archivo
+            } else {
+                // Maneja el error de carga
+                $tipoHojaVehiculo->upload = 'Error al cargar el archivo: ' . $file->getError();
+            }
+        } else {
+            $tipoHojaVehiculo->upload = 'No tiene foto';
+        }
+
+        $tipoHojaVehiculo->save();
+
+        // Mostrar mensaje de éxito
+        Toast::info(__('Datos guardados exitosamente.'));
+    }
+
+    /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'tipo_hoja' => 'required|string|max:4000',
+            'upload' => 'required|image|mimes:jpg,jpeg,png,gif|max:10240',  // Asegúrate de que el nombre coincida con tu formulario
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'tipo_hoja.required' => 'El tipo de hoja es obligatorio.',
+            'tipo_hoja.max' => 'El tipo de hoja no puede tener más de 4000 caracteres.',
+            'upload.required' => 'El archivo de imagen es obligatorio.',
+            'upload.image' => 'El archivo debe ser una imagen.',
+            'upload.mimes' => 'La imagen debe ser de tipo: jpg, jpeg, png, gif.',
+            'upload.max' => 'La imagen no debe exceder los 10 MB.',
+        ];
+    }
+
+    /* public function onSave(Request $request, TipoHojaVehiculo $tipoHojaVehiculo): void
+    {
+        try {
+            // Verificar el tipo MIME del archivo antes de la validación
+            if ($request->hasFile('upload')) {
+                $file = $request->file('upload');
+                $mimeType = $file->getMimeType();
+                Toast::info(__('Tipo MIME del archivo: ') . $mimeType);
+            }
+
+            // Validar los datos
+            $validatedData = $request->validate([
+                'tipo_hoja' => 'required|string|max:4000',
+                'upload' => 'nullable|image|max:10240',  // Solo validación de imagen, sin mimes
+            ]);
+
+            // Guardar los datos del tipo de hoja
+            $tipoHojaVehiculo->tipo_hoja = $validatedData['tipo_hoja'];
+
+            // Si hay una imagen subida, procesarla
+            if ($request->hasFile('upload')) {
+                $file = $request->file('upload');
+                $path = $file->store('uploads', 'public');
+
+                // Guardar la ruta de la imagen en el modelo
+                $tipoHojaVehiculo->upload = $path;
+
+                // Crear una copia de la imagen en la carpeta public/uploads
+                Storage::disk('public')->put('uploads/' . $file->getClientOriginalName(), file_get_contents($file));
+            }
+
+            dd($tipoHojaVehiculo);
+
+            // Guardar el modelo
+            $tipoHojaVehiculo->save();
+
+            // Mostrar mensaje de éxito utilizando Orchid Toast
+            Toast::info(__('Datos guardados exitosamente.'));
+        } catch (ValidationException $e) {
+            // Mostrar mensaje de error de validación utilizando Orchid Toast
+            Toast::error(__('Error de validación: ') . implode(', ', $e->errors()));
+        } catch (Exception $e) {
+            // Mostrar mensaje de error general utilizando Orchid Toast
+            Toast::error(__('Error: ') . $e->getMessage());
+        }
+    } */
 
     /**
      * Get the label for the resource.
@@ -192,105 +416,5 @@ class TipoHojaVehiculoResource extends Resource
     public static function displayInNavigation(): bool
     {
         return false;
-    }
-
-    /**
-     * Get the fields displayed by the resource.
-     *
-     * @return array
-     */
-    public function fields(): array
-    {
-        return [
-            Group::make([
-                Input::make('tipo_hoja')
-                    ->title('Tipo Hoja')
-                    ->placeholder('Ingrese el tipo de la hoja')
-                    ->autofocus()
-                    ->required(),
-                Upload::make('upload')
-                    ->acceptedFiles('image/*')  // Solo acepta imágenes
-                    ->maxFiles(1)  // Opcional: Limita la carga a un solo archivo
-                    ->maxSize(10 * 1024)  // Opcional: Limita el tamaño del archivo a 10 MB (ajusta según sea necesario)
-                    ->help('Sólo se permiten imágenes (JPG, PNG, GIF). Solo puede cargar un archivo, su tamaño debe ser 10 * 1024')  // Mensaje opcional para el usuario
-                    ->disk('public')  // Asegúrate de definir el disco de almacenamiento si es necesario
-                    ->path('uploads')  // Define una ruta de almacenamiento si es necesario
-                    ->required(),
-            ]),
-        ];
-    }
-
-    /**
-     * Get the columns displayed by the resource.
-     *
-     * @return TD[]
-     */
-    public function columns(): array
-    {
-        return [
-            TD::make('id')
-                ->sort()
-                ->filter(Input::make()),
-            TD::make('upload', 'Tipo de Hoja')
-                ->sort()
-                ->filter(Input::make()),
-            TD::make('foto_hoja', 'Imagen')
-                ->render(function ($model) {
-                    if ($model->upload) {
-                        return "<img src='" . asset('storage/' . $model->upload) . "' style='width: 100px; height: auto;' />";
-                    }
-                    return 'No Image';
-                }),
-            TD::make('created_at', 'Fecha de creación')
-                ->sort()
-                ->filter(Input::make())
-                ->render(function ($model) {
-                    return $model->created_at->toDateTimeString();
-                }),
-            TD::make('updated_at', 'Fecha de actualización')
-                ->sort()
-                ->filter(Input::make())
-                ->render(function ($model) {
-                    return $model->updated_at->toDateTimeString();
-                }),
-        ];
-    }
-
-    /**
-     * Get the sights displayed by the resource.
-     *
-     * @return Sight[]
-     */
-    public function legend(): array
-    {
-        return [
-            Sight::make('id'),
-            Sight::make('tipo_hoja', 'Tipo la hoja'),
-            Sight::make('upload', 'Imagen')
-                ->render(function ($model) {
-                    if ($model->upload) {
-                        return "<img src='" . asset('storage/' . $model->upload) . "' style='width: 100px; height: auto;' />";
-                    }
-                    return 'No Image';
-                }),
-            Sight::make('created_at', 'Fecha de actualización')
-                ->render(function ($model) {
-                    return $model->created_at->toDateTimeString();
-                }),
-            Sight::make('updated_at', 'Fecha de actualización')
-                ->render(function ($model) {
-                    return $model->created_at->toDateTimeString();
-                }),
-        ];
-    }
-
-    /**
-     * Get the filters available for the resource.
-     *
-     * @return array
-     */
-    public function filters(): array
-    {
-        return [];
     }
 }

@@ -92,7 +92,7 @@ class PlatformProvider extends OrchidServiceProvider
                         ->permission('platform.roleo.long.vehiculo'),
                     Menu::make('Tipo Hoja Vehiculo')
                         ->icon('fa.book')
-                        ->route('platform.resource.list', ['resource' => 'tipo-hoja-vechiculos-resources'])
+                        ->route('platform.resource.list', ['resource' => 'tipo-hoja-vehiculo-resources'])
                         ->permission('platform.tipo.hoja.vechiculos'),
                     Menu::make('Vehiculo')
                         ->icon('fa.book')
