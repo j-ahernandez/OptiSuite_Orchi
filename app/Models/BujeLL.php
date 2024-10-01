@@ -14,4 +14,15 @@ class BujeLL extends Model
 
     // Dejar $guarded vacío significa que todos los campos son asignables en masa
     protected $guarded = [''];
+
+    // Relación con BujeRB
+    public function bujeRB()
+    {
+        return $this->belongsTo(BujeRB::class, 'bujeRBNum');
+    }
+
+    public function getDimensionesAttribute()
+    {
+        return "{$this->dim_a} {$this->dim_b} {$this->dim_c} {$this->dim_d} {$this->remarks}";
+    }
 }

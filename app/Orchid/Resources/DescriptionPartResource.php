@@ -4,6 +4,7 @@ namespace App\Orchid\Resources;
 
 use App\Models\ModeloVehiculo;
 use App\Models\Vehiculo;
+use App\Orchid\Components\ImagePreview;
 use Illuminate\Support\Facades\DB;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Actions\Button;
@@ -15,6 +16,8 @@ use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
 use \App\Models\PosicionVehiculo;
+use \App\Models\RefTensadoVehiculo;
+use \App\Models\TipoHojaVehiculo;
 use \App\Models\YearVehiculo;
 
 class DescriptionPartResource extends Resource
@@ -33,6 +36,8 @@ class DescriptionPartResource extends Resource
      */
     public function fields(): array
     {
+        $imageUrl = asset('storage/uploads/' . 'no-preview.jpg');  // Aquí puedes construir la URL de tu imagen
+
         return [
             // Fila 0
             Group::make([
@@ -93,13 +98,16 @@ class DescriptionPartResource extends Resource
                     ->set('class', 'form-select')
                     ->disabled()
                     ->help('Por favor seleccione una posición.'),
-                Relation::make('dlttrsid')
-                    ->fromModel(Vehiculo::class, 'descripcionname: vehiculo', 'id')  // Modelo Vehiculo (puedes cambiarlo si es otro)
+                Select::make('dlttrsid')
+                    ->options([
+                        0 => 'T',
+                        1 => 'D',
+                    ])
                     ->title('Seleccione una Dlt/Trs')
                     ->id('dlttrsidInput')
-                    ->empty('Seleccione una Dlt/Trs')
+                    ->empty('')
                     ->searchable()
-                    ->set('class', 'form-select')
+                    ->set('class', 'selectpicker')
                     ->disabled()
                     ->help('Por favor seleccione una Dlt/Trs.'),
             ]),
@@ -112,7 +120,7 @@ class DescriptionPartResource extends Resource
                     ->readonly()
                     ->placeholder('Identidad'),
                 Relation::make('refauxid')
-                    ->fromModel(Vehiculo::class, 'descripcionvehiculo', 'id')  // Cambia a tu modelo correspondiente
+                    ->fromModel(RefTensadoVehiculo::class, 'Descripcion', 'id')  // Cambia a tu modelo correspondiente
                     ->title('Seleccione un Ref/Aux')
                     ->id('refauxidInput')
                     ->empty('Seleccione una Ref/Aux')
@@ -120,28 +128,43 @@ class DescriptionPartResource extends Resource
                     ->set('class', 'form-select')
                     ->disabled()
                     ->help('Por favor seleccione una Ref/Aux.'),
-                Relation::make('materialgrapaid')
-                    ->fromModel(Vehiculo::class, 'descripcionvehiculo', 'id')  // Cambia a tu modelo correspondiente
+                Select::make('materialgrapaid')
+                    ->options(function () {
+                        // Selecciona los campos 'inches', 'decimal' y 'mm' y los concatena
+                        return DB::table('material_grapas')
+                            ->select(
+                                'id',
+                                DB::raw("CONCAT(inches, ', ', decimal, ', ', mm) as detalles")
+                            )
+                            ->pluck('detalles', 'id');
+                    })
                     ->title('Seleccione un Material Grapa')
                     ->id('materialgrapaidInput')
                     ->empty('Seleccione una opción')
                     ->searchable()
-                    ->set('class', 'form-select')
+                    ->set('class', 'selectpicker')
                     ->disabled()
-                    ->help('Por favor seleccione una Material Grapa.'),
+                    ->help('Por favor seleccione un Material Grapa.'),
             ]),
             // Fila 4
             Group::make([
                 Select::make('materialid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->options(function () {
+                        // Selecciona los campos 'no_mat', 'width_plg', 'thick_plg', 'width_mm', 'thick_mm', 'Grueso' y 'material_combinado' y los concatena
+                        return DB::table('material_const_vehiculos')
+                            ->select(
+                                'id',
+                                DB::raw("CONCAT(no_mat, ', ', width_plg, ', ', thick_plg, ', ', width_mm, ', ', thick_mm, ', ', Grueso, ', ', material_combinado) as detalles")
+                            )
+                            ->pluck('detalles', 'id');
+                    })
                     ->title('Seleccione un Material')
                     ->id('materialidInput')
                     ->empty('')
                     ->searchable()
-                    ->disabled()
                     ->set('class', 'selectpicker')
                     ->disabled()
-                    ->help('Por favor seleccione una Material.'),
+                    ->help('Por favor seleccione un Material.'),
                 Input::make('anchomm')
                     ->title('Ancho MM')
                     ->type(value: 'text')
@@ -172,7 +195,7 @@ class DescriptionPartResource extends Resource
                     ->readonly()
                     ->placeholder('Descripción'),
                 Select::make('tipohojaid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->fromModel(TipoHojaVehiculo::class, 'tipo_hoja', 'id')  // Usar el modelo Vehiculo
                     ->title('Seleccione un Tipo de Hoja')
                     ->empty('')
                     ->id('tipohojaidInput')
@@ -211,16 +234,32 @@ class DescriptionPartResource extends Resource
                     ->readonly()
                     ->placeholder('LL CM'),
                 Select::make('roleolcid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->options(function () {
+                        // Selecciona los campos 'milimetros' y 'pulgadas' y los concatena
+                        return DB::table('roleo_long_vehiculos')
+                            ->select(
+                                'id',
+                                DB::raw("CONCAT(milimetros, ', ', pulgadas) as detalles")
+                            )
+                            ->pluck('detalles', 'id');
+                    })
                     ->title('Seleccione una Roleo LC')
                     ->empty('')
-                    ->id('roleolcidInput')
+                    ->id('roleollidInput')
                     ->searchable()
                     ->set('class', 'selectpicker')
                     ->disabled()
-                    ->help('Por favor seleccione un Roleo LC.'),
+                    ->help('Por favor seleccione un Roleo LL.'),
                 Select::make('roleollid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->options(function () {
+                        // Selecciona los campos 'milimetros' y 'pulgadas' y los concatena
+                        return DB::table('roleo_long_vehiculos')
+                            ->select(
+                                'id',
+                                DB::raw("CONCAT(milimetros, ', ', pulgadas) as detalles")
+                            )
+                            ->pluck('detalles', 'id');
+                    })
                     ->title('Seleccione una Roleo LL')
                     ->empty('')
                     ->id('roleollidInput')
@@ -261,7 +300,13 @@ class DescriptionPartResource extends Resource
             // Fila 9
             Group::make([
                 Select::make('diambocadoid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->options(value: [
+                        0 => '1.25"',
+                        1 => '1.50"',
+                        2 => '1.75"',
+                        3 => '2.0"',
+                        4 => '2.25"',
+                    ])
                     ->title('Seleccione un Diam Bocado')
                     ->id('diambocadoidInput')
                     ->empty('')
@@ -331,7 +376,18 @@ class DescriptionPartResource extends Resource
                     ->disabled()
                     ->help('Por favor seleccione un Abraz Tipo.'),
                 Select::make('abrazmasterid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->options([
+                        0 => '',
+                        1 => '1/8x3/4',
+                        2 => '1/8x1.0',
+                        3 => '1/8x1.1/4',
+                        4 => '3/16x3/4',
+                        5 => '3/16x1.0',
+                        6 => '3/16x1.1/4',
+                        7 => '1/4x3/4',
+                        8 => '1/4x1.0',
+                        9 => '1/4x1.1/4',
+                    ])
                     ->title('Seleccione un Abraz Master')
                     ->id('abrazmasteridInput')
                     ->empty('')
@@ -387,7 +443,15 @@ class DescriptionPartResource extends Resource
                     ->disabled()
                     ->help('Por favor seleccione un Dia TC.'),
                 Select::make('tiposbujesid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->options([
+                        0 => '',
+                        1 => 'Tipos de Buje',
+                        2 => 'RB buje',
+                        3 => 'BM buje',
+                        4 => 'TB buje',
+                        5 => 'HB buje',
+                        6 => 'Copa buje',
+                    ])
                     ->title('Seleccione un Tipo de Buje')
                     ->id('tiposbujesidInput')
                     ->empty('')
@@ -399,7 +463,15 @@ class DescriptionPartResource extends Resource
             // Fila 12
             Group::make([
                 Select::make('bujelcid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->options(function () {
+                        // Selecciona los campos 'part_no', 'od_a', 'id_b', 'length_c' y los concatena
+                        return DB::table('buje_l_c_s')
+                            ->select(
+                                'id',
+                                DB::raw("CONCAT(part_no, ', ', od_a, ', ', id_b, ', ', length_c) as detalles")
+                            )
+                            ->pluck('detalles', 'id');
+                    })
                     ->title('Seleccione un Buje LC')
                     ->id('bujelcidInput')
                     ->empty('')
@@ -408,7 +480,15 @@ class DescriptionPartResource extends Resource
                     ->disabled()
                     ->help('Por favor seleccione un Buje LC.'),
                 Select::make('bujellid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
+                    ->options(function () {
+                        // Selecciona los campos 'dim_a', 'dim_b', 'dim_c', 'dim_d' y 'remarks' y los concatena
+                        return DB::table('buje_l_l_s')
+                            ->select(
+                                'id',
+                                DB::raw("CONCAT(dim_a, ', ', dim_b, ', ', dim_c, ', ', dim_d, ', ', remarks) as dimensiones")
+                            )
+                            ->pluck('dimensiones', 'id');
+                    })
                     ->title('Seleccione un Buje LL')
                     ->id('bujellidInput')
                     ->empty('')
@@ -442,15 +522,17 @@ class DescriptionPartResource extends Resource
                     ->id('pesokgInput')
                     ->readonly()
                     ->placeholder('Peso KG'),
-                Select::make('roscaid')
-                    // ->fromModel(\App\Models\Vehiculo::class, 'descripcionvehiculo', 'id') // Usar el modelo Vehiculo
-                    ->title('Seleccione una Rosca')
-                    ->id('roscaidInput')
-                    ->empty('')
-                    ->searchable()
-                    ->set('class', 'selectpicker')
-                    ->disabled()
-                    ->help('Por favor seleccione una Rosca.'),
+            ]),
+            Group::make([
+                ImagePreview::make()
+                    ->setImageUrl($imageUrl)
+                    ->title('Tipo de Hoja'),
+                ImagePreview::make()
+                    ->setImageUrl($imageUrl)
+                    ->title('Buje LC'),
+                ImagePreview::make()
+                    ->setImageUrl($imageUrl)
+                    ->title('Buje LL'),
             ]),
             // Fila 15
             Group::make([
