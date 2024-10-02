@@ -2,12 +2,15 @@
 
 namespace App\Orchid\Resources;
 
+use App\Models\BujeLC;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
+use Orchid\Support\Facades\Toast;
 
 class BujeLCResource extends Resource
 {
@@ -16,7 +19,7 @@ class BujeLCResource extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\BujeLC::class;
+    public static $model = BujeLC::class;
 
     /**
      * Get the fields displayed by the resource.
@@ -46,10 +49,12 @@ class BujeLCResource extends Resource
                     ->title('Length C')
                     ->type('text')  // Corregido
                     ->required(),
-                Input::make('picture')
-                    ->title('Picture')
-                    ->type('numeric')  // Corregido
-                    ->required(),
+                Input::make('picture')  // Este debe coincidir
+                    ->title('Seleccione una Imágen')
+                    ->placeholder('Seleccione una imágen JPG, JPEG, PNG')
+                    ->type('file')
+                    ->acceptedFiles('image/jpeg,image/png,image/jpg')
+                    ->autofocus(),
             ]),
         ];
     }
@@ -75,6 +80,14 @@ class BujeLCResource extends Resource
             TD::make('length_c', 'Length C')
                 ->sort()
                 ->filter(Input::make()),
+            TD::make('picture', 'Imagen')
+                ->render(function ($model) {
+                    if ($model->picture) {
+                        // Construir la ruta a la imagen
+                        return "<img src='" . asset('storage/uploads/' . $model->picture) . "' style='width: 100px; height: auto;' />";
+                    }
+                    return 'No Image';
+                }),
             TD::make('created_at', 'Date of creation')
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();
@@ -95,10 +108,17 @@ class BujeLCResource extends Resource
     {
         return [
             Sight::make('id'),
-            Sight::make('part_no'),
-            Sight::make('od_a'),
-            Sight::make('id_b'),
-            Sight::make('length_c'),
+            Sight::make('part_no', 'Part_No'),
+            Sight::make('od_a', 'Od A'),
+            Sight::make('id_b', 'Id B'),
+            Sight::make('length_c', 'Lenth C'),
+            Sight::make('picture', 'Imagen')
+                ->render(function ($model) {
+                    if ($model->picture) {
+                        return "<img src='" . asset('storage/uploads/' . $model->picture) . "' style='width: 100px; height: auto;' />";
+                    }
+                    return 'No Image';
+                }),
             Sight::make('created_at', 'Fecha de creación')
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();
@@ -118,6 +138,86 @@ class BujeLCResource extends Resource
     public function filters(): array
     {
         return [];
+    }
+
+    /**
+     * Save the uploaded image and store a copy in the public/uploads folder.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\BujeLC $bujeLC
+     * @return void
+     */
+    public function onSave(Request $request, BujeLC $bujeLC): void
+    {
+        // Validar los datos del request
+        $validatedData = $request->validate($this->rules($bujeLC), $this->messages());
+
+        // Guardar los datos
+        $bujeLC->part_no = $validatedData['part_no'];
+        $bujeLC->od_a = $validatedData['od_a'];
+        $bujeLC->id_b = $validatedData['id_b'];
+        $bujeLC->length_c = $validatedData['length_c'];
+
+        // Procesar la carga del archivo
+        if ($request->hasFile('model.picture')) {  // Cambiar aquí para acceder correctamente
+            $file = $request->file('model.picture');
+
+            // Verifica si hay errores en el archivo
+            if ($file->getError() === UPLOAD_ERR_OK) {
+                $fileName = date('Ymd_His') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                // Guarda el archivo en el sistema de archivos
+                $file->storeAs('uploads', $fileName, 'public');
+                // Solo guarda el nombre del archivo en la base de datos
+                $bujeLC->picture = $fileName;  // Solo el nombre del archivo
+            } else {
+                // Maneja el error de carga
+                $bujeLC->picture = 'Error al cargar el archivo: ' . $file->getError();
+            }
+        } else {
+            $bujeLC->picture = 'no-preview.jpg';
+        }
+
+        $bujeLC->save();
+
+        // Mostrar mensaje de éxito
+        Toast::info(message: __('Datos guardados exitosamente.'));
+    }
+
+    /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'part_no' => 'required|max:10',
+            'od_a' => 'required|max:10',
+            'id_b' => 'required|max:10',
+            'length_c' => 'required|max:10',
+            'picture' => 'nullable|image|max:2048',  // Regla para la imagen, opcional y máximo 2MB
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'part_no.required' => 'El campo Parte No es obligatorio.',
+            'part_no.max' => 'El Número de Parte no puede tener más de 10 caracteres.',
+            'od_a.required' => 'El campo OD A es obligatorio.',
+            'od_a.max' => 'El OD A no puede tener más de 10 caracteres.',
+            'id_b.required' => 'El campo ID B es obligatorio.',
+            'id_b.max' => 'El ID B no puede tener más de 10 caracteres.',
+            'length_c.required' => 'El campo Longitud C es obligatorio.',
+            'length_c.max' => 'La Longitud C no puede tener más de 10 caracteres.',
+            'picture.image' => 'El archivo debe ser una imagen (JPG, JPEG, PNG).',
+            'picture.max' => 'La imagen no puede ser mayor de 2MB.',
+        ];
     }
 
     /**
@@ -280,36 +380,6 @@ class BujeLCResource extends Resource
      *
      * @return bool
      */
-
-    /**
-     * Get the validation rules that apply to save/update.
-     *
-     * @return array
-     */
-    public function rules(Model $model): array
-    {
-        return [
-            'part_no' => 'required|max:10',  // Regla de requerimiento y máximo de 5
-            'od_a' => 'required|max:10',
-            'id_b' => 'required|max:10',
-            'length_c' => 'required|max:10',
-        ];
-    }
-
-    /**
-     * Get the custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'part_no' => 'El Numero de Parte no puede tener más de 10 caracteres.',
-            'od_a' => 'EL OD A no puede tener más de 10 caracteres.',
-            'id_b' => 'EL ID B no puede tener más de 10 caracteres.',
-            'length_c' => 'Las Pulgadas C no puede tener más de 10 caracteres.',
-        ];
-    }
 
     /**
      * Determine if the resource should be displayed in the navigation menu.

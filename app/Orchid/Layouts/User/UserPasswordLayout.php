@@ -1,13 +1,11 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Orchid\Layouts\User;
 
 use Orchid\Platform\Models\User;
-use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Password;
 use Orchid\Screen\Layouts\Rows;
+use Orchid\Screen\Field;
 
 class UserPasswordLayout extends Rows
 {

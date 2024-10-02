@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Orchid\Screens\User;
 
@@ -14,12 +12,12 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Orchid\Access\Impersonation;
 use Orchid\Platform\Models\User;
-use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Action;
 use Orchid\Screen\Screen;
-use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
+use Orchid\Support\Color;
 
 class UserEditScreen extends Screen
 {
@@ -38,7 +36,7 @@ class UserEditScreen extends Screen
         $user->load(['roles']);
 
         return [
-            'user'       => $user,
+            'user' => $user,
             'permission' => $user->getStatusPermission(),
         ];
     }
@@ -79,13 +77,11 @@ class UserEditScreen extends Screen
                 ->confirm(__('You can revert to your original state by logging out.'))
                 ->method('loginAs')
                 ->canSee($this->user->exists && $this->user->id !== \request()->user()->id),
-
             Button::make(__('Remove'))
                 ->icon('bs.trash3')
                 ->confirm(__('Once the account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.'))
                 ->method('remove')
                 ->canSee($this->user->exists),
-
             Button::make(__('Save'))
                 ->icon('bs.check-circle')
                 ->method('save'),
@@ -98,10 +94,9 @@ class UserEditScreen extends Screen
     public function layout(): iterable
     {
         return [
-
             Layout::block(UserEditLayout::class)
                 ->title(__('Profile Information'))
-                ->description(__('Update your account\'s profile information and email address.'))
+                ->description(__("Update your account's profile information and email address."))
                 ->commands(
                     Button::make(__('Save'))
                         ->type(Color::BASIC)
@@ -109,7 +104,6 @@ class UserEditScreen extends Screen
                         ->canSee($this->user->exists)
                         ->method('save')
                 ),
-
             Layout::block(UserPasswordLayout::class)
                 ->title(__('Password'))
                 ->description(__('Ensure your account is using a long, random password to stay secure.'))
@@ -120,7 +114,6 @@ class UserEditScreen extends Screen
                         ->canSee($this->user->exists)
                         ->method('save')
                 ),
-
             Layout::block(UserRoleLayout::class)
                 ->title(__('Roles'))
                 ->description(__('A Role defines a set of tasks a user assigned the role is allowed to perform.'))
@@ -131,8 +124,7 @@ class UserEditScreen extends Screen
                         ->canSee($this->user->exists)
                         ->method('save')
                 ),
-
-            Layout::block(RolePermissionLayout::class)
+            /*Layout::block(RolePermissionLayout::class)
                 ->title(__('Permissions'))
                 ->description(__('Allow the user to perform some actions that are not provided for by his roles'))
                 ->commands(
@@ -141,8 +133,7 @@ class UserEditScreen extends Screen
                         ->icon('bs.check-circle')
                         ->canSee($this->user->exists)
                         ->method('save')
-                ),
-
+                ),*/
         ];
     }
 
@@ -159,7 +150,7 @@ class UserEditScreen extends Screen
         ]);
 
         $permissions = collect($request->get('permissions'))
-            ->map(fn ($value, $key) => [base64_decode($key) => $value])
+            ->map(fn($value, $key) => [base64_decode($key) => $value])
             ->collapse()
             ->toArray();
 

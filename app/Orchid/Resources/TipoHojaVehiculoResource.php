@@ -8,12 +8,9 @@ use Illuminate\Http\Request;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\Raw;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
-use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
-use \Orchid\Screen\Fields\Label;
 
 class TipoHojaVehiculoResource extends Resource
 {
@@ -45,8 +42,7 @@ class TipoHojaVehiculoResource extends Resource
                     ->placeholder('Seleccione una imágen JPG, JPEG, PNG')
                     ->type('file')
                     ->acceptedFiles('image/jpeg,image/png,image/jpg')
-                    ->autofocus()
-                    ->required(),
+                    ->autofocus(),
             ]),
         ];
     }

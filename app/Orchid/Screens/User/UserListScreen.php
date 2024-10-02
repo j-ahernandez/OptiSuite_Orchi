@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Orchid\Screens\User;
 
@@ -8,6 +6,7 @@ use App\Orchid\Layouts\User\UserEditLayout;
 use App\Orchid\Layouts\User\UserFiltersLayout;
 use App\Orchid\Layouts\User\UserListLayout;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Orchid\Platform\Models\User;
 use Orchid\Screen\Actions\Link;
@@ -24,11 +23,25 @@ class UserListScreen extends Screen
      */
     public function query(): iterable
     {
+        $query = User::with('roles')
+            ->filters(UserFiltersLayout::class)
+            ->defaultSort('id', 'desc');
+
+        // Obtener el usuario autenticado
+        $user = Auth::user();
+
+        // Verificar si el usuario tiene el rol 'Super Admin'
+        $isSuperAdmin = $user->roles->contains('name', 'Super Admin');
+
+        // Excluir los usuarios con el rol 'Super Admin' si el usuario autenticado no es un Super Admin
+        if (!$isSuperAdmin) {
+            $query->whereDoesntHave('roles', function ($q) {
+                $q->where('name', 'Super Admin');
+            });
+        }
+
         return [
-            'users' => User::with('roles')
-                ->filters(UserFiltersLayout::class)
-                ->defaultSort('id', 'desc')
-                ->paginate(),
+            'users' => $query->paginate(),
         ];
     }
 
@@ -79,7 +92,6 @@ class UserListScreen extends Screen
         return [
             UserFiltersLayout::class,
             UserListLayout::class,
-
             Layout::modal('editUserModal', UserEditLayout::class)
                 ->deferred('loadUserOnOpenModal'),
         ];

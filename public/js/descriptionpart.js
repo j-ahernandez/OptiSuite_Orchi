@@ -15,7 +15,6 @@ $(() => {
         if (typeValue === '0') {//VEHICULO (01-99)
             enableSelect('modelidInput');
         } else if (typeValue === '1') {// TRAMO TERMINADO (9T -- TrT)
-            console.log('TRAMO TERMINADO (9T -- TrT)');
             enableSelect('positionidInput');
         } else if (typeValue === '2') {// TRAMO RECTO (9TR -- TrR)
             $('#longitInput').prop('readonly', false);

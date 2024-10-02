@@ -9,6 +9,7 @@
     <script src="{{ asset('js/jquery.js') }}?v={{ time() }}"></script>
     <script src="{{ asset('js/utility.js') }}?v={{ time() }}"></script>
     <script src="{{ asset('js/brio.js') }}?v={{ time() }}"></script>
+    <script src="{{ asset('js/roleo_long.js') }}?v={{ time() }}"></script>
     <script src="{{ asset('js/descriptionpart.js') }}?v={{ time() }}"></script>
 @endpush
 

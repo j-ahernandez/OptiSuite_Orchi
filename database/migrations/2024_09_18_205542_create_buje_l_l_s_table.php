@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('buje_l_l_s', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('bujeRBNum');  // Definir la columna de clave foránea
+            $table->unsignedBigInteger('idbujeRBNum');  // Definir la columna de clave foránea
             $table->string('dim_a', 10)->nullable();
             $table->string('dim_b', 10)->nullable();
             $table->string('dim_c', 10)->nullable();
@@ -22,8 +22,7 @@ return new class extends Migration {
             $table->timestamps();
 
             // Definir la relación de clave foránea sin acción en cascada
-            $table
-                ->foreign('bujeRBNum')
+            $table->foreign('idbujeRBNum')
                 ->references('id')
                 ->on('buje_r_b_s');
         });

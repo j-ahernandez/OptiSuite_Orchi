@@ -33,7 +33,8 @@ class UserRoleLayout extends Rows
                 ->fromQuery($rolesQuery, 'name')  // Cambiado de fromModel a fromQuery
                 ->multiple()
                 ->title(__('Name role'))
-                ->help('Specify which groups this account should belong to'),
+                ->help('Specify which groups this account should belong to')
+                ->required(),
         ];
     }
 }

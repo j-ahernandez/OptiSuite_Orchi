@@ -161,13 +161,13 @@ class MaterialConstVehiculoResource extends Resource
     public function rules(Model $model): array
     {
         return [
-            'no_mat' => 'required|max:5',  // Regla de requerimiento y máximo de 5
-            'width_plg' => 'required',
-            'thick_plg' => 'required',
-            'width_mm' => 'required',
-            'thick_mm' => 'required',
-            'Grueso' => 'required',
-            'material_combinado' => 'required',
+            'no_mat' => 'required|string|max:5',  // Campo requerido, cadena de texto, máximo 5 caracteres
+            'width_plg' => 'required|numeric',  // Campo requerido, debe ser numérico
+            'thick_plg' => 'required|numeric',  // Campo requerido, debe ser numérico
+            'width_mm' => 'required|numeric',  // Campo requerido, debe ser numérico
+            'thick_mm' => 'required|numeric',  // Campo requerido, debe ser numérico
+            'Grueso' => 'required|numeric',  // Campo requerido, debe ser numérico
+            'material_combinado' => 'required|string|max:4000',  // Campo requerido, cadena de texto, máximo 4000 caracteres
         ];
     }
 
@@ -179,14 +179,22 @@ class MaterialConstVehiculoResource extends Resource
     public function messages(): array
     {
         return [
-            'no_mat.required' => 'El número de material es obligatorio.',
-            'no_mat.max' => 'El número de material no puede tener más de 5 caracteres.',
+            'no_mat.required' => 'El número de materia prima es obligatorio.',
+            'no_mat.string' => 'El número de materia prima debe ser un texto.',
+            'no_mat.max' => 'El número de materia prima no puede tener más de 5 caracteres.',
             'width_plg.required' => 'El ancho en pulgadas es obligatorio.',
-            'thick_plg.required' => 'El grosor en pulgadas es obligatorio.',
+            'width_plg.numeric' => 'El ancho en pulgadas debe ser un número válido.',
+            'thick_plg.required' => 'El espesor en pulgadas es obligatorio.',
+            'thick_plg.numeric' => 'El espesor en pulgadas debe ser un número válido.',
             'width_mm.required' => 'El ancho en milímetros es obligatorio.',
-            'thick_mm.required' => 'El grosor en milímetros es obligatorio.',
+            'width_mm.numeric' => 'El ancho en milímetros debe ser un número válido.',
+            'thick_mm.required' => 'El espesor en milímetros es obligatorio.',
+            'thick_mm.numeric' => 'El espesor en milímetros debe ser un número válido.',
             'Grueso.required' => 'El grueso es obligatorio.',
+            'Grueso.numeric' => 'El grueso debe ser un número válido.',
             'material_combinado.required' => 'El material combinado es obligatorio.',
+            'material_combinado.string' => 'El material combinado debe ser un texto.',
+            'material_combinado.max' => 'El material combinado no puede tener más de 4000 caracteres.',
         ];
     }
 

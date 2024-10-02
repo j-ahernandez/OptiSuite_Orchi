@@ -2,9 +2,17 @@
 
 namespace App\Orchid\Resources;
 
+use App\Models\BujeLL;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Orchid\Crud\Resource;
+use Orchid\Screen\Fields\Group;
+use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Select;
+use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
+use Orchid\Support\Facades\Toast;
 
 class BujeLLResource extends Resource
 {
@@ -13,11 +21,63 @@ class BujeLLResource extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\BujeLL::class;
+    public static $model = BujeLL::class;
 
     public function fields(): array
     {
-        return [];
+        return [
+            Group::make([
+                Select::make('idbujeRBNum')
+                    ->options(function () {
+                        // Selecciona los campos que deseas concatenar en la tabla 'buje_r_b_s'
+                        return DB::table('buje_r_b_s')
+                            ->select(
+                                'id',
+                                DB::raw("CONCAT(bujeRBNum, ', ', dia_cpo_PI, ', ', long_cpo_PI, ', ', dia_cpo_MM, ', ', long_tot_MM) as detalles")
+                            )
+                            ->pluck('detalles', 'id');
+                    })
+                    ->title('Seleccione un Buje RB')
+                    ->id('bujeRBidInput')
+                    ->required()
+                    ->empty('Seleccione una opción')
+                    ->searchable()
+                    ->set('class', 'selectpicker')
+                    ->help('Por favor seleccione un Buje RB.')
+            ]),
+            Group::make([
+                Input::make('dim_a')
+                    ->title('Diam A')
+                    ->type('text')  // Corregido
+                    ->autofocus()
+                    ->required(),
+                Input::make('dim_b')
+                    ->title('Dim B')
+                    ->type('text')  // Corregido
+                    ->required(),
+                Input::make('dim_c')
+                    ->title('Dim C')
+                    ->type('text')  // Corregido
+                    ->required(),
+            ]),
+            Group::make([
+                Input::make('dim_d')
+                    ->title('Diam D')
+                    ->type('text')  // Corregido
+                    ->autofocus()
+                    ->required(),
+                Input::make('remarks')
+                    ->title('Remark')
+                    ->type('text')  // Corregido
+                    ->required(),
+                Input::make('picture')  // Este debe coincidir
+                    ->title('Seleccione una Imágen')
+                    ->placeholder('Seleccione una imágen JPG, JPEG, PNG')
+                    ->type('file')
+                    ->acceptedFiles('image/jpeg,image/png,image/jpg')
+                    ->autofocus(),
+            ]),
+        ];
     }
 
     /**
@@ -28,7 +88,38 @@ class BujeLLResource extends Resource
     public function columns(): array
     {
         return [
-            TD::make('id'),
+            TD::make('id')
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('bujeRB.bujeRBNum', 'ID Buje RB Num')  // Mostrar el campo relacionado
+                ->render(function ($model) {
+                    return $model->bujeRB ? $model->bujeRB->bujeRBNum : 'N/A';
+                })
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('dim_a', 'Diam A')
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('dim_b', 'Diam B')
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('dim_c', 'Diam C')
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('dim_d', 'Diam D')
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('remarks', 'Remarks')
+                ->sort()
+                ->filter(Input::make()),
+            TD::make('picture', 'Imagen')
+                ->render(function ($model) {
+                    if ($model->picture) {
+                        // Construir la ruta a la imagen
+                        return "<img src='" . asset('storage/uploads/' . $model->picture) . "' style='width: 100px; height: auto;' />";
+                    }
+                    return 'No Image';
+                }),
             TD::make('created_at', 'Date of creation')
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();
@@ -47,7 +138,121 @@ class BujeLLResource extends Resource
      */
     public function legend(): array
     {
-        return [];
+        return [
+            Sight::make('id'),
+            Sight::make('dim_a', 'Diam A'),
+            Sight::make('dim_b', 'Diam B'),
+            Sight::make('dim_c', 'Diam C'),
+            Sight::make('dim_d', 'Diam D'),
+            Sight::make('remarks', 'Rermarks'),
+            Sight::make('picture', 'Imagen')
+                ->render(function ($model) {
+                    if ($model->picture) {
+                        return "<img src='" . asset('storage/uploads/' . $model->picture) . "' style='width: 100px; height: auto;' />";
+                    }
+                    return 'No Image';
+                }),
+            Sight::make('created_at', 'Fecha de creación')
+                ->render(function ($model) {
+                    return $model->created_at->toDateTimeString();
+                }),
+            Sight::make('updated_at', 'Fecha de actualización')
+                ->render(function ($model) {
+                    return $model->updated_at->toDateTimeString();  // Cambiado `created_at` por `updated_at`
+                }),
+        ];
+    }
+
+    /**
+     * Save the uploaded image and store a copy in the public/uploads folder.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\BujeLC $bujeLC
+     * @return void
+     */
+    public function onSave(Request $request, BujeLL $bujeLL): void
+    {
+        // dd($request->all());
+
+        // Validar los datos del request
+        $validatedData = $request->validate($this->rules($bujeLL), $this->messages());
+
+        // Guardar los datos
+        $bujeLL->idbujeRBNum = $validatedData['idbujeRBNum'];
+        $bujeLL->dim_a = $validatedData['dim_a'];
+        $bujeLL->dim_b = $validatedData['dim_b'];
+        $bujeLL->dim_c = $validatedData['dim_c'];
+        $bujeLL->dim_d = $validatedData['dim_d'];
+        $bujeLL->remarks = $validatedData['remarks'];
+
+        // Procesar la carga del archivo
+        if ($request->hasFile('model.picture')) {  // Cambiar aquí para acceder correctamente
+            $file = $request->file('model.picture');
+
+            // Verifica si hay errores en el archivo
+            if ($file->getError() === UPLOAD_ERR_OK) {
+                $fileName = date('Ymd_His') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                // Guarda el archivo en el sistema de archivos
+                $file->storeAs('uploads', $fileName, 'public');
+                // Solo guarda el nombre del archivo en la base de datos
+                $bujeLL->picture = $fileName;  // Solo el nombre del archivo
+            } else {
+                // Maneja el error de carga
+                $bujeLL->picture = 'Error al cargar el archivo: ' . $file->getError();
+            }
+        } else {
+            $bujeLL->picture = 'no-preview.jpg';
+        }
+
+        // dd($bujeLL);
+
+        $bujeLL->save();
+
+        // Mostrar mensaje de éxito
+        Toast::info(message: __('Datos guardados exitosamente.'));
+    }
+
+    /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'idbujeRBNum' => 'required|exists:buje_r_b_s,id',  // Asegura que el ID de Buje RB exista
+            'dim_a' => 'required|max:10',  // Requerido y máximo de 10 caracteres
+            'dim_b' => 'required|max:10',  // Requerido y máximo de 10 caracteres
+            'dim_c' => 'required|max:10',  // Requerido y máximo de 10 caracteres
+            'dim_d' => 'required|max:10',  // Requerido y máximo de 10 caracteres
+            'remarks' => 'nullable|max:20',  // Opcional y máximo de 20 caracteres
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',  // Opcional, tipo imagen, y máximo de 2MB
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'idbujeRBNum.required' => 'El Buje RB es requerido.',
+            'idbujeRBNum.exists' => 'El Buje RB seleccionado no es válido.',
+            'dim_a.required' => 'El Diametro A es requerido.',
+            'dim_a.max' => 'El Diametro A no puede tener más de 10 caracteres.',
+            'dim_b.required' => 'El Diametro B es requerido.',
+            'dim_b.max' => 'El Diametro B no puede tener más de 10 caracteres.',
+            'dim_c.required' => 'El Diametro C es requerido.',
+            'dim_c.max' => 'El Diametro C no puede tener más de 10 caracteres.',
+            'dim_d.required' => 'El Diametro D es requerido.',
+            'dim_d.max' => 'El Diametro D no puede tener más de 10 caracteres.',
+            'remarks.max' => 'Los Remarks no pueden tener más de 20 caracteres.',
+            'picture.image' => 'El archivo debe ser una imagen.',
+            'picture.mimes' => 'Solo se permiten imágenes en formato JPG, JPEG y PNG.',
+            'picture.max' => 'La imagen no puede ser mayor de 2MB.',
+        ];
     }
 
     /**
@@ -221,38 +426,6 @@ class BujeLLResource extends Resource
     public static function trafficCop(): bool
     {
         return true;  // Habilita la verificación de cambios
-    }
-
-    /**
-     * Get the validation rules that apply to save/update.
-     *
-     * @return array
-     */
-    public function rules(Model $model): array
-    {
-        return [
-            'dim_a' => 'max:10',  // Regla de requerimiento y máximo de 5
-            'dim_b' => 'max:10',
-            'dim_c' => 'max:10',
-            'dim_d' => 'max:10',
-            'remarks' => 'max:20',
-        ];
-    }
-
-    /**
-     * Get the custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'dim_a' => 'El Diametro A no puede tener más de 10 caracteres.',
-            'dim_b' => 'El Diametro B no puede tener más de 10 caracteres.',
-            'dim_c' => 'El Diametro C no puede tener más de 10 caracteres.',
-            'dim_d' => 'El Diametro D no puede tener más de 10 caracteres.',
-            'remarks' => 'Los Remarks no puede tener más de 20 caracteres.',
-        ];
     }
 
     /**

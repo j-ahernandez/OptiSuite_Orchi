@@ -30,12 +30,14 @@ class RoleoLongVehiculoResource extends Resource
                 Input::make('milimetros')
                     ->title('Milimetros')
                     ->type('text')
+                    ->id('milimetrosInput')
                     ->placeholder('Ingrese los Milimetros')
                     ->autofocus()
                     ->required(),
                 Input::make('pulgadas')
                     ->title('Pulgadas')
                     ->type('text')
+                    ->id('pulgadasInput')
                     ->placeholder('Ingrese las Pulgadas')
                     ->required(),
             ]),

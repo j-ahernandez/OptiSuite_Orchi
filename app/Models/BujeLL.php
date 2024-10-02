@@ -18,7 +18,7 @@ class BujeLL extends Model
     // Relación con BujeRB
     public function bujeRB()
     {
-        return $this->belongsTo(BujeRB::class, 'bujeRBNum');
+        return $this->belongsTo(BujeRB::class, 'idbujeRBNum');
     }
 
     public function getDimensionesAttribute()

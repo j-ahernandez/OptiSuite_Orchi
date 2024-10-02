@@ -127,7 +127,8 @@ class PlatformProvider extends OrchidServiceProvider
         return [
             ItemPermission::group(__('System'))
                 ->addPermission('platform.systems.roles', __('Roles'))
-                ->addPermission('platform.systems.users', __('Usuarios'))
+                ->addPermission('platform.systems.users', __('Usuarios')),
+            ItemPermission::group(__('Fast Solutions - Menu'))
                 ->addPermission('platform.descriptionpart', __('Descripción de Partes'))
                 ->addPermission('platform.bujelc', __('Buje LC'))
                 ->addPermission('platform.bujell', __('Buje LL'))
