@@ -1,13 +1,12 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Orchid\Screens\Role;
 
 use App\Orchid\Layouts\Role\RoleListLayout;
+use Illuminate\Support\Facades\Auth;
 use Orchid\Platform\Models\Role;
-use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Action;
 use Orchid\Screen\Screen;
 
 class RoleListScreen extends Screen
@@ -19,8 +18,21 @@ class RoleListScreen extends Screen
      */
     public function query(): iterable
     {
+        $query = Role::filters()->defaultSort('id', 'desc');
+
+        // Obtener el usuario autenticado
+        $user = Auth::user();
+
+        // Verificar si el usuario tiene el rol 'Super Admin'
+        $isSuperAdmin = $user->roles->contains('name', 'Super Admin');
+
+        // Excluir el rol "Super Admin" si el usuario no es un Super Admin
+        if (!$isSuperAdmin) {
+            $query->where('name', '!=', 'Super Admin');
+        }
+
         return [
-            'roles' => Role::filters()->defaultSort('id', 'desc')->paginate(),
+            'roles' => $query->paginate(),
         ];
     }
 
