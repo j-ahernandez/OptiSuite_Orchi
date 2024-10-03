@@ -1,7 +1,5 @@
 @push('head')
     <link href="/favicon.ico" id="favicon" rel="icon">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     {{-- AREA CSS --}}
     <link href="{{ asset('css/style.css') }}?v={{ time() }}" rel="stylesheet">
 
@@ -12,6 +10,7 @@
     <script src="{{ asset('js/roleo_long.js') }}?v={{ time() }}"></script>
     <script src="{{ asset('js/descriptionpart.js') }}?v={{ time() }}"></script>
 @endpush
+
 
 <div class="h2 d-flex align-items-center">
     @auth

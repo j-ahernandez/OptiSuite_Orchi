@@ -2,10 +2,13 @@
 
 namespace App\Orchid\Resources;
 
+use App\Models\DescriptionPart;
 use App\Models\ModeloVehiculo;
-use App\Models\Vehiculo;
 use App\Orchid\Components\ImagePreview;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Group;
@@ -15,6 +18,7 @@ use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
+use Orchid\Support\Facades\Toast;
 use \App\Models\PosicionVehiculo;
 use \App\Models\RefTensadoVehiculo;
 use \App\Models\TipoHojaVehiculo;
@@ -27,7 +31,7 @@ class DescriptionPartResource extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\DescriptionPart::class;
+    public static $model = DescriptionPart::class;
 
     /**
      * Get the fields displayed by the resource.
@@ -45,8 +49,9 @@ class DescriptionPartResource extends Resource
                     ->title('Código')
                     ->type(value: 'text')
                     ->id('CódigoInput')
-                    ->placeholder('Código')
-                    ->readonly(),
+                    ->required()
+                    // //->readonly()
+                    ->placeholder('Código'),
             ]),
             // Fila 1
             Group::make([
@@ -69,13 +74,13 @@ class DescriptionPartResource extends Resource
                     ->empty('Seleccione una opción')
                     ->id('modelidInput')
                     ->set('class', 'form-select')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione el vehículo y modelo.'),
                 Input::make('apodo')
                     ->title('Apodo')
                     ->type(value: 'text')
                     ->id(value: 'apodoInput')
-                    ->readonly()
+                    // ->readonly()
                     ->placeholder('Apodo'),
             ]),
             // Fila 2
@@ -87,7 +92,7 @@ class DescriptionPartResource extends Resource
                     ->empty('Seleccione un año')
                     ->searchable()
                     ->set('class', 'form-select')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un año.'),
                 Relation::make('positionid')
                     ->fromModel(PosicionVehiculo::class, 'posicion', 'id')  // Usar el modelo PosicionVehiculo
@@ -96,7 +101,7 @@ class DescriptionPartResource extends Resource
                     ->empty('Seleccione una posición')
                     ->searchable()
                     ->set('class', 'form-select')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione una posición.'),
                 Select::make('dlttrsid')
                     ->options([
@@ -108,7 +113,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione una Dlt/Trs.'),
             ]),
             // Fila 3
@@ -117,7 +122,7 @@ class DescriptionPartResource extends Resource
                     ->title('Identidad')
                     ->type(value: 'text')
                     ->id('identidadInput')
-                    ->readonly()
+                    // ->readonly()
                     ->placeholder('Identidad'),
                 Relation::make('refauxid')
                     ->fromModel(RefTensadoVehiculo::class, 'Descripcion', 'id')  // Cambia a tu modelo correspondiente
@@ -126,7 +131,7 @@ class DescriptionPartResource extends Resource
                     ->empty('Seleccione una Ref/Aux')
                     ->searchable()
                     ->set('class', 'form-select')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione una Ref/Aux.'),
                 Select::make('materialgrapaid')
                     ->options(function () {
@@ -143,7 +148,7 @@ class DescriptionPartResource extends Resource
                     ->empty('Seleccione una opción')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un Material Grapa.'),
             ]),
             // Fila 4
@@ -163,19 +168,19 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un Material.'),
                 Input::make('anchomm')
                     ->title('Ancho MM')
                     ->type(value: 'text')
                     ->id('anchommInput')
-                    ->readonly()
+                    // ->readonly()
                     ->placeholder('Ancho MM'),
                 Input::make('gruesomm')
                     ->title('Grueso MM')
                     ->type(value: 'text')
                     ->id('gruesommInput')
-                    ->readonly()
+                    // ->readonly()
                     ->placeholder('Grueso MM'),
             ]),
             // Fila 5
@@ -184,7 +189,7 @@ class DescriptionPartResource extends Resource
                     ->title('Longit CM')
                     ->type(value: 'text')
                     ->id('longitInput')
-                    ->readonly()
+                    // ->readonly()
                     ->placeholder('Longit MM'),
                 /* ->rules('required|numeric|min:10|max:180') */
                 // Añade las reglas de validación aquí,
@@ -192,7 +197,7 @@ class DescriptionPartResource extends Resource
                     ->title('Descripción')
                     ->type(value: 'text')
                     ->id('descriptionInput')
-                    ->readonly()
+                    // ->readonly()
                     ->placeholder('Descripción'),
                 Select::make('tipohojaid')
                     ->fromModel(TipoHojaVehiculo::class, 'tipo_hoja', 'id')  // Usar el modelo Vehiculo
@@ -201,7 +206,7 @@ class DescriptionPartResource extends Resource
                     ->id('tipohojaidInput')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un Tipo de Hoja.'),
             ]),
             // Fila 6
@@ -210,19 +215,19 @@ class DescriptionPartResource extends Resource
                     ->title('Corte Cm')
                     ->type(value: 'text')
                     ->id('cortecmInput')
-                    ->readonly()
+                    // ->readonly()
                     ->placeholder('Corte CM'),
                 Input::make('distcccm')
                     ->title('Distcc CM')
                     ->type(value: 'text')
                     ->id('distcccmInput')
-                    ->readonly()
+                    // ->readonly()
                     ->placeholder('Distcc CM'),
                 Input::make('lccm')
                     ->title('LC CM')
                     ->type(value: 'text')
                     ->id('lccmInput')
-                    ->readonly()
+                    // ->readonly()
                     ->placeholder('LC CM'),
             ]),
             // Fila 7
@@ -231,7 +236,7 @@ class DescriptionPartResource extends Resource
                     ->title('LL CM')
                     ->type(value: 'text')
                     ->id('llcmInput')
-                    ->readonly()
+                    // ->readonly()
                     ->placeholder('LL CM'),
                 Select::make('roleolcid')
                     ->options(function () {
@@ -248,7 +253,7 @@ class DescriptionPartResource extends Resource
                     ->id('roleollidInput')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un Roleo LL.'),
                 Select::make('roleollid')
                     ->options(function () {
@@ -265,24 +270,24 @@ class DescriptionPartResource extends Resource
                     ->id('roleollidInput')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un Roleo LL.'),
             ]),
             // Fila 8
             Group::make([
-                Input::make('2roleolc')
+                Input::make('dosroleolc')
                     ->title('2Roleo LC')
                     ->type(value: 'text')
                     ->id('2roleolcInput')
-                    ->readonly()
+                    // ->readonly()
                     ->placeholder('2Roleo LC'),
-                Input::make(name: '2roleollllcm')
+                Input::make(name: 'dosroleollcm')
                     ->title('2Roleo LL')
                     ->type(value: 'text')
-                    ->id('2roleollllcmInput')
-                    ->readonly()
+                    ->id('2roleollcmInput')
+                    // ->readonly()
                     ->placeholder('2Roleo LL'),
-                Select::make('2porcenroleo')
+                Select::make('dosporcenroleo')
                     ->options([
                         0 => '0%',
                         1 => '25%',
@@ -294,7 +299,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un 2% Roleo.'),
             ]),
             // Fila 9
@@ -312,7 +317,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un Diam Bocado.'),
                 Select::make('anchoteid')
                     ->options(value: [
@@ -329,7 +334,7 @@ class DescriptionPartResource extends Resource
                     ->searchable()
                     ->disable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un Ancho TE.'),
                 Select::make('destajeid')
                     ->options(value: [
@@ -343,7 +348,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un Destaje.'),
             ]),
             // Fila 10
@@ -360,7 +365,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un % Despunte.'),
                 Select::make('abraztipoid')
                     ->options([
@@ -373,7 +378,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un Abraz Tipo.'),
                 Select::make('abrazmasterid')
                     ->options([
@@ -393,7 +398,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un Abraz Master.'),
             ]),
             // Fila 11
@@ -402,7 +407,7 @@ class DescriptionPartResource extends Resource
                     ->title('Abraz Long CM')
                     ->type(value: 'text')
                     ->id('abrazlongcmInput')
-                    ->readonly()
+                    // ->readonly()
                     ->placeholder('Abraz Long CM'),
                 Select::make('diatcid')
                     ->options([
@@ -440,7 +445,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un Dia TC.'),
                 Select::make('tiposbujesid')
                     ->options([
@@ -457,7 +462,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un Tipo de Buje.'),
             ]),
             // Fila 12
@@ -477,7 +482,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un Buje LC.'),
                 Select::make('bujellid')
                     ->options(function () {
@@ -494,7 +499,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un Buje LL.'),
                 Select::make('brioid')
                     ->options(function () {
@@ -511,7 +516,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    ->disabled()
+                    // ->disabled()
                     ->help('Por favor seleccione un Brio CM.'),
             ]),
             // Fila 13
@@ -520,7 +525,7 @@ class DescriptionPartResource extends Resource
                     ->title('Peso KG')
                     ->type(value: 'text')
                     ->id('pesokgInput')
-                    ->readonly()
+                    // ->readonly()
                     ->placeholder('Peso KG'),
             ]),
             Group::make([
@@ -562,276 +567,120 @@ class DescriptionPartResource extends Resource
             TD::make('typeid', 'Tipo')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->vehiculoid;
-            }*/
             TD::make('vehiculoid', 'Vehiculo')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->vehiculoid;
-            }*/
             TD::make('modelid', 'Modelo')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->modelid;
-            }*/
             TD::make('apodo', 'Apodo')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->apodo;
-            }*/
             TD::make('yearid', 'Año')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->yearid;
-            }*/
             TD::make('positionid', 'Posición')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->positionid;
-            }*/
             TD::make('dlttrsid', 'Dlt/Trs')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->dlttrsid;
-            }*/
             TD::make('identidad', 'Identidad')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->identidad;
-            }*/
             TD::make('refauxid', 'Ref/Aux')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->refauxid;
-            }*/
             TD::make('materialgrapaid', 'Material Grapa')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->materialgrapaid;
-            }*/
             TD::make('anchomm', 'Ancho')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->anchomm;
-            }*/
             TD::make('gruesomm', 'Grueso (mm)')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->gruesomm;
-            }*/
             TD::make('longit', 'Longit (mm)')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->longit;
-            }*/
             TD::make('description', 'Descripción')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->description;
-            }*/
             TD::make('tipohojaid', 'Tipo Hoja')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->tipohojaid;
-            }*/
             TD::make('cortecm', 'Corte (cm)')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->cortecm;
-            }*/
             TD::make('distcccm', 'DistCC (cm)')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->distcccm;
-            }*/
             TD::make('lccm', 'LC (cm)')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->lccm;
-            }*/
             TD::make('llcm', 'LL (cm)')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->llcm;
-            }*/
             TD::make('roleolcid', 'RoleoLC')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->roleolcid;
-            }*/
             TD::make('roleollid', 'Roleo LL')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->roleollid;
-            }*/
-            TD::make('2roleolc', '2RoleoLL')
+            TD::make('dosroleolc', '2RoleoLL')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->2roleolc;
-            }*/
-            TD::make('2roleoll', '2RoleoLC')
+            TD::make('dosroleoll', '2RoleoLC')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->2roleollllcm;
-            }*/
-            TD::make('2porcenroleo', '2% Roleo')
+            TD::make('dosporcenroleo', '2% Roleo')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->2porcenroleo;
-            }*/
             TD::make('diambocadoid', 'Diam Bocado')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->diambocadoid;
-            }*/
             TD::make('anchoteid', 'Ancho TE')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->anchoteid;
-            }*/
             TD::make('destajeid', 'Destaje')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->destajeid;
-            }*/
             TD::make('porcendespunte', '% Despunte')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->destajeid;
-            }*/
             TD::make('abraztipoid', 'Abraz-Tipo')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->abraztipoid;
-            }*/
             TD::make('abrazmasterid', 'Abraz-Master')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->abrazmasterid;
-            }*/
             TD::make('abrazlongcm', 'Abrazad-Long (cm)')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->abrazlongcm;
-            }*/
             TD::make('diatcid', 'DiaTC')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->diatcid;
-            }*/
             TD::make('tiposbujesid', 'Tipos de Buje')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->tiposbujesid;
-            }*/
             TD::make('bujelcid', 'Buje LC')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->bujelcid;
-            }*/
             TD::make('bujellid', 'Buje LL')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->bujellid;
-            }*/
             TD::make('brioid', 'Brio (cm)')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->brioid;
-            }*/
             TD::make('pesokg', 'Peso (kg)')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->pesokg;
-            }*/
             TD::make('observacion', 'Observación')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->observacion;
-            }*/
             TD::make('rosca', 'Rosca')
                 ->sort()
                 ->filter(Input::make()),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->typeid;
-            }*/
             TD::make('created_at', 'Fecha de creación')
                 ->sort()
                 ->filter(Input::make())
@@ -856,211 +705,73 @@ class DescriptionPartResource extends Resource
     {
         return [
             Sight::make('id'),
-            // Fila 1
             Sight::make('code', 'Código'),
-            Sight::make('typeid'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->typeid;
-            })*/
-            Sight::make('vehiculoid', 'Vehiculo'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->vehiculoid;
-            })*/
-            Sight::make('modelid', 'Modelo'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->modelid;
-            })*/
+            Sight::make('typeid', 'Tipo Vehículo')
+                ->render(function ($model) {
+                    return [
+                        0 => 'VEHICULO (01-99)',
+                        1 => 'TRAMO TERMINADO (9T -- TrT)',
+                        2 => 'TRAMO RECTO (9TR -- TrR)',
+                        3 => 'GRAPA',
+                    ][$model->typeid] ?? 'Desconocido';
+                }),
+            Sight::make('vehiculoid', 'Vehículo')
+                ->render(function ($model) {
+                    return $model->vehiculo->nombre ?? 'No asignado';  // Cambia 'nombre' al campo correspondiente
+                }),
+            Sight::make('modelid', 'Modelo')
+                ->render(function ($model) {
+                    return $model->modelo->nombre ?? 'No asignado';  // Cambia 'nombre' al campo correspondiente
+                }),
             Sight::make('apodo', 'Apodo'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->apodo;
-            })*/
             Sight::make('yearid', 'Año'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->yearid;
-            })*/
-            Sight::make('positionid', 'Posición'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->positionid;
-            })*/
+            Sight::make('positionid', 'Posición')
+                ->render(function ($model) {
+                    return $model->posicion->posicion ?? 'No asignada';  // Cambia 'posicion' al campo correspondiente
+                }),
             Sight::make('dlttrsid', 'Dlt/Trs'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->dlttrsid;
-            })*/
             Sight::make('identidad', 'Identidad'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->identidad;
-            })*/
             Sight::make('refauxid', 'Ref/Aux'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->refauxid;
-            })*/
-            Sight::make('materialgrapaid', 'Material Grapa'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->materialgrapaid;
-            })*/
-            Sight::make('materialid', 'Material'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->materialid;
-            })*/
+            Sight::make('materialgrapaid', 'Material Grapa')
+                ->render(function ($model) {
+                    return $model->materialGrapa->nombre ?? 'No asignado';  // Cambia 'nombre' al campo correspondiente
+                }),
             Sight::make('anchomm', 'Ancho (mm)'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->anchomm;
-            })*/
             Sight::make('gruesomm', 'Grueso (mm)'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->gruesomm;
-            })*/
             Sight::make('longit', 'Longit (cm)'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->longit;
-            })*/
             Sight::make('description', 'Descripción'),
             Sight::make('tipohojaid', 'Tipo Hoja'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->tipohojaid;
-            })*/
             Sight::make('cortecm', 'Corte (cm)'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->cortecm;
-            })*/
             Sight::make('distcccm', 'DistCC (cm)'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->distcccm;
-            })*/
             Sight::make('lccm', 'LC (cm)'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->lccm;
-            })*/
             Sight::make('llcm', 'LL (cm)'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->llcm;
-            })*/
             Sight::make('roleolcid', 'RoleoLC'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->roleolcid;
-            })*/
             Sight::make('roleollid', 'RoleoLL'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->roleolcid;
-            })*/
-            Sight::make('2roleolc', '2Roleo LC'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->2roleolc;
-            })*/
-            Sight::make('2roleoll', '2Roleo LL'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->2roleollllcm;
-            })*/
-            Sight::make('2porcenroleo', '2% Roleo'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->2porcenroleo;
-            })*/
+            Sight::make('dosroleolc', '2Roleo LC'),
+            Sight::make('dosroleoll', '2Roleo LL'),
+            Sight::make('dosporcenroleo', '2% Roleo'),
             Sight::make('diambocadoid', 'Diam Bocado'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->diambocadoid;
-            })*/
             Sight::make('anchoteid', 'Ancho TE'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->anchoteid;
-            })*/
             Sight::make('destajeid', 'Destaje'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->destajeid;
-            })*/
             Sight::make('porcendespunte', '% Despunte'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->porcendespunte;
-            })*/
             Sight::make('abraztipoid', 'Abraz-Tipo'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->abraztipoid;
-            })*/
             Sight::make('abrazmasterid', 'Abraz-Master'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->abrazmasterid;
-            })*/
             Sight::make('abrazlongcm', 'Abraz-Long (cm)'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->abrazlongcm;
-            })*/
             Sight::make('diatcid', 'DiaTC'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->diatcid;
-            })*/
             Sight::make('tiposbujesid', 'Tipos de Buje'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->tiposbujesid;
-            })*/
             Sight::make('bujelcid', 'Buje LC'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->bujelcid;
-            })*/
             Sight::make('bujellid', 'Buje LL'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->bujellid;
-            })*/
             Sight::make('brioid', 'Brio (cm)'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->brioid;
-            })*/
             Sight::make('pesokg', 'Peso (kg)'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->pesokg;
-            })*/
             Sight::make('observacion', 'Observación'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->observacion;
-            })*/
-            Sight::make('roscaid', 'Rosca'),
-            /*->render(function ($model) {
-                // Aquí puedes personalizar cómo mostrar el valor
-                return $model->roleollid;
-            })*/
-            Sight::make('created_at', 'Fecha de actualización')
+            Sight::make('rosca', 'Rosca'),
+            Sight::make('created_at', 'Fecha de creación')
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();
                 }),
             Sight::make('updated_at', 'Fecha de actualización')
                 ->render(function ($model) {
-                    return $model->created_at->toDateTimeString();
+                    return $model->updated_at->toDateTimeString();
                 }),
         ];
     }
@@ -1073,6 +784,154 @@ class DescriptionPartResource extends Resource
     public function filters(): array
     {
         return [];
+    }
+
+    /**
+     * Save the uploaded image and store a copy in the public/uploads folder.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\DescriptionPart $descriptionPart
+     * @return void
+     */
+    /*public function onSave(Request $request, DescriptionPart $descriptionPart): void
+    {
+        // Registrar los datos del request en el archivo de log
+        Log::info($request->all());
+
+        // Validar los datos del request
+        $validatedData = $request->validate($this->rules($descriptionPart), $this->messages());
+        dd($validatedData);
+        // Guardar los datos del tipo de hoja
+        $descriptionPart->code = $validatedData['code'] ?? '';
+        $descriptionPart->typeid = $validatedData['typeid'] ?? '';
+
+        $descriptionPart->save();
+
+        // Mostrar mensaje de éxito
+        Toast::info(message: __('Datos guardados exitosamente.'));
+    }*/
+
+    /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'code' => 'required|string|max:255',
+            'typeid' => 'nullable|string|max:255',
+            'modelid' => 'nullable|integer',
+            'apodo' => 'nullable|string|max:255',
+            'yearid' => 'nullable|integer',
+            'positionid' => 'nullable|integer',
+            'dlttrsid' => 'nullable|string|max:255',
+            'identidad' => 'nullable|string|max:255',
+            'refauxid' => 'nullable|integer',
+            'materialgrapaid' => 'nullable|integer',
+            'materialid' => 'nullable|integer',
+            'anchomm' => 'nullable|string|max:255',
+            'gruesomm' => 'nullable|string|max:255',
+            'longit' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'tipohojaid' => 'nullable|integer',
+            'cortecm' => 'nullable|string|max:255',
+            'distcccm' => 'nullable|string|max:255',
+            'lccm' => 'nullable|string|max:255',
+            'llcm' => 'nullable|string|max:255',
+            'roleolcid' => 'nullable|integer',
+            'roleollid' => 'nullable|integer',
+            'dosroleolc' => 'nullable|string|max:255',
+            'dosroleollcm' => 'nullable|string|max:255',
+            'dosporcenroleo' => 'nullable|string|max:255',
+            'diambocadoid' => 'nullable|string|max:255',
+            'anchoteid' => 'nullable|string|max:255',
+            'destajeid' => 'nullable|string|max:255',
+            'porcendespunte' => 'nullable|integer',
+            'abraztipoid' => 'nullable|integer',
+            'abrazmasterid' => 'nullable|integer',
+            'abrazlongcm' => 'nullable|string|max:255',
+            'diatcid' => 'nullable|integer',
+            'tiposbujesid' => 'nullable|integer',
+            'bujelcid' => 'nullable|integer',
+            'bujellid' => 'nullable|integer',
+            'brioid' => 'nullable|integer',
+            'pesokg' => 'nullable|string|max:255',
+            'observacion' => 'nullable|string|max:255',
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'code.required' => 'El código es obligatorio.',
+            'code.string' => 'El código debe ser un texto.',
+            'code.max' => 'El código no puede tener más de 255 caracteres.',
+            'typeid.string' => 'El tipo debe ser un texto.',
+            'typeid.max' => 'El tipo no puede tener más de 255 caracteres.',
+            'modelid.integer' => 'El ID del modelo debe ser un número.',
+            'apodo.string' => 'El apodo debe ser un texto.',
+            'apodo.max' => 'El apodo no puede tener más de 255 caracteres.',
+            'yearid.integer' => 'El ID del año debe ser un número.',
+            'positionid.integer' => 'El ID de la posición debe ser un número.',
+            'dlttrsid.string' => 'El campo DL TTRS debe ser un texto.',
+            'dlttrsid.max' => 'El campo DL TTRS no puede tener más de 255 caracteres.',
+            'identidad.string' => 'El campo identidad debe ser un texto.',
+            'identidad.max' => 'El campo identidad no puede tener más de 255 caracteres.',
+            'refauxid.integer' => 'El ID de referencia auxiliar debe ser un número.',
+            'materialgrapaid.integer' => 'El ID de material de grapa debe ser un número.',
+            'materialid.integer' => 'El ID de material debe ser un número.',
+            'anchomm.string' => 'El ancho en mm debe ser un texto.',
+            'anchomm.max' => 'El ancho en mm no puede tener más de 255 caracteres.',
+            'gruesomm.string' => 'El grosor en mm debe ser un texto.',
+            'gruesomm.max' => 'El grosor en mm no puede tener más de 255 caracteres.',
+            'longit.string' => 'La longitud debe ser un texto.',
+            'longit.max' => 'La longitud no puede tener más de 255 caracteres.',
+            'description.string' => 'La descripción debe ser un texto.',
+            'description.max' => 'La descripción no puede tener más de 255 caracteres.',
+            'tipohojaid.integer' => 'El ID del tipo de hoja debe ser un número.',
+            'cortecm.string' => 'El corte en cm debe ser un texto.',
+            'cortecm.max' => 'El corte en cm no puede tener más de 255 caracteres.',
+            'distcccm.string' => 'La distancia en cc cm debe ser un texto.',
+            'distcccm.max' => 'La distancia en cc cm no puede tener más de 255 caracteres.',
+            'lccm.string' => 'El campo LCCM debe ser un texto.',
+            'lccm.max' => 'El campo LCCM no puede tener más de 255 caracteres.',
+            'llcm.string' => 'El campo LLCM debe ser un texto.',
+            'llcm.max' => 'El campo LLCM no puede tener más de 255 caracteres.',
+            'roleolcid.integer' => 'El ID de roleolc debe ser un número.',
+            'roleollid.integer' => 'El ID de roleoll debe ser un número.',
+            'dosroleolc.string' => 'El segundo roleolc debe ser un texto.',
+            'dosroleolc.max' => 'El segundo roleolc no puede tener más de 255 caracteres.',
+            'dosroleollcm.string' => 'El segundo roleol LLCM debe ser un texto.',
+            'dosroleollcm.max' => 'El segundo roleol LLCM no puede tener más de 255 caracteres.',
+            'dosporcenroleo.string' => 'El porcentaje de roleo debe ser un texto.',
+            'dosporcenroleo.max' => 'El porcentaje de roleo no puede tener más de 255 caracteres.',
+            'diambocadoid.string' => 'El ID de diámetro de bocado debe ser un texto.',
+            'diambocadoid.max' => 'El ID de diámetro de bocado no puede tener más de 255 caracteres.',
+            'anchoteid.string' => 'El ID de ancho de TE debe ser un texto.',
+            'anchoteid.max' => 'El ID de ancho de TE no puede tener más de 255 caracteres.',
+            'destajeid.string' => 'El ID de destaje debe ser un texto.',
+            'destajeid.max' => 'El ID de destaje no puede tener más de 255 caracteres.',
+            'porcendespunte.integer' => 'El porcentaje de despunte debe ser un número.',
+            'abraztipoid.integer' => 'El ID del tipo de abrazadera debe ser un número.',
+            'abrazmasterid.integer' => 'El ID de la abrazadera maestra debe ser un número.',
+            'abrazlongcm.string' => 'La longitud de abrazadera en cm debe ser un texto.',
+            'abrazlongcm.max' => 'La longitud de abrazadera en cm no puede tener más de 255 caracteres.',
+            'diatcid.integer' => 'El ID de diatc debe ser un número.',
+            'tiposbujesid.integer' => 'El ID del tipo de buje debe ser un número.',
+            'bujelcid.integer' => 'El ID del buje LC debe ser un número.',
+            'bujellid.integer' => 'El ID del buje LL debe ser un número.',
+            'brioid.integer' => 'El ID de BRIO debe ser un número.',
+            'pesokg.string' => 'El peso en kg debe ser un texto.',
+            'pesokg.max' => 'El peso en kg no puede tener más de 255 caracteres.',
+            'observacion.string' => 'La observación debe ser un texto.',
+            'observacion.max' => 'La observación no puede tener más de 255 caracteres.',
+        ];
     }
 
     /**

@@ -1,15 +1,15 @@
-$(() => {
+/* $(() => {
     //SELECT PARA TIPO
     const handleTypeChange = () => {
         const typeValue = $('#typeidInput').val();
     
         // DESHABILITAR OBJETOS
         disableAllSelects(['typeidInput']);
-        disableAllInputs();
+        disableAllInputs(['CódigoInput']);
     
         // LIMPIAR OBJETOS
         clearAllRelationSelectFields(['typeidInput']);
-        clearAllInputFields();
+        clearAllInputFields(['CódigoInput']);
     
         // Habilitar campos según el valor de typeValue
         if (typeValue === '0') {//VEHICULO (01-99)
@@ -34,11 +34,11 @@ $(() => {
     const handleModelChange = () => {   
         // DESHABILITAR OBJETOS
         disableAllSelects(['typeidInput', 'modelidInput']);
-        disableAllInputs();
+        disableAllInputs(['CódigoInput']);
     
         // LIMPIAR OBJETOS
         clearAllRelationSelectFields(['typeidInput', 'modelidInput']);
-        clearAllInputFields();
+        clearAllInputFields(['CódigoInput']);
     
         // HABILITAR OBJETOS
         $('#apodoInput').prop('readonly', false);
@@ -77,3 +77,4 @@ $(() => {
     $('#yearidInput').on('change', handleYearChange);
     $('#positionidInput').on('change', handlePositionChange);
 });
+ */
