@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('tipo_hoja_vechiculos', function (Blueprint $table) {
+        Schema::create('tipo_hoja_vehiculos', function (Blueprint $table) {
             $table->id();  // Crea una columna de clave primaria
             $table->string('tipo_hoja', 4000)->charset('utf8');  // Esto crea un VARCHAR(MAX)
             $table->string('upload', 4000)->charset('utf8')->nullable();  // Esto crea un VARCHAR(MAX)
@@ -23,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('tipo_hoja_vechiculos');
+        Schema::dropIfExists('tipo_hoja_vehiculos');
     }
 };

@@ -77,9 +77,6 @@ class MaterialConstVehiculoResource extends Resource
             TD::make('id')
                 ->sort()
                 ->filter(Input::make()),
-            TD::make('id')
-                ->sort()
-                ->filter(Input::make()),
             TD::make('no_mat', 'Número de materia prima')
                 ->sort()
                 ->filter(Input::make()),
@@ -161,13 +158,13 @@ class MaterialConstVehiculoResource extends Resource
     public function rules(Model $model): array
     {
         return [
-            'no_mat' => 'required|string|max:5',  // Campo requerido, cadena de texto, máximo 5 caracteres
-            'width_plg' => 'required|numeric',  // Campo requerido, debe ser numérico
-            'thick_plg' => 'required|numeric',  // Campo requerido, debe ser numérico
-            'width_mm' => 'required|numeric',  // Campo requerido, debe ser numérico
-            'thick_mm' => 'required|numeric',  // Campo requerido, debe ser numérico
-            'Grueso' => 'required|numeric',  // Campo requerido, debe ser numérico
-            'material_combinado' => 'required|string|max:4000',  // Campo requerido, cadena de texto, máximo 4000 caracteres
+            'no_mat' => 'required|string|max:5',  // Requerido, debe ser una cadena con un máximo de 5 caracteres
+            'width_plg' => 'required|numeric',  // Requerido, debe ser numérico
+            'thick_plg' => 'required|numeric',  // Requerido, debe ser numérico
+            'width_mm' => 'required|numeric',  // Requerido, debe ser numérico
+            'thick_mm' => 'required|numeric',  // Requerido, debe ser numérico
+            'Grueso' => 'required|numeric',  // Requerido, debe ser numérico
+            'material_combinado' => 'required|string|max:4000',  // Requerido, cadena de texto, máximo 4000 caracteres
         ];
     }
 
@@ -180,7 +177,7 @@ class MaterialConstVehiculoResource extends Resource
     {
         return [
             'no_mat.required' => 'El número de materia prima es obligatorio.',
-            'no_mat.string' => 'El número de materia prima debe ser un texto.',
+            'no_mat.string' => 'El número de materia prima debe ser texto.',
             'no_mat.max' => 'El número de materia prima no puede tener más de 5 caracteres.',
             'width_plg.required' => 'El ancho en pulgadas es obligatorio.',
             'width_plg.numeric' => 'El ancho en pulgadas debe ser un número válido.',
@@ -193,7 +190,7 @@ class MaterialConstVehiculoResource extends Resource
             'Grueso.required' => 'El grueso es obligatorio.',
             'Grueso.numeric' => 'El grueso debe ser un número válido.',
             'material_combinado.required' => 'El material combinado es obligatorio.',
-            'material_combinado.string' => 'El material combinado debe ser un texto.',
+            'material_combinado.string' => 'El material combinado debe ser texto.',
             'material_combinado.max' => 'El material combinado no puede tener más de 4000 caracteres.',
         ];
     }

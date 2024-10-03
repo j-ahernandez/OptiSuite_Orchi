@@ -171,6 +171,67 @@ class BujeRBResource extends Resource
     }
 
     /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'bujeRBNum' => 'required|string|max:25',  // Requerido, cadena de texto, máximo 25 caracteres
+            'dia_cpo_PI' => 'required|string|max:25',  // Requerido, cadena de texto, máximo 25 caracteres
+            'long_cpo_PI' => 'required|string|max:25',  // Requerido, cadena de texto, máximo 25 caracteres
+            'long_tot_PI' => 'required|string|max:25',  // Requerido, cadena de texto, máximo 25 caracteres
+            'dian_int_PI' => 'required|string|max:25',  // Requerido, cadena de texto, máximo 25 caracteres
+            'dia_cpo_MM' => 'required|string|max:25',  // Requerido, cadena de texto, máximo 25 caracteres
+            'long_cpo_MM' => 'required|string|max:25',  // Requerido, cadena de texto, máximo 25 caracteres
+            'long_tot_MM' => 'required|string|max:25',  // Requerido, cadena de texto, máximo 25 caracteres
+            'dian_int_MM' => 'required|string|max:25',  // Requerido, cadena de texto, máximo 25 caracteres
+            'remarks' => 'nullable|string|max:25',  // Opcional, cadena de texto, máximo 25 caracteres
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'bujeRBNum.required' => 'El número de buje R B es obligatorio.',
+            'bujeRBNum.string' => 'El número de buje R B debe ser un texto.',
+            'bujeRBNum.max' => 'El número de buje R B no puede tener más de 25 caracteres.',
+            'dia_cpo_PI.required' => 'El día del cpo PI es obligatorio.',
+            'dia_cpo_PI.string' => 'El día del cpo PI debe ser un texto.',
+            'dia_cpo_PI.max' => 'El día del cpo PI no puede tener más de 25 caracteres.',
+            'long_cpo_PI.required' => 'La longitud del cpo PI es obligatoria.',
+            'long_cpo_PI.string' => 'La longitud del cpo PI debe ser un texto.',
+            'long_cpo_PI.max' => 'La longitud del cpo PI no puede tener más de 25 caracteres.',
+            'long_tot_PI.required' => 'La longitud total PI es obligatoria.',
+            'long_tot_PI.string' => 'La longitud total PI debe ser un texto.',
+            'long_tot_PI.max' => 'La longitud total PI no puede tener más de 25 caracteres.',
+            'dian_int_PI.required' => 'El diámetro interior PI es obligatorio.',
+            'dian_int_PI.string' => 'El diámetro interior PI debe ser un texto.',
+            'dian_int_PI.max' => 'El diámetro interior PI no puede tener más de 25 caracteres.',
+            'dia_cpo_MM.required' => 'El día del cpo MM es obligatorio.',
+            'dia_cpo_MM.string' => 'El día del cpo MM debe ser un texto.',
+            'dia_cpo_MM.max' => 'El día del cpo MM no puede tener más de 25 caracteres.',
+            'long_cpo_MM.required' => 'La longitud del cpo MM es obligatoria.',
+            'long_cpo_MM.string' => 'La longitud del cpo MM debe ser un texto.',
+            'long_cpo_MM.max' => 'La longitud del cpo MM no puede tener más de 25 caracteres.',
+            'long_tot_MM.required' => 'La longitud total MM es obligatoria.',
+            'long_tot_MM.string' => 'La longitud total MM debe ser un texto.',
+            'long_tot_MM.max' => 'La longitud total MM no puede tener más de 25 caracteres.',
+            'dian_int_MM.required' => 'El diámetro interior MM es obligatorio.',
+            'dian_int_MM.string' => 'El diámetro interior MM debe ser un texto.',
+            'dian_int_MM.max' => 'El diámetro interior MM no puede tener más de 25 caracteres.',
+            'remarks.string' => 'Los comentarios deben ser un texto.',
+            'remarks.max' => 'Los comentarios no pueden tener más de 25 caracteres.',
+        ];
+    }
+
+    /**
      * Get the label for the resource.
      *
      * @return string
@@ -331,48 +392,6 @@ class BujeRBResource extends Resource
     public static function trafficCop(): bool
     {
         return true;  // Habilita la verificación de cambios
-    }
-
-    /**
-     * Get the validation rules that apply to save/update.
-     *
-     * @return array
-     */
-    public function rules(Model $model): array
-    {
-        return [
-            'bujeRBNum' => 'required|max:25',  // Regla de requerimiento y máximo de 5
-            'dia_cpo_PI' => 'required|max:25',
-            'long_cpo_PI' => 'required|max:25',
-            'long_tot_PI' => 'required|max:25',
-            'dian_int_PI' => 'required|max:25',
-            'dia_cpo_MM' => 'required|max:25',
-            'long_cpo_MM' => 'required|max:25',
-            'long_tot_MM' => 'required|max:25',
-            'dian_int_MM' => 'required|max:25',
-            'remarks' => 'max:255',
-        ];
-    }
-
-    /**
-     * Get the custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'bujeRBNum' => 'El Buje RB no puede tener más de 25 caracteres.',
-            'dia_cpo_PI' => 'El Diametro CPO PI no puede tener más de 25 caracteres.',
-            'long_cpo_PI' => 'La Longitud CPO PI no puede tener más de 25 caracteres.',
-            'long_tot_PI' => 'La Longitud Tot PI no puede tener más de 25 caracteres.',
-            'dian_int_PI' => 'El Diametro Int PI no puede tener más de 25 caracteres.',
-            'dia_cpo_MM' => 'El Diametro CPO MM no puede tener más de 25 caracteres.',
-            'long_cpo_MM' => 'La Longitud CPO MM no puede tener más de 25 caracteres.',
-            'long_tot_MM' => 'La Longitud Tot MM no puede tener más de 25 caracteres.',
-            'dian_int_MM' => 'El Diametro Int MM no puede tener más de 25 caracteres.',
-            'remarks' => 'Los Remarks no puede tener más de 255 caracteres.',
-        ];
     }
 
     /**

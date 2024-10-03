@@ -105,6 +105,36 @@ class RefTensadoVehiculoResource extends Resource
     }
 
     /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'letra' => 'required|string|max:25',  // Requerido, cadena de texto, máximo 25 caracteres
+            'Descripcion' => 'required|string|max:25',  // Requerido, cadena de texto, máximo 25 caracteres
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'letra.required' => 'La letra es obligatoria.',
+            'letra.string' => 'La letra debe ser un texto.',
+            'letra.max' => 'La letra no puede tener más de 25 caracteres.',
+            'Descripcion.required' => 'La descripción es obligatoria.',
+            'Descripcion.string' => 'La descripción debe ser un texto.',
+            'Descripcion.max' => 'La descripción no puede tener más de 25 caracteres.',
+        ];
+    }
+
+    /**
      * Get the label for the resource.
      *
      * @return string
@@ -265,32 +295,6 @@ class RefTensadoVehiculoResource extends Resource
     public static function trafficCop(): bool
     {
         return true;  // Habilita la verificación de cambios
-    }
-
-    /**
-     * Get the validation rules that apply to save/update.
-     *
-     * @return array
-     */
-    public function rules(Model $model): array
-    {
-        return [
-            'letra' => 'required|max:25',  // Regla de requerimiento y máximo de 5
-            'Descripcion' => 'required|max:25',  // Regla de requerimiento y máximo de 5
-        ];
-    }
-
-    /**
-     * Get the custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'letra' => 'El Valor letra no puede tener más de 25 caracteres.',
-            'Descripcion' => 'La Descripcion no puede tener más de 25 caracteres.',
-        ];
     }
 
     /**

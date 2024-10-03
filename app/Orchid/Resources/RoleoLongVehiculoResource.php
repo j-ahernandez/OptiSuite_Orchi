@@ -55,7 +55,7 @@ class RoleoLongVehiculoResource extends Resource
             TD::make('id')
                 ->sort()
                 ->filter(Input::make()),
-            TD::make('milimetros', 'Milemetros')
+            TD::make('milimetros', 'Milimetros')
                 ->sort()
                 ->filter(Input::make()),
             TD::make('pulgadas', 'Pulgadas')
@@ -85,7 +85,7 @@ class RoleoLongVehiculoResource extends Resource
     {
         return [
             Sight::make('id'),
-            Sight::make('milimetros', 'Milemetros'),
+            Sight::make('milimetros', 'Milimetros'),
             Sight::make('pulgadas', 'Pulgadas'),
             Sight::make('created_at', 'Fecha de actualización')
                 ->render(function ($model) {
@@ -106,6 +106,36 @@ class RoleoLongVehiculoResource extends Resource
     public function filters(): array
     {
         return [];
+    }
+
+    /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'milimetros' => 'required|string|max:25',  // Requerido, cadena de texto, máximo 25 caracteres
+            'pulgadas' => 'required|string|max:25',  // Requerido, cadena de texto, máximo 25 caracteres
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'milimetros.required' => 'El campo milimetros es obligatorio.',
+            'milimetros.string' => 'El campo milimetros debe ser un texto.',
+            'milimetros.max' => 'El campo milimetros no puede tener más de 25 caracteres.',
+            'pulgadas.required' => 'El campo pulgadas es obligatorio.',
+            'pulgadas.string' => 'El campo pulgadas debe ser un texto.',
+            'pulgadas.max' => 'El campo pulgadas no puede tener más de 25 caracteres.',
+        ];
     }
 
     /**
@@ -269,32 +299,6 @@ class RoleoLongVehiculoResource extends Resource
     public static function trafficCop(): bool
     {
         return true;  // Habilita la verificación de cambios
-    }
-
-    /**
-     * Get the validation rules that apply to save/update.
-     *
-     * @return array
-     */
-    public function rules(Model $model): array
-    {
-        return [
-            'milimetros' => 'required|max:25',  // Regla de requerimiento y máximo de 5
-            'pulgadas' => 'required|max:25',  // Regla de requerimiento y máximo de 5
-        ];
-    }
-
-    /**
-     * Get the custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'milimetros' => 'Los Milimetros no puede tener más de 25 caracteres.',
-            'pulgadas' => 'Las Pulgadas no puede tener más de 25 caracteres.',
-        ];
     }
 
     /**

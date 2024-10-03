@@ -12,7 +12,5 @@ class MaterialGrapa extends Model
 {
     use HasFactory, AsSource, Filterable, Attachable;
 
-    protected $fillable = [
-        '',
-    ];
+    protected $fillable = [];
 }

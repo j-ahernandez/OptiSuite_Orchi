@@ -191,11 +191,11 @@ class BujeLCResource extends Resource
     public function rules(Model $model): array
     {
         return [
-            'part_no' => 'required|max:10',
-            'od_a' => 'required|max:10',
-            'id_b' => 'required|max:10',
-            'length_c' => 'required|max:10',
-            'picture' => 'nullable|image|max:2048',  // Regla para la imagen, opcional y máximo 2MB
+            'part_no' => 'required|string|max:10',
+            'od_a' => 'required|string|max:10',
+            'id_b' => 'required|string|max:10',
+            'length_c' => 'required|string|max:10',
+            'picture' => 'nullable|image|max:2048',  // La imagen es opcional y debe ser de un máximo de 2MB
         ];
     }
 
@@ -207,15 +207,19 @@ class BujeLCResource extends Resource
     public function messages(): array
     {
         return [
-            'part_no.required' => 'El campo Parte No es obligatorio.',
-            'part_no.max' => 'El Número de Parte no puede tener más de 10 caracteres.',
-            'od_a.required' => 'El campo OD A es obligatorio.',
-            'od_a.max' => 'El OD A no puede tener más de 10 caracteres.',
-            'id_b.required' => 'El campo ID B es obligatorio.',
-            'id_b.max' => 'El ID B no puede tener más de 10 caracteres.',
-            'length_c.required' => 'El campo Longitud C es obligatorio.',
-            'length_c.max' => 'La Longitud C no puede tener más de 10 caracteres.',
-            'picture.image' => 'El archivo debe ser una imagen (JPG, JPEG, PNG).',
+            'part_no.required' => 'El campo "Parte No" es obligatorio.',
+            'part_no.string' => 'El campo "Parte No" debe ser una cadena de texto.',
+            'part_no.max' => 'El campo "Parte No" no puede exceder los 10 caracteres.',
+            'od_a.required' => 'El campo "OD A" es obligatorio.',
+            'od_a.string' => 'El campo "OD A" debe ser una cadena de texto.',
+            'od_a.max' => 'El campo "OD A" no puede exceder los 10 caracteres.',
+            'id_b.required' => 'El campo "ID B" es obligatorio.',
+            'id_b.string' => 'El campo "ID B" debe ser una cadena de texto.',
+            'id_b.max' => 'El campo "ID B" no puede exceder los 10 caracteres.',
+            'length_c.required' => 'El campo "Longitud C" es obligatorio.',
+            'length_c.string' => 'El campo "Longitud C" debe ser una cadena de texto.',
+            'length_c.max' => 'El campo "Longitud C" no puede exceder los 10 caracteres.',
+            'picture.image' => 'El archivo de imagen debe ser de tipo JPG, JPEG o PNG.',
             'picture.max' => 'La imagen no puede ser mayor de 2MB.',
         ];
     }

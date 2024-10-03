@@ -98,6 +98,33 @@ class YearVehiculoResource extends Resource
     }
 
     /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'year_vh' => 'required|integer|min:1886|max:' . date('Y'),  // Requerido, debe ser un entero entre 1886 y el año actual
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'year_vh.required' => 'El campo year_vh es obligatorio.',
+            'year_vh.integer' => 'El campo year_vh debe ser un número entero.',
+            'year_vh.min' => 'El año debe ser mayor o igual a 1886.',
+            'year_vh.max' => 'El año no puede ser mayor que ' . date('Y') . '.',
+        ];
+    }
+
+    /**
      * Get the label for the resource.
      *
      * @return string
@@ -258,30 +285,6 @@ class YearVehiculoResource extends Resource
     public static function trafficCop(): bool
     {
         return true;  // Habilita la verificación de cambios
-    }
-
-    /**
-     * Get the validation rules that apply to save/update.
-     *
-     * @return array
-     */
-    public function rules(Model $model): array
-    {
-        return [
-            'year_vh' => 'required|integer|min:1900|max:' . date('Y'),  // Debe ser un entero, entre 1900 y el año actual
-        ];
-    }
-
-    /**
-     * Get the custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'year_vh' => 'Debe ser un entero, entre 1900 y el año actual.',
-        ];
     }
 
     /**

@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
 
@@ -105,6 +104,34 @@ class MaterialGrapaResource extends Resource
     public function filters(): array
     {
         return [];
+    }
+
+    /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'inches' => 'nullable|string|max:10',  // Campo opcional, cadena de texto, máximo 10 caracteres
+            'decimal' => 'nullable|string|max:10',  // Campo opcional, cadena de texto, máximo 10 caracteres
+            'mm' => 'nullable|string|max:10',  // Campo opcional, cadena de texto, máximo 10 caracteres
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'inches.max' => 'Las Pulgadas no pueden tener más de 10 caracteres.',
+            'decimal.max' => 'Los decimales no pueden tener más de 10 caracteres.',
+            'mm.max' => 'Los Milímetros no pueden tener más de 10 caracteres.',
+        ];
     }
 
     /**
@@ -268,34 +295,6 @@ class MaterialGrapaResource extends Resource
     public static function trafficCop(): bool
     {
         return true;  // Habilita la verificación de cambios
-    }
-
-    /**
-     * Get the validation rules that apply to save/update.
-     *
-     * @return array
-     */
-    public function rules(Model $model): array
-    {
-        return [
-            'inches' => 'max:10',  // Regla de requerimiento y máximo de 5
-            'decimal' => 'max:10',
-            'mm' => 'max:10',
-        ];
-    }
-
-    /**
-     * Get the custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'inches' => 'Las Pulgadas no puede tener más de 10 caracteres.',
-            'decimal' => 'Los decimales no puede tener más de 10 caracteres.',
-            'mm' => 'Los Milimetros no puede tener más de 10 caracteres.',
-        ];
     }
 
     /**

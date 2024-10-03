@@ -116,6 +116,36 @@ class VehiculoResource extends Resource
     }
 
     /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'descripcionvehiculo' => 'required|string|max:255',  // Requerido, cadena de texto, máximo 255 caracteres
+            'nombrecorto' => 'required|string|max:10',  // Requerido, cadena de texto, máximo 10 caracteres
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'descripcionvehiculo.required' => 'El campo descripcionvehiculo es obligatorio.',
+            'descripcionvehiculo.string' => 'El campo descripcionvehiculo debe ser un texto.',
+            'descripcionvehiculo.max' => 'El campo descripcionvehiculo no puede tener más de 255 caracteres.',
+            'nombrecorto.required' => 'El campo nombrecorto es obligatorio.',
+            'nombrecorto.string' => 'El campo nombrecorto debe ser un texto.',
+            'nombrecorto.max' => 'El campo nombrecorto no puede tener más de 10 caracteres.',
+        ];
+    }
+
+    /**
      * Get the label for the resource.
      *
      * @return string
@@ -276,34 +306,6 @@ class VehiculoResource extends Resource
     public static function trafficCop(): bool
     {
         return true;  // Habilita la verificación de cambios
-    }
-
-    /**
-     * Get the validation rules that apply to save/update.
-     *
-     * @return array
-     */
-    public function rules(Model $model): array
-    {
-        return [
-            'descripcionvehiculo' => 'required|max:255',  // Regla de requerimiento y máximo de 5
-            'nombrecorto' => 'required|max:10',  // Regla de requerimiento y máximo de 5
-            'numero' => 'required|max:10',  // Regla de requerimiento y máximo de 5
-        ];
-    }
-
-    /**
-     * Get the custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'descripcionvehiculo' => 'La Descripcion no puede tener más de 255 caracteres.',
-            'nombrecorto' => 'El Nombre no puede tener más de 10 caracteres.',
-            'numero' => 'El numero no puede tener más de 10 caracteres.',
-        ];
     }
 
     /**

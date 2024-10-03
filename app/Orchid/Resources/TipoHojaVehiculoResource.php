@@ -192,53 +192,6 @@ class TipoHojaVehiculoResource extends Resource
         ];
     }
 
-    /* public function onSave(Request $request, TipoHojaVehiculo $tipoHojaVehiculo): void
-    {
-        try {
-            // Verificar el tipo MIME del archivo antes de la validación
-            if ($request->hasFile('upload')) {
-                $file = $request->file('upload');
-                $mimeType = $file->getMimeType();
-                Toast::info(__('Tipo MIME del archivo: ') . $mimeType);
-            }
-
-            // Validar los datos
-            $validatedData = $request->validate([
-                'tipo_hoja' => 'required|string|max:4000',
-                'upload' => 'nullable|image|max:10240',  // Solo validación de imagen, sin mimes
-            ]);
-
-            // Guardar los datos del tipo de hoja
-            $tipoHojaVehiculo->tipo_hoja = $validatedData['tipo_hoja'];
-
-            // Si hay una imagen subida, procesarla
-            if ($request->hasFile('upload')) {
-                $file = $request->file('upload');
-                $path = $file->store('uploads', 'public');
-
-                // Guardar la ruta de la imagen en el modelo
-                $tipoHojaVehiculo->upload = $path;
-
-                // Crear una copia de la imagen en la carpeta public/uploads
-                Storage::disk('public')->put('uploads/' . $file->getClientOriginalName(), file_get_contents($file));
-            }
-
-            dd($tipoHojaVehiculo);
-
-            // Guardar el modelo
-            $tipoHojaVehiculo->save();
-
-            // Mostrar mensaje de éxito utilizando Orchid Toast
-            Toast::info(__('Datos guardados exitosamente.'));
-        } catch (ValidationException $e) {
-            // Mostrar mensaje de error de validación utilizando Orchid Toast
-            Toast::error(__('Error de validación: ') . implode(', ', $e->errors()));
-        } catch (Exception $e) {
-            // Mostrar mensaje de error general utilizando Orchid Toast
-            Toast::error(__('Error: ') . $e->getMessage());
-        }
-    } */
-
     /**
      * Get the label for the resource.
      *

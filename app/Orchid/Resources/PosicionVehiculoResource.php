@@ -98,6 +98,32 @@ class PosicionVehiculoResource extends Resource
     }
 
     /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'posicion' => 'required|string|max:255',  // Requerido, cadena de texto, máximo 255 caracteres
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'posicion.required' => 'La posición es obligatoria.',
+            'posicion.string' => 'La posición debe ser un texto.',
+            'posicion.max' => 'La posición no puede tener más de 255 caracteres.',
+        ];
+    }
+
+    /**
      * Get the label for the resource.
      *
      * @return string
@@ -258,30 +284,6 @@ class PosicionVehiculoResource extends Resource
     public static function trafficCop(): bool
     {
         return true;  // Habilita la verificación de cambios
-    }
-
-    /**
-     * Get the validation rules that apply to save/update.
-     *
-     * @return array
-     */
-    public function rules(Model $model): array
-    {
-        return [
-            'posicion' => 'required|max:25',  // Regla de requerimiento y máximo de 5
-        ];
-    }
-
-    /**
-     * Get the custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'posicion' => 'La Posicion no puede tener más de 255 caracteres.',
-        ];
     }
 
     /**

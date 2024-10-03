@@ -96,6 +96,32 @@ class MoldeResource extends Resource
     }
 
     /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'descripcion_molde' => 'required|string|max:25',  // Requerido, cadena de texto, máximo 25 caracteres
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'descripcion_molde.required' => 'La descripción del molde es obligatoria.',
+            'descripcion_molde.string' => 'La descripción del molde debe ser un texto.',
+            'descripcion_molde.max' => 'La descripción del molde no puede tener más de 25 caracteres.',
+        ];
+    }
+
+    /**
      * Get the label for the resource.
      *
      * @return string
@@ -256,30 +282,6 @@ class MoldeResource extends Resource
     public static function trafficCop(): bool
     {
         return true;  // Habilita la verificación de cambios
-    }
-
-    /**
-     * Get the validation rules that apply to save/update.
-     *
-     * @return array
-     */
-    public function rules(Model $model): array
-    {
-        return [
-            'descripcion_molde' => 'required|max:25',  // Regla de requerimiento y máximo de 5
-        ];
-    }
-
-    /**
-     * Get the custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'descripcion_molde' => 'El Detalle no puede tener más de 25 caracteres.',
-        ];
     }
 
     /**

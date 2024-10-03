@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
 
@@ -97,6 +96,34 @@ class BrioResource extends Resource
                 ->render(function ($model) {
                     return $model->updated_at->toDateTimeString();  // Cambiado `created_at` por `updated_at`
                 }),
+        ];
+    }
+
+    /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'cm' => 'nullable|string|max:10',
+            'inches' => 'nullable|string|max:10',
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'cm.string' => 'El campo cm debe ser una cadena de texto.',
+            'cm.max' => 'El campo cm no puede tener más de 10 caracteres.',
+            'inches.string' => 'El campo inches debe ser una cadena de texto.',
+            'inches.max' => 'El campo inches no puede tener más de 10 caracteres.',
         ];
     }
 
@@ -261,32 +288,6 @@ class BrioResource extends Resource
     public static function trafficCop(): bool
     {
         return true;  // Habilita la verificación de cambios
-    }
-
-    /**
-     * Get the validation rules that apply to save/update.
-     *
-     * @return array
-     */
-    public function rules(Model $model): array
-    {
-        return [
-            'cm' => 'required|max:10',  // Regla de requerimiento y máximo de 5
-            'inches' => 'required|max:10',
-        ];
-    }
-
-    /**
-     * Get the custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'cm' => 'Los CM no puede tener más de 5 caracteres.',
-            'inches' => 'Las Pulgadas no puede tener más de 5 caracteres.',
-        ];
     }
 
     /**

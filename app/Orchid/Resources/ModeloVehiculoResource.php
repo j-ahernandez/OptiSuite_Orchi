@@ -111,6 +111,35 @@ class ModeloVehiculoResource extends Resource
     }
 
     /**
+     * Get the validation rules that apply to save/update.
+     *
+     * @return array
+     */
+    public function rules(Model $model): array
+    {
+        return [
+            'idVehiculo' => 'required|exists:vehiculos,id',  // Requerido, debe existir en la tabla 'vehiculos'
+            'modelo_detalle' => 'required|string|max:255',  // Requerido, cadena de texto, máximo 255 caracteres
+        ];
+    }
+
+    /**
+     * Get the custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'idVehiculo.required' => 'El campo idVehiculo es obligatorio.',
+            'idVehiculo.exists' => 'El idVehiculo debe existir en la tabla de vehículos.',
+            'modelo_detalle.required' => 'El modelo de detalle es obligatorio.',
+            'modelo_detalle.string' => 'El modelo de detalle debe ser un texto.',
+            'modelo_detalle.max' => 'El modelo de detalle no puede tener más de 255 caracteres.',
+        ];
+    }
+
+    /**
      * Get the filters available for the resource.
      *
      * @return array
@@ -281,30 +310,6 @@ class ModeloVehiculoResource extends Resource
         return __('Eliminar :resource', [
             'resource' => static::singular()
         ]);
-    }
-
-    /**
-     * Get the validation rules that apply to save/update.
-     *
-     * @return array
-     */
-    public function rules(Model $model): array
-    {
-        return [
-            'modelo_detalle' => 'max:255',  // Regla de requerimiento y máximo de 5
-        ];
-    }
-
-    /**
-     * Get the custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'modelo_detalle' => 'El Detalle no puede tener más de 255 caracteres.',
-        ];
     }
 
     /**

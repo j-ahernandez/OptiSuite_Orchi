@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->string('long_cpo_MM', 25);  // Esto creará un VARCHAR(255)
             $table->string('long_tot_MM', 25);  // Esto creará un VARCHAR(255)
             $table->string('dian_int_MM', 25);  // Esto creará un VARCHAR(255)
-            $table->string('remarks', 25);  // Esto creará un VARCHAR(255)
+            $table->string('remarks', 25)->nullable();  // Esto creará un VARCHAR(255)
             $table->timestamps();
         });
     }

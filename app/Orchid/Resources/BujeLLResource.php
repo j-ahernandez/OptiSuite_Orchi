@@ -220,13 +220,13 @@ class BujeLLResource extends Resource
     public function rules(Model $model): array
     {
         return [
-            'idbujeRBNum' => 'required|exists:buje_r_b_s,id',  // Asegura que el ID de Buje RB exista
-            'dim_a' => 'required|max:10',  // Requerido y máximo de 10 caracteres
-            'dim_b' => 'required|max:10',  // Requerido y máximo de 10 caracteres
-            'dim_c' => 'required|max:10',  // Requerido y máximo de 10 caracteres
-            'dim_d' => 'required|max:10',  // Requerido y máximo de 10 caracteres
-            'remarks' => 'nullable|max:20',  // Opcional y máximo de 20 caracteres
-            'picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',  // Opcional, tipo imagen, y máximo de 2MB
+            'idbujeRBNum' => 'required|exists:buje_r_b_s,id',  // Verifica que el ID de Buje RB exista en la base de datos
+            'dim_a' => 'nullable|string|max:10',  // Opcional, debe ser una cadena y máximo de 10 caracteres
+            'dim_b' => 'nullable|string|max:10',  // Opcional, debe ser una cadena y máximo de 10 caracteres
+            'dim_c' => 'nullable|string|max:10',  // Opcional, debe ser una cadena y máximo de 10 caracteres
+            'dim_d' => 'nullable|string|max:10',  // Opcional, debe ser una cadena y máximo de 10 caracteres
+            'remarks' => 'nullable|string|max:20',  // Opcional, debe ser una cadena y máximo de 20 caracteres
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',  // Opcional, debe ser una imagen y máximo de 2MB
         ];
     }
 
@@ -238,18 +238,24 @@ class BujeLLResource extends Resource
     public function messages(): array
     {
         return [
-            'idbujeRBNum.required' => 'El Buje RB es requerido.',
+            'idbujeRBNum.required' => 'El campo "Buje RB" es obligatorio.',
             'idbujeRBNum.exists' => 'El Buje RB seleccionado no es válido.',
-            'dim_a.required' => 'El Diametro A es requerido.',
-            'dim_a.max' => 'El Diametro A no puede tener más de 10 caracteres.',
-            'dim_b.required' => 'El Diametro B es requerido.',
-            'dim_b.max' => 'El Diametro B no puede tener más de 10 caracteres.',
-            'dim_c.required' => 'El Diametro C es requerido.',
-            'dim_c.max' => 'El Diametro C no puede tener más de 10 caracteres.',
-            'dim_d.required' => 'El Diametro D es requerido.',
-            'dim_d.max' => 'El Diametro D no puede tener más de 10 caracteres.',
-            'remarks.max' => 'Los Remarks no pueden tener más de 20 caracteres.',
-            'picture.image' => 'El archivo debe ser una imagen.',
+            'dim_a.nullable' => 'El campo "Diámetro A" es opcional.',
+            'dim_a.string' => 'El campo "Diámetro A" debe ser una cadena de texto.',
+            'dim_a.max' => 'El "Diámetro A" no puede tener más de 10 caracteres.',
+            'dim_b.nullable' => 'El campo "Diámetro B" es opcional.',
+            'dim_b.string' => 'El campo "Diámetro B" debe ser una cadena de texto.',
+            'dim_b.max' => 'El "Diámetro B" no puede tener más de 10 caracteres.',
+            'dim_c.nullable' => 'El campo "Diámetro C" es opcional.',
+            'dim_c.string' => 'El campo "Diámetro C" debe ser una cadena de texto.',
+            'dim_c.max' => 'El "Diámetro C" no puede tener más de 10 caracteres.',
+            'dim_d.nullable' => 'El campo "Diámetro D" es opcional.',
+            'dim_d.string' => 'El campo "Diámetro D" debe ser una cadena de texto.',
+            'dim_d.max' => 'El "Diámetro D" no puede tener más de 10 caracteres.',
+            'remarks.nullable' => 'El campo "Remarks" es opcional.',
+            'remarks.string' => 'El campo "Remarks" debe ser una cadena de texto.',
+            'remarks.max' => 'Los "Remarks" no pueden tener más de 20 caracteres.',
+            'picture.image' => 'El archivo debe ser una imagen (JPG, JPEG, PNG).',
             'picture.mimes' => 'Solo se permiten imágenes en formato JPG, JPEG y PNG.',
             'picture.max' => 'La imagen no puede ser mayor de 2MB.',
         ];

@@ -93,7 +93,7 @@ class PlatformProvider extends OrchidServiceProvider
                     Menu::make('Tipo Hoja Vehiculo')
                         ->icon('fa.book')
                         ->route('platform.resource.list', ['resource' => 'tipo-hoja-vehiculo-resources'])
-                        ->permission('platform.tipo.hoja.vechiculos'),
+                        ->permission('platform.tipo.hoja.vehiculos'),
                     Menu::make('Vehiculo')
                         ->icon('fa.book')
                         ->route('platform.resource.list', ['resource' => 'vehiculo-resources'])
@@ -102,7 +102,8 @@ class PlatformProvider extends OrchidServiceProvider
                         ->icon('fa.book')
                         ->route('platform.resource.list', ['resource' => 'year-vehiculo-resources'])
                         ->permission('platform.year.vehiculo'),
-                ]),
+                ])
+                ->permission('platform.configuracion'),
             // CONTROL DE ACCESO
             Menu::make(__('Usuarios'))
                 ->icon('bs.people')
@@ -128,7 +129,9 @@ class PlatformProvider extends OrchidServiceProvider
             ItemPermission::group(__('System'))
                 ->addPermission('platform.systems.roles', __('Roles'))
                 ->addPermission('platform.systems.users', __('Usuarios')),
-            ItemPermission::group(__('Fast Solutions - Menu'))
+            ItemPermission::group(__('Fast Solutions - Menus'))
+                ->addPermission('platform.configuracion', __('Configuración')),
+            ItemPermission::group(__('Fast Solutions - Sub-Menus'))
                 ->addPermission('platform.descriptionpart', __('Descripción de Partes'))
                 ->addPermission('platform.bujelc', __('Buje LC'))
                 ->addPermission('platform.bujell', __('Buje LL'))
@@ -140,7 +143,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.posicion.vehiculo', __('Posicion Vehiculo'))
                 ->addPermission('platform.ref.tensado.vehiculo', __('Referencia Tensado Vehiculo'))
                 ->addPermission('platform.roleo.long.vehiculo', __('Roleo Long Vehiculo'))
-                ->addPermission('platform.tipo.hoja.vechiculos', __('Tipo Hoja Vehiculo'))
+                ->addPermission('platform.tipo.hoja.vehiculos', __('Tipo Hoja Vehiculo'))
                 ->addPermission('platform.vehiculo', __('Tipo Vehiculo'))
                 ->addPermission('platform.year.vehiculo', __('Año Vehiculo'))
                 ->addPermission('platform.abraz', __('Abrazaderas'))

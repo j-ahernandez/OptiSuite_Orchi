@@ -12,9 +12,9 @@ return new class extends Migration {
     {
         Schema::create('material_grapas', function (Blueprint $table) {
             $table->id();
-            $table->string('inches', 15)->nullable()->change();;  // Esto creará un VARCHAR(255)
-            $table->string('decimal', 15)->nullable()->change();;  // Esto creará un VARCHAR(255)
-            $table->string('mm', 15)->nullable()->change();  // Esto creará un VARCHAR(255)
+            $table->string('inches', 10)->nullable();
+            $table->string('decimal', 10)->nullable();
+            $table->string('mm', 10)->nullable();
             $table->timestamps();
         });
     }

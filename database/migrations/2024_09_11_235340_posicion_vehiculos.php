@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('posicion_vechiculos', function (Blueprint $table) {
+        Schema::create('posicion_vehiculos', function (Blueprint $table) {
             $table->id(); // Crea una columna de clave primaria
-            $table->integer('posicion'); // Columna de tipo entero
+            $table->string('posicion'); // Columna de tipo entero
             $table->timestamps(); // Crea las columnas created_at y updated_at
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('posicion_vechiculos');
+        Schema::dropIfExists('posicion_vehiculos');
     }
 };
