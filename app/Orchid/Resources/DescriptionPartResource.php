@@ -74,14 +74,17 @@ class DescriptionPartResource extends Resource
                     ->empty('Seleccione una opción')
                     ->id('modelidInput')
                     ->set('class', 'form-select')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione el vehículo y modelo.'),
                 Input::make('apodo')
                     ->title('Apodo')
                     ->type(value: 'text')
                     ->id(value: 'apodoInput')
-                    // ->readonly()
+                    ->readonly()
                     ->placeholder('Apodo'),
+                Input::make('modelid_hidden')
+                    ->type('hidden')
+                    ->value($modelidValue)  // Asigna el valor del campo deshabilitado
             ]),
             // Fila 2
             Group::make([
@@ -92,7 +95,7 @@ class DescriptionPartResource extends Resource
                     ->empty('Seleccione un año')
                     ->searchable()
                     ->set('class', 'form-select')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un año.'),
                 Relation::make('positionid')
                     ->fromModel(PosicionVehiculo::class, 'posicion', 'id')  // Usar el modelo PosicionVehiculo
@@ -793,23 +796,24 @@ class DescriptionPartResource extends Resource
      * @param \App\Models\DescriptionPart $descriptionPart
      * @return void
      */
-    /*public function onSave(Request $request, DescriptionPart $descriptionPart): void
+    public function onSave(Request $request, DescriptionPart $descriptionPart): void
     {
+        dd($request->all());
         // Registrar los datos del request en el archivo de log
         Log::info($request->all());
 
         // Validar los datos del request
-        $validatedData = $request->validate($this->rules($descriptionPart), $this->messages());
-        dd($validatedData);
+        // $validatedData = $request->validate($this->rules($descriptionPart), $this->messages());
+
         // Guardar los datos del tipo de hoja
-        $descriptionPart->code = $validatedData['code'] ?? '';
-        $descriptionPart->typeid = $validatedData['typeid'] ?? '';
+        $descriptionPart->code = $request['code'] ?? '';
+        $descriptionPart->typeid = $valirequestdatedData['typeid'] ?? '';
 
         $descriptionPart->save();
 
         // Mostrar mensaje de éxito
         Toast::info(message: __('Datos guardados exitosamente.'));
-    }*/
+    }
 
     /**
      * Get the validation rules that apply to save/update.

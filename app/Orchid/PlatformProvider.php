@@ -2,10 +2,12 @@
 
 namespace App\Orchid;
 
+use App\Http\Controllers\VersionController;  // Asegúrate de importar el controlador si es necesario
 use Orchid\Platform\Dashboard;
 use Orchid\Platform\ItemPermission;
 use Orchid\Platform\OrchidServiceProvider;
 use Orchid\Screen\Actions\Menu;
+use Orchid\Support\Color;
 
 class PlatformProvider extends OrchidServiceProvider
 {
@@ -115,6 +117,11 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.systems.roles')
                 ->permission('platform.systems.roles')
                 ->divider(),
+            Menu::make('Versión')
+                ->icon('bs.box-arrow-up-right')
+                ->url('https://github.com/clinicarehn/PalmScale/tree/main/Laravel/CHANGELOG.md')
+                ->target('_blank')
+                ->badge(fn() => VersionController::getLatestVersionFromChangelog(), Color::DARK)
         ];
     }
 

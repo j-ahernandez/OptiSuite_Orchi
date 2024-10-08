@@ -1,4 +1,4 @@
-/* $(() => {
+$(() => {
     //SELECT PARA TIPO
     const handleTypeChange = () => {
         const typeValue = $('#typeidInput').val();
@@ -77,4 +77,3 @@
     $('#yearidInput').on('change', handleYearChange);
     $('#positionidInput').on('change', handlePositionChange);
 });
- */
