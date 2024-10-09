@@ -34,7 +34,7 @@ class PlatformProvider extends OrchidServiceProvider
     {
         return [
             // MapOPRh
-            Menu::make('Descripción de Partes')
+            Menu::make('Codigo Hoja de Resortes')
                 ->icon('fa.book')
                 ->route('platform.resource.list', ['resource' => 'description-part-resources'])
                 ->permission('platform.descriptionpart')
@@ -64,11 +64,11 @@ class PlatformProvider extends OrchidServiceProvider
                         ->icon('fa.book')
                         ->route('platform.resource.list', ['resource' => 'buje-r-b-resources'])
                         ->permission('platform.bujerb'),
-                    Menu::make('Material Construcción')
+                    Menu::make('Materia Prima')
                         ->icon('fa.book')
                         ->route('platform.resource.list', ['resource' => 'material-const-vehiculo-resources'])
                         ->permission('platform.material.const.vehiculo'),
-                    Menu::make('Material Grapas')
+                    Menu::make('Crear Grapa')
                         ->icon('fa.book')
                         ->route('platform.resource.list', ['resource' => 'material-grapa-resources'])
                         ->permission('platform.material.grapa'),
@@ -139,12 +139,12 @@ class PlatformProvider extends OrchidServiceProvider
             ItemPermission::group(__('Fast Solutions - Menus'))
                 ->addPermission('platform.configuracion', __('Configuración')),
             ItemPermission::group(__('Fast Solutions - Sub-Menus'))
-                ->addPermission('platform.descriptionpart', __('Descripción de Partes'))
+                ->addPermission('platform.descriptionpart', __('Codigo Hoja de Resortes'))
                 ->addPermission('platform.bujelc', __('Buje LC'))
                 ->addPermission('platform.bujell', __('Buje LL'))
                 ->addPermission('platform.bujerb', __('Buje RB'))
-                ->addPermission('platform.material.const.vehiculo', __('Material Construcción Vehiculo'))
-                ->addPermission('platform.material.grapa', __('Material Grapa'))
+                ->addPermission('platform.material.const.vehiculo', __('Materia Prima'))
+                ->addPermission('platform.material.grapa', __('Crear Grapa'))
                 ->addPermission('platform.modelo.vehiculo', __('Modelo Vehiculos'))
                 ->addPermission('platform.molde', __('Molde'))
                 ->addPermission('platform.posicion.vehiculo', __('Posicion Vehiculo'))
