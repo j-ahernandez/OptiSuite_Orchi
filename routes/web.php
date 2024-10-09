@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TipoHojaController;
 use Illuminate\Support\Facades\Auth;  // Importar la facade de Auth
 use Illuminate\Support\Facades\Route;
 

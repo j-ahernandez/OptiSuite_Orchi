@@ -1543,3 +1543,385 @@
 #84 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(23): require_once('C:\\\\xampp\\\\htdocs...')
 #85 {main}
 "} 
+[2024-10-08 18:51:30] local.ERROR: syntax error, unexpected identifier "Group", expecting "]" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected identifier \"Group\", expecting \"]\" at C:\\xampp\\htdocs\\Laravel\\OptiSuite\\app\\Orchid\\Resources\\DescriptionPartResource.php:54)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\xampp\\\\htdocs...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('App\\\\Orchid\\\\Reso...')
+#2 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\orchid\\crud\\src\\ResourceFinder.php(71): is_subclass_of('App\\\\Orchid\\\\Reso...', 'Orchid\\\\Crud\\\\Res...')
+#3 [internal function]: Orchid\\Crud\\ResourceFinder->Orchid\\Crud\\{closure}('App\\\\Orchid\\\\Reso...', 'C:\\\\xampp\\\\htdocs...')
+#4 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Collections\\Arr.php(926): array_filter(Array, Object(Closure), 1)
+#5 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Collections\\Collection.php(391): Illuminate\\Support\\Arr::where(Array, Object(Closure))
+#6 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\orchid\\crud\\src\\ResourceFinder.php(70): Illuminate\\Support\\Collection->filter(Object(Closure))
+#7 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\orchid\\crud\\src\\CrudServiceProvider.php(40): Orchid\\Crud\\ResourceFinder->find('C:\\\\xampp\\\\htdocs...')
+#8 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Orchid\\Crud\\CrudServiceProvider->boot(Object(Orchid\\Crud\\ResourceFinder), Object(Orchid\\Crud\\Arbitrator))
+#9 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#10 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(95): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))
+#11 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#12 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(690): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#13 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1119): Illuminate\\Container\\Container->call(Array)
+#14 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1100): Illuminate\\Foundation\\Application->bootProvider(Object(Orchid\\Crud\\CrudServiceProvider))
+#15 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(Orchid\\Crud\\CrudServiceProvider), 'Orchid\\\\Crud\\\\Cru...')
+#16 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1099): array_walk(Array, Object(Closure))
+#17 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#18 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(316): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#19 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(473): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#20 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(195): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#21 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#22 {main}
+"} 
+[2024-10-08 18:51:30] local.ERROR: syntax error, unexpected identifier "Group", expecting "]" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected identifier \"Group\", expecting \"]\" at C:\\xampp\\htdocs\\Laravel\\OptiSuite\\app\\Orchid\\Resources\\DescriptionPartResource.php:54)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\xampp\\\\htdocs...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('App\\\\Orchid\\\\Reso...')
+#2 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\orchid\\crud\\src\\ResourceFinder.php(71): is_subclass_of('App\\\\Orchid\\\\Reso...', 'Orchid\\\\Crud\\\\Res...')
+#3 [internal function]: Orchid\\Crud\\ResourceFinder->Orchid\\Crud\\{closure}('App\\\\Orchid\\\\Reso...', 'C:\\\\xampp\\\\htdocs...')
+#4 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Collections\\Arr.php(926): array_filter(Array, Object(Closure), 1)
+#5 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Collections\\Collection.php(391): Illuminate\\Support\\Arr::where(Array, Object(Closure))
+#6 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\orchid\\crud\\src\\ResourceFinder.php(70): Illuminate\\Support\\Collection->filter(Object(Closure))
+#7 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\orchid\\crud\\src\\CrudServiceProvider.php(40): Orchid\\Crud\\ResourceFinder->find('C:\\\\xampp\\\\htdocs...')
+#8 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Orchid\\Crud\\CrudServiceProvider->boot(Object(Orchid\\Crud\\ResourceFinder), Object(Orchid\\Crud\\Arbitrator))
+#9 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#10 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(95): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))
+#11 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#12 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(690): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#13 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1119): Illuminate\\Container\\Container->call(Array)
+#14 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1100): Illuminate\\Foundation\\Application->bootProvider(Object(Orchid\\Crud\\CrudServiceProvider))
+#15 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(Orchid\\Crud\\CrudServiceProvider), 'Orchid\\\\Crud\\\\Cru...')
+#16 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1099): array_walk(Array, Object(Closure))
+#17 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#18 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(316): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#19 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(473): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#20 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(195): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#21 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#22 {main}
+"} 
+[2024-10-08 18:51:30] local.ERROR: syntax error, unexpected identifier "Group", expecting "]" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected identifier \"Group\", expecting \"]\" at C:\\xampp\\htdocs\\Laravel\\OptiSuite\\app\\Orchid\\Resources\\DescriptionPartResource.php:54)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\xampp\\\\htdocs...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('App\\\\Orchid\\\\Reso...')
+#2 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\orchid\\crud\\src\\ResourceFinder.php(71): is_subclass_of('App\\\\Orchid\\\\Reso...', 'Orchid\\\\Crud\\\\Res...')
+#3 [internal function]: Orchid\\Crud\\ResourceFinder->Orchid\\Crud\\{closure}('App\\\\Orchid\\\\Reso...', 'C:\\\\xampp\\\\htdocs...')
+#4 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Collections\\Arr.php(926): array_filter(Array, Object(Closure), 1)
+#5 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Collections\\Collection.php(391): Illuminate\\Support\\Arr::where(Array, Object(Closure))
+#6 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\orchid\\crud\\src\\ResourceFinder.php(70): Illuminate\\Support\\Collection->filter(Object(Closure))
+#7 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\orchid\\crud\\src\\CrudServiceProvider.php(40): Orchid\\Crud\\ResourceFinder->find('C:\\\\xampp\\\\htdocs...')
+#8 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Orchid\\Crud\\CrudServiceProvider->boot(Object(Orchid\\Crud\\ResourceFinder), Object(Orchid\\Crud\\Arbitrator))
+#9 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#10 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(95): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))
+#11 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#12 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(690): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#13 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1119): Illuminate\\Container\\Container->call(Array)
+#14 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1100): Illuminate\\Foundation\\Application->bootProvider(Object(Orchid\\Crud\\CrudServiceProvider))
+#15 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(Orchid\\Crud\\CrudServiceProvider), 'Orchid\\\\Crud\\\\Cru...')
+#16 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1099): array_walk(Array, Object(Closure))
+#17 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#18 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(316): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#19 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(473): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#20 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(195): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#21 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#22 {main}
+"} 
+[2024-10-08 19:58:34] local.INFO: array (
+  'code' => '1020',
+  'typeid' => '0',
+  'modelid' => '1',
+  'apodo' => NULL,
+  'yearid' => NULL,
+  'positionid' => NULL,
+  'dlttrsid' => NULL,
+  'identidad' => NULL,
+  'refauxid' => NULL,
+  'materialgrapaid' => NULL,
+  'materialid' => NULL,
+  'anchomm' => NULL,
+  'gruesomm' => NULL,
+  'longit' => NULL,
+  'description' => NULL,
+  'tipohojaid' => NULL,
+  'cortecm' => NULL,
+  'distcccm' => NULL,
+  'lccm' => NULL,
+  'llcm' => NULL,
+  'roleolcid' => NULL,
+  'roleollid' => NULL,
+  'dosroleolc' => NULL,
+  'dosroleollcm' => NULL,
+  'dosporcenroleo' => NULL,
+  'diambocadoid' => NULL,
+  'anchoteid' => NULL,
+  'destajeid' => NULL,
+  'porcendespunte' => NULL,
+  'abraztipoid' => NULL,
+  'abrazmasterid' => NULL,
+  'abrazlongcm' => NULL,
+  'diatcid' => NULL,
+  'tiposbujesid' => NULL,
+  'bujelcid' => NULL,
+  'bujellid' => NULL,
+  'brioid' => NULL,
+  'pesokg' => NULL,
+  'observacion' => NULL,
+)  
+[2024-10-08 20:10:53] local.INFO: array (
+  'code' => '1020',
+  'typeid' => '0',
+  'apodo' => NULL,
+  'yearid' => NULL,
+  'positionid' => NULL,
+  'dlttrsid' => NULL,
+  'identidad' => NULL,
+  'refauxid' => NULL,
+  'materialgrapaid' => NULL,
+  'materialid' => NULL,
+  'anchomm' => NULL,
+  'gruesomm' => NULL,
+  'longit' => NULL,
+  'description' => NULL,
+  'tipohojaid' => NULL,
+  'cortecm' => NULL,
+  'distcccm' => NULL,
+  'lccm' => NULL,
+  'llcm' => NULL,
+  'roleolcid' => NULL,
+  'roleollid' => NULL,
+  'dosroleolc' => NULL,
+  'dosroleollcm' => NULL,
+  'dosporcenroleo' => NULL,
+  'diambocadoid' => NULL,
+  'anchoteid' => NULL,
+  'destajeid' => NULL,
+  'porcendespunte' => NULL,
+  'abraztipoid' => NULL,
+  'abrazmasterid' => NULL,
+  'abrazlongcm' => NULL,
+  'diatcid' => NULL,
+  'tiposbujesid' => NULL,
+  'bujelcid' => NULL,
+  'bujellid' => NULL,
+  'brioid' => NULL,
+  'pesokg' => NULL,
+  'observacion' => NULL,
+)  
+[2024-10-08 20:14:28] local.INFO: array (
+  'code' => '14020',
+  'typeid' => '0',
+  'modelid' => '1',
+  'apodo' => NULL,
+  'yearid' => NULL,
+  'positionid' => NULL,
+  'dlttrsid' => NULL,
+  'identidad' => NULL,
+  'refauxid' => NULL,
+  'materialgrapaid' => NULL,
+  'materialid' => NULL,
+  'anchomm' => NULL,
+  'gruesomm' => NULL,
+  'longit' => NULL,
+  'description' => NULL,
+  'tipohojaid' => NULL,
+  'cortecm' => NULL,
+  'distcccm' => NULL,
+  'lccm' => NULL,
+  'llcm' => NULL,
+  'roleolcid' => NULL,
+  'roleollid' => NULL,
+  'dosroleolc' => NULL,
+  'dosroleollcm' => NULL,
+  'dosporcenroleo' => NULL,
+  'diambocadoid' => NULL,
+  'anchoteid' => NULL,
+  'destajeid' => NULL,
+  'porcendespunte' => NULL,
+  'abraztipoid' => NULL,
+  'abrazmasterid' => NULL,
+  'abrazlongcm' => NULL,
+  'diatcid' => NULL,
+  'tiposbujesid' => NULL,
+  'bujelcid' => NULL,
+  'bujellid' => NULL,
+  'brioid' => NULL,
+  'pesokg' => NULL,
+  'observacion' => NULL,
+)  
+[2024-10-08 20:17:25] local.INFO: array (
+  'code' => '1020',
+  'typeid' => NULL,
+  'apodo' => NULL,
+  'yearid' => NULL,
+  'positionid' => NULL,
+  'dlttrsid' => NULL,
+  'identidad' => NULL,
+  'refauxid' => NULL,
+  'materialgrapaid' => NULL,
+  'materialid' => NULL,
+  'anchomm' => NULL,
+  'gruesomm' => NULL,
+  'longit' => NULL,
+  'description' => NULL,
+  'tipohojaid' => NULL,
+  'cortecm' => NULL,
+  'distcccm' => NULL,
+  'lccm' => NULL,
+  'llcm' => NULL,
+  'roleolcid' => NULL,
+  'roleollid' => NULL,
+  'dosroleolc' => NULL,
+  'dosroleollcm' => NULL,
+  'dosporcenroleo' => NULL,
+  'diambocadoid' => NULL,
+  'anchoteid' => NULL,
+  'destajeid' => NULL,
+  'porcendespunte' => NULL,
+  'abraztipoid' => NULL,
+  'abrazmasterid' => NULL,
+  'abrazlongcm' => NULL,
+  'diatcid' => NULL,
+  'tiposbujesid' => NULL,
+  'bujelcid' => NULL,
+  'bujellid' => NULL,
+  'brioid' => NULL,
+  'pesokg' => NULL,
+  'observacion' => NULL,
+)  
+[2024-10-08 20:20:53] local.INFO: array (
+  'code' => '1050',
+  'typeid' => '0',
+  'modelid' => NULL,
+  'apodo' => NULL,
+  'positionid' => NULL,
+  'identidad' => NULL,
+  'anchomm' => NULL,
+  'gruesomm' => NULL,
+  'longit' => NULL,
+  'description' => NULL,
+  'cortecm' => NULL,
+  'distcccm' => NULL,
+  'lccm' => NULL,
+  'llcm' => NULL,
+  'dosroleolc' => NULL,
+  'dosroleollcm' => NULL,
+  'abrazlongcm' => NULL,
+  'pesokg' => NULL,
+  'observacion' => NULL,
+)  
+[2024-10-08 20:27:25] local.INFO: array (
+  'code' => '1020',
+  'typeid' => '0',
+  'modelid' => '1',
+  'apodo' => 'Apodo',
+  'yearid' => '1',
+  'positionid' => '1',
+  'identidad' => '1234',
+  'materialid' => NULL,
+  'anchomm' => '1234',
+  'gruesomm' => '1234',
+  'longit' => '1234',
+  'description' => NULL,
+  'cortecm' => NULL,
+  'distcccm' => NULL,
+  'lccm' => NULL,
+  'llcm' => NULL,
+  'dosroleolc' => NULL,
+  'dosroleollcm' => NULL,
+  'abrazlongcm' => NULL,
+  'pesokg' => NULL,
+  'observacion' => NULL,
+)  
+[2024-10-08 20:32:17] local.INFO: array (
+  'code' => '1050',
+  'typeid' => '0',
+  'modelid' => '1',
+  'apodo' => '1020',
+  'yearid' => '1',
+  'positionid' => '1',
+  'identidad' => '1234',
+  'materialid' => '1',
+  'anchomm' => NULL,
+  'gruesomm' => NULL,
+  'longit' => NULL,
+  'description' => NULL,
+  'cortecm' => NULL,
+  'distcccm' => NULL,
+  'lccm' => NULL,
+  'llcm' => NULL,
+  'dosroleolc' => NULL,
+  'dosroleollcm' => NULL,
+  'abrazlongcm' => NULL,
+  'pesokg' => NULL,
+  'observacion' => 'asasdasas',
+)  
+[2024-10-08 20:58:15] local.INFO: array (
+  'code' => '1020',
+  'typeid' => '3',
+  'apodo' => NULL,
+  'identidad' => NULL,
+  'materialgrapaid' => '1',
+  'anchomm' => NULL,
+  'gruesomm' => NULL,
+  'longit' => '1212',
+  'description' => NULL,
+  'cortecm' => NULL,
+  'distcccm' => NULL,
+  'lccm' => NULL,
+  'llcm' => NULL,
+  'dosroleolc' => NULL,
+  'dosroleollcm' => NULL,
+  'abrazlongcm' => NULL,
+  'pesokg' => NULL,
+  'observacion' => NULL,
+)  
+[2024-10-08 21:17:31] local.ERROR: syntax error, unexpected token "->", expecting "]" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"->\", expecting \"]\" at C:\\xampp\\htdocs\\Laravel\\OptiSuite\\app\\Orchid\\Resources\\DescriptionPartResource.php:218)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\xampp\\\\htdocs...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('App\\\\Orchid\\\\Reso...')
+#2 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\orchid\\crud\\src\\ResourceFinder.php(71): is_subclass_of('App\\\\Orchid\\\\Reso...', 'Orchid\\\\Crud\\\\Res...')
+#3 [internal function]: Orchid\\Crud\\ResourceFinder->Orchid\\Crud\\{closure}('App\\\\Orchid\\\\Reso...', 'C:\\\\xampp\\\\htdocs...')
+#4 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Collections\\Arr.php(926): array_filter(Array, Object(Closure), 1)
+#5 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Collections\\Collection.php(391): Illuminate\\Support\\Arr::where(Array, Object(Closure))
+#6 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\orchid\\crud\\src\\ResourceFinder.php(70): Illuminate\\Support\\Collection->filter(Object(Closure))
+#7 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\orchid\\crud\\src\\CrudServiceProvider.php(40): Orchid\\Crud\\ResourceFinder->find('C:\\\\xampp\\\\htdocs...')
+#8 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Orchid\\Crud\\CrudServiceProvider->boot(Object(Orchid\\Crud\\ResourceFinder), Object(Orchid\\Crud\\Arbitrator))
+#9 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#10 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(95): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))
+#11 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#12 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(690): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#13 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1119): Illuminate\\Container\\Container->call(Array)
+#14 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1100): Illuminate\\Foundation\\Application->bootProvider(Object(Orchid\\Crud\\CrudServiceProvider))
+#15 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(Orchid\\Crud\\CrudServiceProvider), 'Orchid\\\\Crud\\\\Cru...')
+#16 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1099): array_walk(Array, Object(Closure))
+#17 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#18 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(316): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#19 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(473): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#20 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(195): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#21 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#22 {main}
+"} 
+[2024-10-08 21:17:34] local.ERROR: syntax error, unexpected token "->", expecting "]" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"->\", expecting \"]\" at C:\\xampp\\htdocs\\Laravel\\OptiSuite\\app\\Orchid\\Resources\\DescriptionPartResource.php:218)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\xampp\\\\htdocs...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('App\\\\Orchid\\\\Reso...')
+#2 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\orchid\\crud\\src\\ResourceFinder.php(71): is_subclass_of('App\\\\Orchid\\\\Reso...', 'Orchid\\\\Crud\\\\Res...')
+#3 [internal function]: Orchid\\Crud\\ResourceFinder->Orchid\\Crud\\{closure}('App\\\\Orchid\\\\Reso...', 'C:\\\\xampp\\\\htdocs...')
+#4 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Collections\\Arr.php(926): array_filter(Array, Object(Closure), 1)
+#5 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Collections\\Collection.php(391): Illuminate\\Support\\Arr::where(Array, Object(Closure))
+#6 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\orchid\\crud\\src\\ResourceFinder.php(70): Illuminate\\Support\\Collection->filter(Object(Closure))
+#7 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\orchid\\crud\\src\\CrudServiceProvider.php(40): Orchid\\Crud\\ResourceFinder->find('C:\\\\xampp\\\\htdocs...')
+#8 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Orchid\\Crud\\CrudServiceProvider->boot(Object(Orchid\\Crud\\ResourceFinder), Object(Orchid\\Crud\\Arbitrator))
+#9 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#10 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(95): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))
+#11 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#12 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(690): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#13 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1119): Illuminate\\Container\\Container->call(Array)
+#14 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1100): Illuminate\\Foundation\\Application->bootProvider(Object(Orchid\\Crud\\CrudServiceProvider))
+#15 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(Orchid\\Crud\\CrudServiceProvider), 'Orchid\\\\Crud\\\\Cru...')
+#16 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1099): array_walk(Array, Object(Closure))
+#17 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#18 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(316): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#19 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(187): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#20 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(171): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#21 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(145): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#22 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1188): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#23 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\public\\index.php(17): Illuminate\\Foundation\\Application->handleRequest(Object(Illuminate\\Http\\Request))
+#24 C:\\xampp\\htdocs\\Laravel\\OptiSuite\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(23): require_once('C:\\\\xampp\\\\htdocs...')
+#25 {main}
+"} 

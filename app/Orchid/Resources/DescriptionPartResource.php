@@ -51,7 +51,8 @@ class DescriptionPartResource extends Resource
                     ->id('CódigoInput')
                     ->required()
                     // //->readonly()
-                    ->placeholder('Código'),
+                    ->placeholder('Código')
+                    ->autocomplete('off'),  // Desactivar autocompletado
             ]),
             // Fila 1
             Group::make([
@@ -81,10 +82,8 @@ class DescriptionPartResource extends Resource
                     ->type(value: 'text')
                     ->id(value: 'apodoInput')
                     ->readonly()
+                    ->autocomplete('off')
                     ->placeholder('Apodo'),
-                Input::make('modelid_hidden')
-                    ->type('hidden')
-                    ->value($modelidValue)  // Asigna el valor del campo deshabilitado
             ]),
             // Fila 2
             Group::make([
@@ -104,7 +103,7 @@ class DescriptionPartResource extends Resource
                     ->empty('Seleccione una posición')
                     ->searchable()
                     ->set('class', 'form-select')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione una posición.'),
                 Select::make('dlttrsid')
                     ->options([
@@ -116,7 +115,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione una Dlt/Trs.'),
             ]),
             // Fila 3
@@ -125,7 +124,8 @@ class DescriptionPartResource extends Resource
                     ->title('Identidad')
                     ->type(value: 'text')
                     ->id('identidadInput')
-                    // ->readonly()
+                    ->autocomplete('off')
+                    ->readonly()
                     ->placeholder('Identidad'),
                 Relation::make('refauxid')
                     ->fromModel(RefTensadoVehiculo::class, 'Descripcion', 'id')  // Cambia a tu modelo correspondiente
@@ -134,7 +134,7 @@ class DescriptionPartResource extends Resource
                     ->empty('Seleccione una Ref/Aux')
                     ->searchable()
                     ->set('class', 'form-select')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione una Ref/Aux.'),
                 Select::make('materialgrapaid')
                     ->options(function () {
@@ -151,7 +151,7 @@ class DescriptionPartResource extends Resource
                     ->empty('Seleccione una opción')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un Material Grapa.'),
             ]),
             // Fila 4
@@ -171,19 +171,21 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un Material.'),
                 Input::make('anchomm')
                     ->title('Ancho MM')
                     ->type(value: 'text')
                     ->id('anchommInput')
-                    // ->readonly()
+                    ->autocomplete('off')
+                    ->readonly()
                     ->placeholder('Ancho MM'),
                 Input::make('gruesomm')
                     ->title('Grueso MM')
                     ->type(value: 'text')
                     ->id('gruesommInput')
-                    // ->readonly()
+                    ->autocomplete('off')
+                    ->readonly()
                     ->placeholder('Grueso MM'),
             ]),
             // Fila 5
@@ -192,7 +194,8 @@ class DescriptionPartResource extends Resource
                     ->title('Longit CM')
                     ->type(value: 'text')
                     ->id('longitInput')
-                    // ->readonly()
+                    ->autocomplete('off')
+                    ->readonly()
                     ->placeholder('Longit MM'),
                 /* ->rules('required|numeric|min:10|max:180') */
                 // Añade las reglas de validación aquí,
@@ -200,7 +203,8 @@ class DescriptionPartResource extends Resource
                     ->title('Descripción')
                     ->type(value: 'text')
                     ->id('descriptionInput')
-                    // ->readonly()
+                    ->autocomplete('off')
+                    ->readonly()
                     ->placeholder('Descripción'),
                 Select::make('tipohojaid')
                     ->fromModel(TipoHojaVehiculo::class, 'tipo_hoja', 'id')  // Usar el modelo Vehiculo
@@ -209,7 +213,7 @@ class DescriptionPartResource extends Resource
                     ->id('tipohojaidInput')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un Tipo de Hoja.'),
             ]),
             // Fila 6
@@ -218,19 +222,22 @@ class DescriptionPartResource extends Resource
                     ->title('Corte Cm')
                     ->type(value: 'text')
                     ->id('cortecmInput')
-                    // ->readonly()
+                    ->autocomplete('off')
+                    ->readonly()
                     ->placeholder('Corte CM'),
                 Input::make('distcccm')
                     ->title('Distcc CM')
                     ->type(value: 'text')
                     ->id('distcccmInput')
-                    // ->readonly()
+                    ->autocomplete('off')
+                    ->readonly()
                     ->placeholder('Distcc CM'),
                 Input::make('lccm')
                     ->title('LC CM')
                     ->type(value: 'text')
                     ->id('lccmInput')
-                    // ->readonly()
+                    ->autocomplete('off')
+                    ->readonly()
                     ->placeholder('LC CM'),
             ]),
             // Fila 7
@@ -239,7 +246,8 @@ class DescriptionPartResource extends Resource
                     ->title('LL CM')
                     ->type(value: 'text')
                     ->id('llcmInput')
-                    // ->readonly()
+                    ->autocomplete('off')
+                    ->readonly()
                     ->placeholder('LL CM'),
                 Select::make('roleolcid')
                     ->options(function () {
@@ -253,10 +261,10 @@ class DescriptionPartResource extends Resource
                     })
                     ->title('Seleccione una Roleo LC')
                     ->empty('')
-                    ->id('roleollidInput')
+                    ->id('roleolcidInput')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un Roleo LL.'),
                 Select::make('roleollid')
                     ->options(function () {
@@ -273,7 +281,7 @@ class DescriptionPartResource extends Resource
                     ->id('roleollidInput')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un Roleo LL.'),
             ]),
             // Fila 8
@@ -282,13 +290,15 @@ class DescriptionPartResource extends Resource
                     ->title('2Roleo LC')
                     ->type(value: 'text')
                     ->id('2roleolcInput')
-                    // ->readonly()
+                    ->autocomplete('off')
+                    ->readonly()
                     ->placeholder('2Roleo LC'),
                 Input::make(name: 'dosroleollcm')
                     ->title('2Roleo LL')
                     ->type(value: 'text')
                     ->id('2roleollcmInput')
-                    // ->readonly()
+                    ->autocomplete('off')
+                    ->readonly()
                     ->placeholder('2Roleo LL'),
                 Select::make('dosporcenroleo')
                     ->options([
@@ -302,7 +312,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un 2% Roleo.'),
             ]),
             // Fila 9
@@ -320,7 +330,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un Diam Bocado.'),
                 Select::make('anchoteid')
                     ->options(value: [
@@ -337,7 +347,7 @@ class DescriptionPartResource extends Resource
                     ->searchable()
                     ->disable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un Ancho TE.'),
                 Select::make('destajeid')
                     ->options(value: [
@@ -351,7 +361,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un Destaje.'),
             ]),
             // Fila 10
@@ -368,7 +378,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un % Despunte.'),
                 Select::make('abraztipoid')
                     ->options([
@@ -381,7 +391,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un Abraz Tipo.'),
                 Select::make('abrazmasterid')
                     ->options([
@@ -401,7 +411,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un Abraz Master.'),
             ]),
             // Fila 11
@@ -410,7 +420,8 @@ class DescriptionPartResource extends Resource
                     ->title('Abraz Long CM')
                     ->type(value: 'text')
                     ->id('abrazlongcmInput')
-                    // ->readonly()
+                    ->autocomplete('off')
+                    ->readonly()
                     ->placeholder('Abraz Long CM'),
                 Select::make('diatcid')
                     ->options([
@@ -448,7 +459,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un Dia TC.'),
                 Select::make('tiposbujesid')
                     ->options([
@@ -465,7 +476,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un Tipo de Buje.'),
             ]),
             // Fila 12
@@ -485,7 +496,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un Buje LC.'),
                 Select::make('bujellid')
                     ->options(function () {
@@ -502,7 +513,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un Buje LL.'),
                 Select::make('brioid')
                     ->options(function () {
@@ -519,7 +530,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'selectpicker')
-                    // ->disabled()
+                    ->disabled()
                     ->help('Por favor seleccione un Brio CM.'),
             ]),
             // Fila 13
@@ -528,11 +539,13 @@ class DescriptionPartResource extends Resource
                     ->title('Peso KG')
                     ->type(value: 'text')
                     ->id('pesokgInput')
-                    // ->readonly()
+                    ->autocomplete('off')
+                    ->readonly()
                     ->placeholder('Peso KG'),
             ]),
             Group::make([
                 ImagePreview::make()
+                    ->id('imagePreview')
                     ->setImageUrl($imageUrl)
                     ->title('Tipo de Hoja'),
                 ImagePreview::make()
@@ -798,7 +811,7 @@ class DescriptionPartResource extends Resource
      */
     public function onSave(Request $request, DescriptionPart $descriptionPart): void
     {
-        dd($request->all());
+        // dd($request->all());
         // Registrar los datos del request en el archivo de log
         Log::info($request->all());
 

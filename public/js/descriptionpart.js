@@ -2,15 +2,7 @@ $(() => {
     //SELECT PARA TIPO
     const handleTypeChange = () => {
         const typeValue = $('#typeidInput').val();
-    
-        // DESHABILITAR OBJETOS
-        disableAllSelects(['typeidInput']);
-        disableAllInputs(['CódigoInput']);
-    
-        // LIMPIAR OBJETOS
-        clearAllRelationSelectFields(['typeidInput']);
-        clearAllInputFields(['CódigoInput']);
-    
+       
         // Habilitar campos según el valor de typeValue
         if (typeValue === '0') {//VEHICULO (01-99)
             enableSelect('modelidInput');
@@ -21,7 +13,6 @@ $(() => {
             $('#cortecmInput').prop('readonly', false);
             $('#lccmInput').prop('readonly', false);
             $('#abrazlongcmInput').prop('readonly', false);
-    
             enableSelect('materialidInput');
             enableSelect('porcendespunteInput');
         } else if (typeValue === '3') {// GRAPA
@@ -32,14 +23,6 @@ $(() => {
     
     //SELECT PARA MODEL
     const handleModelChange = () => {   
-        // DESHABILITAR OBJETOS
-        disableAllSelects(['typeidInput', 'modelidInput']);
-        disableAllInputs(['CódigoInput']);
-    
-        // LIMPIAR OBJETOS
-        clearAllRelationSelectFields(['typeidInput', 'modelidInput']);
-        clearAllInputFields(['CódigoInput']);
-    
         // HABILITAR OBJETOS
         $('#apodoInput').prop('readonly', false);
         enableSelect('yearidInput');
@@ -53,9 +36,39 @@ $(() => {
 
     //SELECT PARA POSICION
     const handlePositionChange = () => {
-        // HABILITAR OBJETOS
-        $('#identidadInput').prop('readonly', false);
-        enableSelect('materialidInput');
+        if($('#typeidInput').val() === '0') {//VEHICULO (01-99)
+            // HABILITAR OBJETOS
+            $('#identidadInput').prop('readonly', false);
+            $('#distcccmInput').prop('readonly', false);           
+            enableSelect('materialidInput');
+            enableSelect('tipohojaidInput');
+            enableSelect('diatcidInput');
+            enableSelect('tiposbujesidInput');
+            enableSelect('bujelcidInput');
+            enableSelect('bujellidInput');
+            enableSelect('brioidInput');
+            enableSelect('brioidInput');
+        }
+
+        if($('#typeidInput').val() === '1') {// TRAMO TERMINADO (9T -- TrT)
+            // HABILITAR OBJETOS
+            $('#identidadInput').prop('readonly', false);
+            $('#distcccmInput').prop('readonly', false);           
+            enableSelect('materialidInput');
+            enableSelect('tipohojaidInput');
+            enableSelect('roleolcidInput');
+            enableSelect('roleollidInput');
+            enableSelect('abraztipoidInput');
+            enableSelect('abrazmasteridInput');
+            enableSelect('diatcidInput');
+            enableSelect('bujelcidInput');
+            enableSelect('bujellidInput');
+        }
+    }
+
+    //SELECT PARA POSICION
+    const handleTramoRectoChange = () => {
+
     }
 
     // Asignar manejadores de eventos
@@ -64,6 +77,7 @@ $(() => {
         $('#modelidInput').off('change', handleModelChange);
         //$('#yearidInput').off('change', handleYearChange);
         $('#positionidInput').off('change', handlePositionChange);
+        $('#positionidInput').off('change', handleTramoRectoChange);
 
         handleTypeChange();
         
@@ -76,4 +90,15 @@ $(() => {
     $('#modelidInput').on('change', handleModelChange);
     $('#yearidInput').on('change', handleYearChange);
     $('#positionidInput').on('change', handlePositionChange);
+
+    /*$('form').on('submit', function() {
+        enableSelect(modelidInput)
+
+        var modelidInput = $('#modelidInput');
+        if (modelidInput.length) {
+            // Habilitar el campo deshabilitado
+            modelidInput.prop('disabled', false);
+            console.log('modelidInput value:', modelidInput.val());
+        }
+    });*/ 
 });
