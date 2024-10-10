@@ -101,4 +101,77 @@ $(() => {
             console.log('modelidInput value:', modelidInput.val());
         }
     });*/ 
+
+    // Primero, obtenemos el token CSRF
+    $.get('/obtener-csrf-token', function(response) {
+        const csrfToken = response.csrfToken;
+
+        // Escuchar el evento de cambio en el Select
+        $('#tipohojaidInput').on('change', function() {
+            var selectedValue = $(this).val();
+
+            // Realizar la solicitud AJAX para obtener la URL de la imagen
+            $.ajax({
+                url: `/obtener-imagen-tipo-hoja/${selectedValue}`, // Ruta hacia el controlador
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken // Usamos el token CSRF obtenido
+                },
+                success: function(response) {
+                    // Actualizar la imagen con la URL obtenida en la respuesta
+                    console.log(response.imageUrl);
+                    $('#imagePreviewTipoHoja').attr('src', response.imageUrl); // Asegúrate de que esto coincide con lo que devuelves
+                },
+                error: function(xhr) {
+                    console.error("Error al cargar la imagen");
+                }
+            });
+        });
+
+        // Escuchar el evento de cambio en el Select
+        $('#bujelcidInput').on('change', function() {
+            var selectedValue = $(this).val();
+
+            // Realizar la solicitud AJAX para obtener la URL de la imagen
+            $.ajax({
+                url: `/obtener-imagen-buje-lc/${selectedValue}`, // Ruta hacia el controlador
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken // Usamos el token CSRF obtenido
+                },
+                success: function(response) {
+                    // Actualizar la imagen con la URL obtenida en la respuesta
+                    $('#imagePreviewBujeLC').attr('src', response.imageUrl); // Asegúrate de que esto coincide con lo que devuelves
+                },
+                error: function(xhr) {
+                    console.error("Error al cargar la imagen");
+                }
+            });
+        });
+
+        // Escuchar el evento de cambio en el Select
+        $('#bujellidInput').on('change', function() {
+            var selectedValue = $(this).val();
+
+            // Realizar la solicitud AJAX para obtener la URL de la imagen
+            $.ajax({
+                url: `/obtener-imagen-buje-ll/${selectedValue}`, // Ruta hacia el controlador
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken // Usamos el token CSRF obtenido
+                },
+                success: function(response) {
+                    // Actualizar la imagen con la URL obtenida en la respuesta
+                    console.log(response.imageUrl);
+                    $('#imagePreviewBujeLL').attr('src', response.imageUrl); // Asegúrate de que esto coincide con lo que devuelves
+                },
+                error: function(xhr) {
+                    console.error("Error al cargar la imagen");
+                }
+            });
+        });
+
+
+    });
+
 });

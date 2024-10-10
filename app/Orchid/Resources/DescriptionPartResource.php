@@ -6,7 +6,6 @@ use App\Models\DescriptionPart;
 use App\Models\ModeloVehiculo;
 use App\Orchid\Components\ImagePreview;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Orchid\Crud\Resource;
@@ -545,15 +544,20 @@ class DescriptionPartResource extends Resource
             ]),
             Group::make([
                 ImagePreview::make()
-                    ->id('imagePreview')
+                    ->containerId('imagePreviewContainerTipoHoja')
+                    ->imageId('imagePreviewTipoHoja')
                     ->setImageUrl($imageUrl)
                     ->title('Tipo de Hoja'),
                 ImagePreview::make()
-                    ->setImageUrl($imageUrl)
-                    ->title('Buje LC'),
-                ImagePreview::make()
+                    ->containerId('imagePreviewContainerBujeLL')
+                    ->imageId('imagePreviewBujeLL')
                     ->setImageUrl($imageUrl)
                     ->title('Buje LL'),
+                ImagePreview::make()
+                    ->containerId('imagePreviewContainerBujeLC')
+                    ->imageId('imagePreviewBujeLC')
+                    ->setImageUrl($imageUrl)
+                    ->title('Buje LC'),
             ]),
             // Fila 15
             Group::make([
@@ -582,34 +586,69 @@ class DescriptionPartResource extends Resource
                 ->filter(Input::make()),
             TD::make('typeid', 'Tipo')
                 ->sort()
-                ->filter(Input::make()),
-            TD::make('vehiculoid', 'Vehiculo')
-                ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => 'VEHICULO (01-99)',
+                        1 => 'TRAMO TERMINADO (9T -- TrT)',
+                        2 => 'TRAMO RECTO (9TR -- TrR)',
+                        3 => 'GRAPA',
+                    ][$descriptionPart->typeid] ?? '';
+                }),
             TD::make('modelid', 'Modelo')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    $modelo = ModeloVehiculo::Find($descriptionPart->modelid);
+                    return $modelo ? $modelo->modelo_detalle : '';
+                }),
             TD::make('apodo', 'Apodo')
                 ->sort()
                 ->filter(Input::make()),
             TD::make('yearid', 'Año')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    $year = YearVehiculo::Find($descriptionPart->modelid);
+                    return $year ? $year->year_vh : '';
+                }),
             TD::make('positionid', 'Posición')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    $position = PosicionVehiculo::Find($descriptionPart->modelid);
+                    return $position ? $position->posicion : '';
+                }),
             TD::make('dlttrsid', 'Dlt/Trs')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => 'T',
+                        1 => 'D',
+                    ][$descriptionPart->dlttrsid] ?? '';
+                }),
             TD::make('identidad', 'Identidad')
                 ->sort()
                 ->filter(Input::make()),
             TD::make('refauxid', 'Ref/Aux')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    $ref = RefTensadoVehiculo::Find($descriptionPart->modelid);
+                    return $ref ? $ref->letra : '';
+                }),
             TD::make('materialgrapaid', 'Material Grapa')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    $materialGrapa = DB::table('material_grapas')
+                        ->select(DB::raw("CONCAT(inches, ', ', decimal, ', ', mm) as detalles"))
+                        ->where('id', $descriptionPart->materialgrapaid)
+                        ->first();
+
+                    return $materialGrapa ? $materialGrapa->detalles : 'N/A';
+                }),
             TD::make('anchomm', 'Ancho')
                 ->sort()
                 ->filter(Input::make()),
@@ -621,7 +660,11 @@ class DescriptionPartResource extends Resource
                 ->filter(Input::make()),
             TD::make('description', 'Descripción')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    $tipoHoja = TipoHojaVehiculo::Find($descriptionPart->modelid);
+                    return $tipoHoja ? $tipoHoja->tipo_hoja : '';
+                }),
             TD::make('tipohojaid', 'Tipo Hoja')
                 ->sort()
                 ->filter(Input::make()),
@@ -729,28 +772,28 @@ class DescriptionPartResource extends Resource
                         1 => 'TRAMO TERMINADO (9T -- TrT)',
                         2 => 'TRAMO RECTO (9TR -- TrR)',
                         3 => 'GRAPA',
-                    ][$model->typeid] ?? 'Desconocido';
+                    ][$model->typeid] ?? '';
                 }),
             Sight::make('vehiculoid', 'Vehículo')
                 ->render(function ($model) {
-                    return $model->vehiculo->nombre ?? 'No asignado';  // Cambia 'nombre' al campo correspondiente
+                    return $model->vehiculo->nombre ?? '';  // Cambia 'nombre' al campo correspondiente
                 }),
             Sight::make('modelid', 'Modelo')
                 ->render(function ($model) {
-                    return $model->modelo->nombre ?? 'No asignado';  // Cambia 'nombre' al campo correspondiente
+                    return $model->modelo->nombre ?? '';  // Cambia 'nombre' al campo correspondiente
                 }),
             Sight::make('apodo', 'Apodo'),
             Sight::make('yearid', 'Año'),
             Sight::make('positionid', 'Posición')
                 ->render(function ($model) {
-                    return $model->posicion->posicion ?? 'No asignada';  // Cambia 'posicion' al campo correspondiente
+                    return $model->posicion->posicion ?? '';  // Cambia 'posicion' al campo correspondiente
                 }),
             Sight::make('dlttrsid', 'Dlt/Trs'),
             Sight::make('identidad', 'Identidad'),
             Sight::make('refauxid', 'Ref/Aux'),
             Sight::make('materialgrapaid', 'Material Grapa')
                 ->render(function ($model) {
-                    return $model->materialGrapa->nombre ?? 'No asignado';  // Cambia 'nombre' al campo correspondiente
+                    return $model->materialGrapa->nombre ?? '';  // Cambia 'nombre' al campo correspondiente
                 }),
             Sight::make('anchomm', 'Ancho (mm)'),
             Sight::make('gruesomm', 'Grueso (mm)'),
@@ -809,7 +852,7 @@ class DescriptionPartResource extends Resource
      * @param \App\Models\DescriptionPart $descriptionPart
      * @return void
      */
-    public function onSave(Request $request, DescriptionPart $descriptionPart): void
+    /*public function onSave(Request $request, DescriptionPart $descriptionPart): void
     {
         // dd($request->all());
         // Registrar los datos del request en el archivo de log
@@ -826,7 +869,7 @@ class DescriptionPartResource extends Resource
 
         // Mostrar mensaje de éxito
         Toast::info(message: __('Datos guardados exitosamente.'));
-    }
+    }*/
 
     /**
      * Get the validation rules that apply to save/update.

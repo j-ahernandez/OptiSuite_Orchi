@@ -12,6 +12,8 @@ class ImagePreview extends Field
         $this->addBeforeRender(function () {
             $this->set('imageUrl', '');  // Inicialmente vacío
             $this->set('title', '');  // Inicialmente vacío
+            $this->set('containerId', '');  // Inicialmente vacío
+            $this->set('imageId', '');  // Inicialmente vacío
         });
     }
 
@@ -27,11 +29,25 @@ class ImagePreview extends Field
         return $this;
     }
 
+    public function containerId($id)
+    {
+        $this->set('containerId', $id);
+        return $this;
+    }
+
+    public function imageId($id)
+    {
+        $this->set('imageId', $id);
+        return $this;
+    }
+
     public function render()
     {
         return view($this->view, [
             'imageUrl' => $this->get('imageUrl'),
             'title' => $this->get('title'),
+            'containerId' => $this->get('containerId'),
+            'imageId' => $this->get('imageId'),
         ])->render();
     }
 }
