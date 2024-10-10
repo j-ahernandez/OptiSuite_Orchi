@@ -49,7 +49,7 @@ class DescriptionPartResource extends Resource
                     ->type(value: 'text')
                     ->id('CódigoInput')
                     ->required()
-                    // //->readonly()
+                    // ->readonly()
                     ->placeholder('Código')
                     ->autocomplete('off'),  // Desactivar autocompletado
             ]),
@@ -647,7 +647,7 @@ class DescriptionPartResource extends Resource
                         ->where('id', $descriptionPart->materialgrapaid)
                         ->first();
 
-                    return $materialGrapa ? $materialGrapa->detalles : 'N/A';
+                    return $materialGrapa ? $materialGrapa->detalles : '';
                 }),
             TD::make('anchomm', 'Ancho')
                 ->sort()
@@ -660,14 +660,14 @@ class DescriptionPartResource extends Resource
                 ->filter(Input::make()),
             TD::make('description', 'Descripción')
                 ->sort()
+                ->filter(Input::make()),
+            TD::make('tipohojaid', 'Tipo Hoja')
+                ->sort()
                 ->filter(Input::make())
                 ->render(function ($descriptionPart) {
                     $tipoHoja = TipoHojaVehiculo::Find($descriptionPart->modelid);
                     return $tipoHoja ? $tipoHoja->tipo_hoja : '';
                 }),
-            TD::make('tipohojaid', 'Tipo Hoja')
-                ->sort()
-                ->filter(Input::make()),
             TD::make('cortecm', 'Corte (cm)')
                 ->sort()
                 ->filter(Input::make()),
@@ -682,55 +682,195 @@ class DescriptionPartResource extends Resource
                 ->filter(Input::make()),
             TD::make('roleolcid', 'RoleoLC')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    $roleolc = DB::table('roleo_long_vehiculos')
+                        ->select(DB::raw("CONCAT(milimetros, ', ', pulgadas) as detalles"))
+                        ->where('id', $descriptionPart->roleolcid)
+                        ->first();
+
+                    return $roleolc ? $roleolc->detalles : '';
+                }),
             TD::make('roleollid', 'Roleo LL')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    $roleoll = DB::table('roleo_long_vehiculos')
+                        ->select(DB::raw("CONCAT(milimetros, ', ', pulgadas) as detalles"))
+                        ->where('id', $descriptionPart->roleollid)
+                        ->first();
+
+                    return $roleoll ? $roleoll->detalles : '';
+                }),
             TD::make('dosroleolc', '2RoleoLL')
                 ->sort()
                 ->filter(Input::make()),
             TD::make('dosroleoll', '2RoleoLC')
                 ->sort()
                 ->filter(Input::make()),
+            TD::make('dosroleollcm', '2Roleo LL')
+                ->sort()
+                ->filter(Input::make()),
             TD::make('dosporcenroleo', '2% Roleo')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => '0%',
+                        1 => '25%',
+                        2 => '75%',
+                        3 => '100%',
+                    ][$descriptionPart->dosporcenroleo] ?? '';
+                }),
             TD::make('diambocadoid', 'Diam Bocado')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => '1.25"',
+                        1 => '1.50"',
+                        2 => '1.75"',
+                        3 => '2.0"',
+                        4 => '2.25"',
+                    ][$descriptionPart->diambocadoid] ?? '';
+                }),
             TD::make('anchoteid', 'Ancho TE')
                 ->sort()
                 ->filter(Input::make()),
             TD::make('destajeid', 'Destaje')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => 'SiLC -- NoLL',
+                        1 => 'No',
+                        2 => 'SiLL -- NoLC',
+                        3 => 'SiLL -- SiLC',
+                    ][$descriptionPart->destajeid] ?? '';
+                }),
             TD::make('porcendespunte', '% Despunte')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => '0%',
+                        1 => '25%',
+                        2 => '75%',
+                        3 => '100%',
+                    ][$descriptionPart->porcendespunte] ?? '';
+                }),
             TD::make('abraztipoid', 'Abraz-Tipo')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => '',
+                        1 => 'Tornillo',
+                        2 => 'Doblada',
+                    ][$descriptionPart->abraztipoid] ?? '';
+                }),
             TD::make('abrazmasterid', 'Abraz-Master')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => '',
+                        1 => '1/8x3/4',
+                        2 => '1/8x1.0',
+                        3 => '1/8x1.1/4',
+                        4 => '3/16x3/4',
+                        5 => '3/16x1.0',
+                        6 => '3/16x1.1/4',
+                        7 => '1/4x3/4',
+                        8 => '1/4x1.0',
+                        9 => '1/4x1.1/4',
+                    ][$descriptionPart->abrazmasterid] ?? '';
+                }),
             TD::make('abrazlongcm', 'Abrazad-Long (cm)')
                 ->sort()
                 ->filter(Input::make()),
             TD::make('diatcid', 'DiaTC')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => '',
+                        1 => '6',
+                        2 => '7',
+                        3 => '8',
+                        4 => '8.5',
+                        5 => '9',
+                        6 => '9.5',
+                        7 => '10',
+                        8 => '10.5',
+                        9 => '11',
+                        10 => '11.5',
+                        11 => '12',
+                        12 => '12.5',
+                        13 => '13',
+                        14 => '13.5',
+                        15 => '14',
+                        16 => '14.5',
+                        17 => '15',
+                        18 => '15.5',
+                        19 => '16',
+                        20 => '16.5',
+                        21 => '19',
+                        22 => '19.5',
+                        23 => '20',
+                        24 => '22',
+                        25 => '23',
+                        26 => '25',
+                        27 => '26',
+                    ][$descriptionPart->diatcid] ?? '';
+                }),
             TD::make('tiposbujesid', 'Tipos de Buje')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => '',
+                        1 => 'Tipos de Buje',
+                        2 => 'RB buje',
+                        3 => 'BM buje',
+                        4 => 'TB buje',
+                        5 => 'HB buje',
+                        6 => 'Copa buje',
+                    ][$descriptionPart->tiposbujesid] ?? '';
+                }),
             TD::make('bujelcid', 'Buje LC')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    $bujelc = DB::table('buje_l_c_s')
+                        ->select(DB::raw("CONCAT(part_no, ', ', od_a, ', ', id_b, ', ', length_c) as detalles"))
+                        ->where('id', $descriptionPart->bujelcid)
+                        ->first();
+
+                    return $bujelc ? $bujelc->detalles : '';
+                }),
             TD::make('bujellid', 'Buje LL')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    $bujell = DB::table('buje_l_l_s')
+                        ->select(DB::raw("CONCAT(dim_a, ', ', dim_b, ', ', dim_c, ', ', dim_d, ', ',  remarks) as detalles"))
+                        ->where('id', $descriptionPart->bujellid)
+                        ->first();
+
+                    return $bujell ? $bujell->detalles : '';
+                }),
             TD::make('brioid', 'Brio (cm)')
                 ->sort()
-                ->filter(Input::make()),
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    $bujell = DB::table('brios')
+                        ->select(DB::raw("CONCAT(cm, ', ', inches) as detalles"))
+                        ->where('id', $descriptionPart->bujellid)
+                        ->first();
+
+                    return $bujell ? $bujell->detalles : '';
+                }),
             TD::make('pesokg', 'Peso (kg)')
                 ->sort()
                 ->filter(Input::make()),
@@ -804,23 +944,159 @@ class DescriptionPartResource extends Resource
             Sight::make('distcccm', 'DistCC (cm)'),
             Sight::make('lccm', 'LC (cm)'),
             Sight::make('llcm', 'LL (cm)'),
-            Sight::make('roleolcid', 'RoleoLC'),
-            Sight::make('roleollid', 'RoleoLL'),
+            Sight::make('roleolcid', 'RoleoLC')
+                ->render(function ($descriptionPart) {
+                    $roleolc = DB::table('roleo_long_vehiculos')
+                        ->select(DB::raw("CONCAT(milimetros, ', ', pulgadas) as detalles"))
+                        ->where('id', $descriptionPart->roleolcid)
+                        ->first();
+
+                    return $roleolc ? $roleolc->detalles : '';
+                }),
+            Sight::make('roleollid', 'RoleoLL')
+                ->render(function ($descriptionPart) {
+                    $roleoll = DB::table('roleo_long_vehiculos')
+                        ->select(DB::raw("CONCAT(milimetros, ', ', pulgadas) as detalles"))
+                        ->where('id', $descriptionPart->roleollid)
+                        ->first();
+
+                    return $roleoll ? $roleoll->detalles : '';
+                }),
             Sight::make('dosroleolc', '2Roleo LC'),
             Sight::make('dosroleoll', '2Roleo LL'),
-            Sight::make('dosporcenroleo', '2% Roleo'),
-            Sight::make('diambocadoid', 'Diam Bocado'),
+            Sight::make('dosporcenroleo', '2% Roleo')
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => '0%',
+                        1 => '25%',
+                        2 => '75%',
+                        3 => '100%',
+                    ][$descriptionPart->dosporcenroleo] ?? '';
+                }),
+            Sight::make('diambocadoid', 'Diam Bocado')
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => '1.25"',
+                        1 => '1.50"',
+                        2 => '1.75"',
+                        3 => '2.0"',
+                        4 => '2.25"',
+                    ][$descriptionPart->diambocadoid] ?? '';
+                }),
             Sight::make('anchoteid', 'Ancho TE'),
-            Sight::make('destajeid', 'Destaje'),
-            Sight::make('porcendespunte', '% Despunte'),
-            Sight::make('abraztipoid', 'Abraz-Tipo'),
-            Sight::make('abrazmasterid', 'Abraz-Master'),
+            Sight::make('destajeid', 'Destaje')
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => 'SiLC -- NoLL',
+                        1 => 'No',
+                        2 => 'SiLL -- NoLC',
+                        3 => 'SiLL -- SiLC',
+                    ][$descriptionPart->destajeid] ?? '';
+                }),
+            Sight::make('porcendespunte', '% Despunte')
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => '0%',
+                        1 => '25%',
+                        2 => '75%',
+                        3 => '100%',
+                    ][$descriptionPart->porcendespunte] ?? '';
+                }),
+            Sight::make('abraztipoid', 'Abraz-Tipo')
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => '',
+                        1 => 'Tornillo',
+                        2 => 'Doblada',
+                    ][$descriptionPart->abraztipoid] ?? '';
+                }),
+            Sight::make('abrazmasterid', 'Abraz-Master')
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => '',
+                        1 => '1/8x3/4',
+                        2 => '1/8x1.0',
+                        3 => '1/8x1.1/4',
+                        4 => '3/16x3/4',
+                        5 => '3/16x1.0',
+                        6 => '3/16x1.1/4',
+                        7 => '1/4x3/4',
+                        8 => '1/4x1.0',
+                        9 => '1/4x1.1/4',
+                    ][$descriptionPart->abrazmasterid] ?? '';
+                }),
             Sight::make('abrazlongcm', 'Abraz-Long (cm)'),
-            Sight::make('diatcid', 'DiaTC'),
-            Sight::make('tiposbujesid', 'Tipos de Buje'),
-            Sight::make('bujelcid', 'Buje LC'),
-            Sight::make('bujellid', 'Buje LL'),
-            Sight::make('brioid', 'Brio (cm)'),
+            Sight::make('diatcid', 'DiaTC')->render(function ($descriptionPart) {
+                return [
+                    0 => '',
+                    1 => '6',
+                    2 => '7',
+                    3 => '8',
+                    4 => '8.5',
+                    5 => '9',
+                    6 => '9.5',
+                    7 => '10',
+                    8 => '10.5',
+                    9 => '11',
+                    10 => '11.5',
+                    11 => '12',
+                    12 => '12.5',
+                    13 => '13',
+                    14 => '13.5',
+                    15 => '14',
+                    16 => '14.5',
+                    17 => '15',
+                    18 => '15.5',
+                    19 => '16',
+                    20 => '16.5',
+                    21 => '19',
+                    22 => '19.5',
+                    23 => '20',
+                    24 => '22',
+                    25 => '23',
+                    26 => '25',
+                    27 => '26',
+                ][$descriptionPart->diatcid] ?? '';
+            }),
+            Sight::make('tiposbujesid', 'Tipos de Buje')
+                ->render(function ($descriptionPart) {
+                    return [
+                        0 => '',
+                        1 => 'Tipos de Buje',
+                        2 => 'RB buje',
+                        3 => 'BM buje',
+                        4 => 'TB buje',
+                        5 => 'HB buje',
+                        6 => 'Copa buje',
+                    ][$descriptionPart->tiposbujesid] ?? '';
+                }),
+            Sight::make('bujelcid', 'Buje LC')
+                ->render(function ($descriptionPart) {
+                    $bujelc = DB::table('buje_l_c_s')
+                        ->select(DB::raw("CONCAT(part_no, ', ', od_a, ', ', id_b, ', ', length_c) as detalles"))
+                        ->where('id', $descriptionPart->bujelcid)
+                        ->first();
+
+                    return $bujelc ? $bujelc->detalles : '';
+                }),
+            Sight::make('bujellid', 'Buje LL')
+                ->render(function ($descriptionPart) {
+                    $bujell = DB::table('buje_l_l_s')
+                        ->select(DB::raw("CONCAT(dim_a, ', ', dim_b, ', ', dim_c, ', ', dim_d, ', ',  remarks) as detalles"))
+                        ->where('id', $descriptionPart->bujellid)
+                        ->first();
+
+                    return $bujell ? $bujell->detalles : '';
+                }),
+            Sight::make('brioid', 'Brio (cm)')
+                ->render(function ($descriptionPart) {
+                    $bujell = DB::table('brios')
+                        ->select(DB::raw("CONCAT(cm, ', ', inches) as detalles"))
+                        ->where('id', $descriptionPart->bujellid)
+                        ->first();
+
+                    return $bujell ? $bujell->detalles : '';
+                }),
             Sight::make('pesokg', 'Peso (kg)'),
             Sight::make('observacion', 'Observación'),
             Sight::make('rosca', 'Rosca'),
