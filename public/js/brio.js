@@ -1,13 +1,11 @@
 $(() => {
     $("#inchesInput").attr("readonly", true);
 
-    // Agregar estilo al elemento inchesInput
     $("#inchesInput").css({
-        'color': 'black',  // Fondo blanco
-        'opacity': '1'  // No opaco
+        'color': 'black', 
+        'opacity': '1' 
     });    
 
-    //Brios Resources
     $("#cmInput").on("input", () => {
         var cmInput = $("#cmInput").val();
         var cmValue = parseFloat(cmInput);

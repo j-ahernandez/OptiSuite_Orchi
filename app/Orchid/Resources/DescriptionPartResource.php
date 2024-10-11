@@ -49,7 +49,7 @@ class DescriptionPartResource extends Resource
                     ->type(value: 'text')
                     ->id('CódigoInput')
                     ->required()
-                    // ->readonly()
+                    ->readonly()
                     ->placeholder('Código')
                     ->autocomplete('off'),  // Desactivar autocompletado
             ]),

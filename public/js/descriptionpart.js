@@ -1,43 +1,45 @@
 $(() => {
-    //SELECT PARA TIPO
+    $("#CódigoInput").css({
+        'color': 'black', 
+        'opacity': '1' 
+    });    
+
     const handleTypeChange = () => {
         const typeValue = $('#typeidInput').val();
        
-        // Habilitar campos según el valor de typeValue
-        if (typeValue === '0') {//VEHICULO (01-99)
+        if (typeValue === '0') {
             enableSelect('modelidInput');
-        } else if (typeValue === '1') {// TRAMO TERMINADO (9T -- TrT)
+        } else if (typeValue === '1') {
             enableSelect('positionidInput');
-        } else if (typeValue === '2') {// TRAMO RECTO (9TR -- TrR)
+            disableSelect('modelidInput');
+        } else if (typeValue === '2') {
             $('#longitInput').prop('readonly', false);
             $('#cortecmInput').prop('readonly', false);
             $('#lccmInput').prop('readonly', false);
             $('#abrazlongcmInput').prop('readonly', false);
+
+            disableSelect('modelidInput');
             enableSelect('materialidInput');
             enableSelect('porcendespunteInput');
-        } else if (typeValue === '3') {// GRAPA
+        } else if (typeValue === '3') {
             $('#longitInput').prop('readonly', false);
             enableSelect('materialgrapaidInput');
+            disableSelect('modelidInput');
         }
     };
     
-    //SELECT PARA MODEL
     const handleModelChange = () => {   
-        // HABILITAR OBJETOS
         $('#apodoInput').prop('readonly', false);
         enableSelect('yearidInput');
     };   
     
-    //SELECT PARA AñO
     const handleYearChange = () => {     
-        // HABILITAR OBJETOS
         enableSelect('positionidInput');
     }; 
 
     //SELECT PARA POSICION
     const handlePositionChange = () => {
-        if($('#typeidInput').val() === '0') {//VEHICULO (01-99)
-            // HABILITAR OBJETOS
+        if($('#typeidInput').val() === '0') {
             $('#identidadInput').prop('readonly', false);
             $('#distcccmInput').prop('readonly', false);           
             enableSelect('materialidInput');
@@ -50,8 +52,7 @@ $(() => {
             enableSelect('brioidInput');
         }
 
-        if($('#typeidInput').val() === '1') {// TRAMO TERMINADO (9T -- TrT)
-            // HABILITAR OBJETOS
+        if($('#typeidInput').val() === '1') {
             $('#identidadInput').prop('readonly', false);
             $('#distcccmInput').prop('readonly', false);           
             enableSelect('materialidInput');
@@ -66,14 +67,11 @@ $(() => {
         }
     }
 
-    //SELECT PARA POSICION
     const handleTramoRectoChange = () => {
 
     }
 
-    // Asignar manejadores de eventos
     $('#typeidInput').on('change', () => {
-        //DESHBILITAR TEMPORALMENTE EL EVENTO CHANGE
         $('#modelidInput').off('change', handleModelChange);
         //$('#yearidInput').off('change', handleYearChange);
         $('#positionidInput').off('change', handlePositionChange);
@@ -81,7 +79,6 @@ $(() => {
 
         handleTypeChange();
         
-        //HABIITAR LOS EVENTOS CHANGE
         $('#modelidInput').on('change', handleModelChange);
         //$('#yearidInput').on('change', handleYearChange);
         $('#positionidInput').on('change', handlePositionChange);
@@ -91,36 +88,64 @@ $(() => {
     $('#yearidInput').on('change', handleYearChange);
     $('#positionidInput').on('change', handlePositionChange);
 
-    /*$('form').on('submit', function() {
-        enableSelect(modelidInput)
+    $('#modelidInput').on('change', function() {        
+        var modelidValue = $(this).val();
 
-        var modelidInput = $('#modelidInput');
-        if (modelidInput.length) {
-            // Habilitar el campo deshabilitado
-            modelidInput.prop('disabled', false);
-            console.log('modelidInput value:', modelidInput.val());
-        }
-    });*/ 
+        $('#CódigoInput').val(modelidValue.trim() + '-');
+    });
 
-    // Primero, obtenemos el token CSRF
+    $('#modelidInput').on('change', function() {        
+        var modelidValue = $(this).val();
+
+        $('#CódigoInput').val(modelidValue.trim() + '-');
+    });
+
     $.get('/obtener-csrf-token', function(response) {
         const csrfToken = response.csrfToken;
 
-        // Escuchar el evento de cambio en el Select
+        $('#typeidInput').on('change', function() {
+            var selectedValue = $(this).val();
+            $('#CódigoInput').val('');
+
+            if (selectedValue === '' || selectedValue === '0' || selectedValue === '3') {
+                return;
+            }
+
+            $.ajax({
+                url: `/obtener-codigo-tipo-vehiculo/${selectedValue}`,
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                success: function(response) {
+                    $('#CódigoInput').val(response.numero + '-');                
+
+                    if (selectedValue === '2'){
+                        $('#CódigoInput').val(response.numero + '-R');
+                    }
+                },
+                error: function(xhr) {
+                    if (xhr.responseJSON && xhr.responseJSON.error) {
+                        console.error(xhr.responseJSON.error); 
+                    } else {
+                        console.error('Error en la solicitud AJAX:', xhr.statusText); 
+                    }
+                }
+            });
+        });
+
         $('#tipohojaidInput').on('change', function() {
             var selectedValue = $(this).val();
 
-            // Realizar la solicitud AJAX para obtener la URL de la imagen
             $.ajax({
-                url: `/obtener-imagen-tipo-hoja/${selectedValue}`, // Ruta hacia el controlador
+                url: `/obtener-imagen-tipo-hoja/${selectedValue}`,
                 method: 'GET',
                 headers: {
-                    'X-CSRF-TOKEN': csrfToken // Usamos el token CSRF obtenido
+                    'X-CSRF-TOKEN': csrfToken
                 },
                 success: function(response) {
-                    // Actualizar la imagen con la URL obtenida en la respuesta
                     console.log(response.imageUrl);
-                    $('#imagePreviewTipoHoja').attr('src', response.imageUrl); // Asegúrate de que esto coincide con lo que devuelves
+                    $('#imagePreviewTipoHoja').attr('src', response.imageUrl);
                 },
                 error: function(xhr) {
                     console.error("Error al cargar la imagen");
@@ -128,20 +153,17 @@ $(() => {
             });
         });
 
-        // Escuchar el evento de cambio en el Select
         $('#bujelcidInput').on('change', function() {
             var selectedValue = $(this).val();
 
-            // Realizar la solicitud AJAX para obtener la URL de la imagen
             $.ajax({
-                url: `/obtener-imagen-buje-lc/${selectedValue}`, // Ruta hacia el controlador
+                url: `/obtener-imagen-buje-lc/${selectedValue}`,
                 method: 'GET',
                 headers: {
-                    'X-CSRF-TOKEN': csrfToken // Usamos el token CSRF obtenido
+                    'X-CSRF-TOKEN': csrfToken 
                 },
                 success: function(response) {
-                    // Actualizar la imagen con la URL obtenida en la respuesta
-                    $('#imagePreviewBujeLC').attr('src', response.imageUrl); // Asegúrate de que esto coincide con lo que devuelves
+                    $('#imagePreviewBujeLC').attr('src', response.imageUrl);
                 },
                 error: function(xhr) {
                     console.error("Error al cargar la imagen");
@@ -149,21 +171,18 @@ $(() => {
             });
         });
 
-        // Escuchar el evento de cambio en el Select
         $('#bujellidInput').on('change', function() {
             var selectedValue = $(this).val();
 
-            // Realizar la solicitud AJAX para obtener la URL de la imagen
             $.ajax({
-                url: `/obtener-imagen-buje-ll/${selectedValue}`, // Ruta hacia el controlador
+                url: `/obtener-imagen-buje-ll/${selectedValue}`, 
                 method: 'GET',
                 headers: {
-                    'X-CSRF-TOKEN': csrfToken // Usamos el token CSRF obtenido
+                    'X-CSRF-TOKEN': csrfToken 
                 },
                 success: function(response) {
-                    // Actualizar la imagen con la URL obtenida en la respuesta
                     console.log(response.imageUrl);
-                    $('#imagePreviewBujeLL').attr('src', response.imageUrl); // Asegúrate de que esto coincide con lo que devuelves
+                    $('#imagePreviewBujeLL').attr('src', response.imageUrl); 
                 },
                 error: function(xhr) {
                     console.error("Error al cargar la imagen");
@@ -171,7 +190,5 @@ $(() => {
             });
         });
 
-
     });
-
 });

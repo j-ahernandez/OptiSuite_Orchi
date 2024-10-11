@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
 
@@ -41,6 +42,21 @@ class VehiculoResource extends Resource
                     ->placeholder('Ingrese el número')
                     ->required(),
             ]),
+            Group::make([
+                Select::make('typeid')
+                    ->options([
+                        0 => 'VEHICULO (01-99)',
+                        1 => 'TRAMO TERMINADO (9T -- TrT)',
+                        2 => 'TRAMO RECTO (9TR -- TrR)',
+                        3 => 'GRAPA',
+                    ])
+                    ->title('Tipo Vehículo')
+                    ->id('typeidInput')
+                    ->empty('')
+                    ->searchable()
+                    ->required()
+                    ->set('class', 'form-select'),
+            ]),
         ];
     }
 
@@ -64,6 +80,17 @@ class VehiculoResource extends Resource
             TD::make('numero', 'Número')
                 ->sort()
                 ->filter(Input::make()),
+            TD::make('typeid', 'Tipo Vehículo')
+                ->sort()
+                ->filter(Input::make())
+                ->render(function ($vehiuloResource) {
+                    return [
+                        0 => 'VEHICULO (01-99)',
+                        1 => 'TRAMO TERMINADO (9T -- TrT)',
+                        2 => 'TRAMO RECTO (9TR -- TrR)',
+                        3 => 'GRAPA',
+                    ][$vehiuloResource->typeid] ?? '';
+                }),
             TD::make(
                 'created_at',
                 'Fecha de creación',
@@ -94,6 +121,15 @@ class VehiculoResource extends Resource
             Sight::make('descripcionvehiculo', 'Descripción del Vehículo'),
             Sight::make('nombrecorto', 'Nombre corto'),
             Sight::make('numero', title: 'Número'),
+            Sight::make('typeid', title: 'Número')
+                ->render(function ($vehiuloResource) {
+                    return [
+                        0 => 'VEHICULO (01-99)',
+                        1 => 'TRAMO TERMINADO (9T -- TrT)',
+                        2 => 'TRAMO RECTO (9TR -- TrR)',
+                        3 => 'GRAPA',
+                    ][$vehiuloResource->typeid] ?? '';
+                }),
             Sight::make('created_at', 'Fecha de actualización')
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();
@@ -125,6 +161,8 @@ class VehiculoResource extends Resource
         return [
             'descripcionvehiculo' => 'required|string|max:255',  // Requerido, cadena de texto, máximo 255 caracteres
             'nombrecorto' => 'required|string|max:10',  // Requerido, cadena de texto, máximo 10 caracteres
+            'numero' => 'required|string|max:10',  // Requerido, debe ser un número entero mayor o igual a 1
+            'typeid' => 'required|integer|in:0,1,2,3',  // Requerido, debe ser uno de los valores específicos del select
         ];
     }
 
@@ -136,12 +174,18 @@ class VehiculoResource extends Resource
     public function messages(): array
     {
         return [
-            'descripcionvehiculo.required' => 'El campo descripcionvehiculo es obligatorio.',
-            'descripcionvehiculo.string' => 'El campo descripcionvehiculo debe ser un texto.',
-            'descripcionvehiculo.max' => 'El campo descripcionvehiculo no puede tener más de 255 caracteres.',
-            'nombrecorto.required' => 'El campo nombrecorto es obligatorio.',
-            'nombrecorto.string' => 'El campo nombrecorto debe ser un texto.',
-            'nombrecorto.max' => 'El campo nombrecorto no puede tener más de 10 caracteres.',
+            'descripcionvehiculo.required' => 'El campo descripción del vehículo es obligatorio.',
+            'descripcionvehiculo.string' => 'El campo descripción del vehículo debe ser un texto.',
+            'descripcionvehiculo.max' => 'El campo descripción del vehículo no puede tener más de 255 caracteres.',
+            'nombrecorto.required' => 'El campo nombre corto es obligatorio.',
+            'nombrecorto.string' => 'El campo nombre corto debe ser un texto.',
+            'nombrecorto.max' => 'El campo nombre corto no puede tener más de 10 caracteres.',
+            'numero.required' => 'El campo número es obligatorio.',
+            'numero.string' => 'El campo número debe ser una cadena de texto.',
+            'numero.max' => 'El campo número no puede tener más de 10 caracteres.',
+            'typeid.required' => 'El campo tipo de vehículo es obligatorio.',
+            'typeid.integer' => 'El campo tipo de vehículo debe ser un número válido.',
+            'typeid.in' => 'El campo tipo de vehículo debe ser uno de los valores permitidos: VEHÍCULO (01-99), TRAMO TERMINADO, TRAMO RECTO o GRAPA.',
         ];
     }
 
