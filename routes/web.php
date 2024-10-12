@@ -26,3 +26,8 @@ Route::get('/obtener-imagen-buje-ll/{id}', [BujeLLController::class, 'obtenerIma
 
 // Ruta para formar el codigo en Hoja de Resortes
 Route::get('/obtener-codigo-tipo-vehiculo/{id}', [CodigoHojaController::class, 'obtenerCodigoTipoVehiculo']);
+
+// Rutas para obtener la descripción en la Hoja de Resortes
+Route::get('/obtener-material-combinado-material/{id}', [CodigoHojaController::class, 'obtenerMaterialCombinadoMaterial']);
+Route::get('/obtener-inches-material-grapa/{id}', [CodigoHojaController::class, 'obtenerInchesMaterialGrapa']);
+Route::get('/obtener-nombre-corto-vehiculo/{id}', [CodigoHojaController::class, 'obtenerNombreCortoVehiculo']);

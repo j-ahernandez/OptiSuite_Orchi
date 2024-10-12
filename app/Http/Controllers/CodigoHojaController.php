@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MaterialConstVehiculo;
 use App\Models\Vehiculo;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
+use \App\Models\MaterialGrapa;
+use \App\Models\ModeloVehiculo;
 
 class CodigoHojaController extends Controller
 {
@@ -33,33 +35,82 @@ class CodigoHojaController extends Controller
         return response()->json(['error' => 'Vehículo no encontrado'], 404);
     }
 
-    /*     public function obtenerCodigoTipoVehiculo(int $id, int $model = null, $position = null): JsonResponse
+    /**
+     * Obtiene el material combinado de un vehículo específico.
+     *
+     * @param int $id El ID del material del vehículo.
+     * @return JsonResponse El material combinado en formato JSON.
+     */
+    public function obtenerMaterialCombinadoMaterial(int $id): JsonResponse
     {
         // Si el ID es 0, devolver directamente el número 0
         if ($id === 0) {
-            return response()->json(['numero' => 0]);
+            return response()->json(['material_combinado' => 0]);
         }
 
-        $modelo = '';
+        // Buscar el material del vehículo por su ID
+        $materialConstVehiculo = MaterialConstVehiculo::find($id);
 
-        if (isset($model)) {
-            $modelo = 'AND vehiculos.id = ' . ($model ?? '');
+        // Verificar si el material del vehículo existe
+        if ($materialConstVehiculo) {
+            return response()->json(['material_combinado' => $materialConstVehiculo->material_combinado, 'message' => 'Material Combinado obtenido exitosamente.']);
         }
 
-        // $modelo = 'AND'.($model ?? '');
+        // En caso de que no se encuentre el material del vehículo
+        return response()->json(['error' => 'Material Combinado no encontrado'], 404);
+    }
 
-        // Realiza la consulta
-        $where = 'typeid = ?' . $modelo;
+    /**
+     * Obtiene las pulgadas de un material de grapa específico.
+     *
+     * @param int $id El ID del material de grapa.
+     * @return JsonResponse Las pulgadas del material de grapa en formato JSON.
+     */
+    public function obtenerInchesMaterialGrapa(int $id): JsonResponse
+    {
+        // Si el ID es 0, devolver directamente el número 0
+        if ($id === 0) {
+            return response()->json(['inches' => 0]);
+        }
 
-        $vehiculo = DB::select("SELECT numero FROM vehiculos WHERE $where", [$id]);
+        // Buscar el material de grapa por su ID
+        $materialGrapa = MaterialGrapa::find($id);
 
-        // Verificar si el vehículo existe
-        if (!empty($vehiculo)) {
-            $numero = $vehiculo[0]->numero;  // Accede a la propiedad 'numero'
-            return response()->json(['numero' => $numero]);
+        // Verificar si el material de grapa existe
+        if ($materialGrapa) {
+            return response()->json(['inches' => $materialGrapa->inches, 'message' => 'Pulgadas obtenido exitosamente.']);
+        }
+
+        // En caso de que no se encuentre el material de grapa
+        return response()->json(['error' => 'Pulgadas no encontrado'], 404);
+    }
+
+    /**
+     * Obtiene el nombre corto y el detalle del modelo de un vehículo específico.
+     *
+     * @param int $id El ID del modelo del vehículo.
+     * @return JsonResponse El nombre corto y el detalle del modelo en formato JSON.
+     */
+    public function obtenerNombreCortoVehiculo(int $id): JsonResponse
+    {
+        // Si el ID es 0, devolver directamente el número 0
+        if ($id === 0) {
+            return response()->json(['nombrecorto' => 0]);
+        }
+
+        // Buscar el modelo de vehículo y el vehículo relacionado en una sola consulta
+        $modelo_vehiculos = ModeloVehiculo::with('vehiculo')->find($id);
+
+        // Verificar si el modelo de vehículo existe y tiene un vehículo relacionado
+        if ($modelo_vehiculos && $modelo_vehiculos->vehiculo) {
+            return response()->json([
+                'nombrecorto' => $modelo_vehiculos->vehiculo->nombrecorto,
+                'modelo_detalle' => $modelo_vehiculos->modelo_detalle,
+                'message' => 'Datos obtenidos exitosamente.'
+            ]);
         }
 
         // En caso de que no se encuentre el vehículo
-        return response()->json(['error' => 'Vehículo no encontrado'], 404);
-    } */
+        return response()->json(['error' => 'Datos no encontrados'], 404);
+    }
 }
