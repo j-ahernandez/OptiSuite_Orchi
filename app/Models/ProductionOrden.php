@@ -8,21 +8,21 @@ use Orchid\Attachment\Attachable;
 use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 
-class BujeLL extends Model
+class ProductionOrden extends Model
 {
     use HasFactory, AsSource, Filterable, Attachable;
 
     // Dejar $guarded vacío significa que todos los campos son asignables en masa
     protected $guarded = [];
 
-    // Relación con BujeRB
-    public function bujeRB()
+    // Definir la relación con el modelo Status
+    public function status()
     {
-        return $this->belongsTo(BujeRB::class, 'idbujeRBNum');
+        return $this->belongsTo(Status::class, 'status_id');
     }
 
-    public function getDimensionesAttribute()
+    public function descriptionPart()
     {
-        return "{$this->dim_a} {$this->dim_b} {$this->dim_c} {$this->dim_d} {$this->remarks}";
+        return $this->belongsTo(DescriptionPart::class, 'idDescriptionParts');
     }
 }

@@ -39,6 +39,18 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.resource.list', ['resource' => 'description-part-resources'])
                 ->permission('platform.descriptionpart')
                 ->title(__('MapOPRh')),
+            // Inventario
+            Menu::make('Inventario')
+                ->icon('fa.book')
+                ->route('platform.resource.list', ['resource' => 'inventory-resources'])
+                ->permission('platform.inventory')
+                ->title(__('Inventario')),
+            // Ordenes de Producción
+            Menu::make('Ordenes de Producción')
+                ->icon('fa.book')
+                ->route('platform.resource.list', ['resource' => 'production-orden-resources'])
+                ->permission('platform.production-orden')
+                ->title(__('Ordenes de Producción')),
             // CONFIGURACIÓN
             Menu::make('Configuración')
                 ->icon('fa.gear')  // Asegúrate de que el nombre del icono sea correcto
@@ -137,7 +149,9 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.systems.roles', __('Roles'))
                 ->addPermission('platform.systems.users', __('Usuarios')),
             ItemPermission::group(__('Fast Solutions - Menus'))
-                ->addPermission('platform.configuracion', __('Configuración')),
+                ->addPermission('platform.configuracion', __('Configuración'))
+                ->addPermission('platform.production-orden', __('Oredenes de Producción'))
+                ->addPermission('platform.inventory', __('Inventario')),
             ItemPermission::group(__('Fast Solutions - Sub-Menus'))
                 ->addPermission('platform.descriptionpart', __('Codigo Hoja de Resortes'))
                 ->addPermission('platform.bujelc', __('Buje LC'))

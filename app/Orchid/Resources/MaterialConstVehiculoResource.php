@@ -45,7 +45,7 @@ class MaterialConstVehiculoResource extends Resource
             ]),
             Group::make([
                 Input::make('width_mm')
-                    ->title('Anchoi en mm')
+                    ->title('Ancho en mm')
                     ->placeholder('Ingrese el ancho en mm')
                     ->required(),
                 Input::make('thick_mm')
