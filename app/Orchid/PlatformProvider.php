@@ -157,7 +157,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.configuracion', __('Configuración'))
                 ->addPermission('platform.production-orden', __('Oredenes de Producción'))
                 ->addPermission('platform.inventory', __('Inventario'))
-                ->addPermission('platform.pkglist', __('Packing List'))
+                ->addPermission('platform.pkglist', __('Packing List')),
             ItemPermission::group(__('Fast Solutions - Sub-Menus'))
                 ->addPermission('platform.descriptionpart', __('Codigo Hoja de Resortes'))
                 ->addPermission('platform.bujelc', __('Buje LC'))
@@ -173,8 +173,8 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.tipo.hoja.vehiculos', __('Tipo Hoja Vehiculo'))
                 ->addPermission('platform.vehiculo', __('Tipo Vehiculo'))
                 ->addPermission('platform.year.vehiculo', __('Año Vehiculo'))
-                ->addPermission('platform.abraz', __('Abrazaderas'))                
-                ->addPermission('platform.brio', __('Brios')),
+                ->addPermission('platform.abraz', __('Abrazaderas'))
+                ->addPermission('platform.brio', __('Brios'))
         ];
     }
 }
