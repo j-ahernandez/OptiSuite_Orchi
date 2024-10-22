@@ -215,7 +215,7 @@ class pkglistResource extends Resource
      */
     public static function description(): string
     {
-        return __('Gestión de Pking List.');
+        return __('Gestión de Paking List.');
     }
 
     /**
