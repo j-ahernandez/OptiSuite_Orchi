@@ -39,6 +39,11 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.resource.list', ['resource' => 'description-part-resources'])
                 ->permission('platform.descriptionpart')
                 ->title(__('MapOPRh')),
+            Menu::make('Lista de Empaque')
+                ->icon('fa.book')
+                ->route('platform.resource.list', ['resource' => 'pkglist-resources'])
+                ->permission('platform.pkglist')
+                ->title(__('Packing List')),
             // CONFIGURACIÓN
             Menu::make('Configuración')
                 ->icon('fa.gear')  // Asegúrate de que el nombre del icono sea correcto
@@ -154,6 +159,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.vehiculo', __('Tipo Vehiculo'))
                 ->addPermission('platform.year.vehiculo', __('Año Vehiculo'))
                 ->addPermission('platform.abraz', __('Abrazaderas'))
+                ->addPermission('platform.pkglist', __('Packing List'))
                 ->addPermission('platform.brio', __('Brios')),
         ];
     }

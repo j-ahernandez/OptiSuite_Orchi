@@ -43,6 +43,8 @@ class pkglistResource extends Resource
                     ->title('DIA')
                     ->type(value: 'number')  // Definir como número para DIA
                     ->required(),
+            ]),
+            Group::make([
                 Input::make('pkg_Lenght')
                     ->title('Longitud del Paquete')
                     ->mask(['alias' => 'decimal', 'groupSeparator' => ',', 'radixPoint' => '.'])
@@ -327,7 +329,7 @@ class pkglistResource extends Resource
         return true;  // Habilita la verificación de cambios
     }
 
-    /**
+    /*
      * Determine if the resource should be displayed in the navigation menu.
      *
      * This method controls whether the resource will appear in the navigation menu.
