@@ -51,6 +51,11 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.resource.list', ['resource' => 'production-orden-resources'])
                 ->permission('platform.production-orden')
                 ->title(__('Ordenes de Producción')),
+            Menu::make('Lista de Empaque')
+                ->icon('fa.book')
+                ->route('platform.resource.list', ['resource' => 'pkglist-resources'])
+                ->permission('platform.pkglist')
+                ->title(__('Packing List')),
             // CONFIGURACIÓN
             Menu::make('Configuración')
                 ->icon('fa.gear')  // Asegúrate de que el nombre del icono sea correcto
@@ -151,7 +156,8 @@ class PlatformProvider extends OrchidServiceProvider
             ItemPermission::group(__('Fast Solutions - Menus'))
                 ->addPermission('platform.configuracion', __('Configuración'))
                 ->addPermission('platform.production-orden', __('Oredenes de Producción'))
-                ->addPermission('platform.inventory', __('Inventario')),
+                ->addPermission('platform.inventory', __('Inventario'))
+                ->addPermission('platform.pkglist', __('Packing List'))
             ItemPermission::group(__('Fast Solutions - Sub-Menus'))
                 ->addPermission('platform.descriptionpart', __('Codigo Hoja de Resortes'))
                 ->addPermission('platform.bujelc', __('Buje LC'))
@@ -167,7 +173,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.tipo.hoja.vehiculos', __('Tipo Hoja Vehiculo'))
                 ->addPermission('platform.vehiculo', __('Tipo Vehiculo'))
                 ->addPermission('platform.year.vehiculo', __('Año Vehiculo'))
-                ->addPermission('platform.abraz', __('Abrazaderas'))
+                ->addPermission('platform.abraz', __('Abrazaderas'))                
                 ->addPermission('platform.brio', __('Brios')),
         ];
     }
