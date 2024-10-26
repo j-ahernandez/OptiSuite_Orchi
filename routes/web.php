@@ -3,8 +3,11 @@
 use App\Http\Controllers\BujeLCController;
 use App\Http\Controllers\BujeLLController;
 use App\Http\Controllers\TipoHojaVehiculoController;
+use App\Orchid\Screens\Production\ProductionOrdenDetailListScren;
+use App\Orchid\Screens\Production\ProductionOrdenListScren;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Tabuna\Breadcrumbs\Trail;
 use \App\Http\Controllers\CodigoHojaController;
 
 Route::get('/', function () {
@@ -31,3 +34,19 @@ Route::get('/obtener-codigo-tipo-vehiculo/{id}', [CodigoHojaController::class, '
 Route::get('/obtener-material-combinado-material/{id}', [CodigoHojaController::class, 'obtenerMaterialCombinadoMaterial']);
 Route::get('/obtener-inches-material-grapa/{id}', [CodigoHojaController::class, 'obtenerInchesMaterialGrapa']);
 Route::get('/obtener-nombre-corto-vehiculo/{id}', [CodigoHojaController::class, 'obtenerNombreCortoVehiculo']);
+
+// web.php
+
+// Ruta para la lista de órdenes de producción
+Route::screen('/production-orders', ProductionOrdenListScren::class)
+    ->name('platform.production.orders')
+    ->breadcrumbs(fn(Trail $trail) => $trail
+        ->push('Inicio', route('platform.main'))  // Enlace a la pantalla principal
+        ->push('Órdenes de Producción', route('platform.production.orders')));  // Nombre de la lista
+
+// Ruta para el detalle de una orden de producción específica
+Route::screen('/production-orders/{id}', ProductionOrdenDetailListScren::class)
+    ->name('platform.production.orders.detail')
+    ->breadcrumbs(fn(Trail $trail, $id) => $trail
+        ->parent('platform.production.orders')  // Volver a la lista de órdenes
+        ->push('Detalle Órdenes de Producción', route('platform.production.orders.detail', $id)));  // Enlace a los detalles

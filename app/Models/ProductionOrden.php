@@ -15,14 +15,18 @@ class ProductionOrden extends Model
     // Dejar $guarded vacío significa que todos los campos son asignables en masa
     protected $guarded = [];
 
+    // Definir campos que deben ser tratados como fechas
+    protected $dates = ['production_date'];
+
     // Definir la relación con el modelo Status
     public function status()
     {
         return $this->belongsTo(Status::class, 'status_id');
     }
 
-    public function descriptionPart()
+    // Define la relación con los detalles de la orden
+    public function details()
     {
-        return $this->belongsTo(DescriptionPart::class, 'idDescriptionParts');
+        return $this->hasMany(ProductionOrdenDetail::class, 'production_order_id');
     }
 }

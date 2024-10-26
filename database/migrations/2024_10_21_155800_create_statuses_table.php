@@ -18,17 +18,17 @@ return new class extends Migration {
         // Insertar los estados permitidos
         DB::table('statuses')->insert([
             [
-                'name' => 'pendiente',
+                'name' => 'Pendiente',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'completado',
+                'name' => 'Completado',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'name' => 'cancelado',
+                'name' => 'Cancelado',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

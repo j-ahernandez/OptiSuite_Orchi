@@ -46,9 +46,9 @@ class PlatformProvider extends OrchidServiceProvider
                 ->permission('platform.inventory')
                 ->title(__('Inventario')),
             // Ordenes de Producción
-            Menu::make('Ordenes de Producción')
+            Menu::make(__('Ordenes de Producción'))
                 ->icon('fa.book')
-                ->route('platform.resource.list', ['resource' => 'production-orden-resources'])
+                ->route('platform.production.orders')
                 ->permission('platform.production-orden')
                 ->title(__('Ordenes de Producción')),
             Menu::make('Lista de Empaque')

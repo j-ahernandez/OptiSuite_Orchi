@@ -9,6 +9,14 @@
     <script src="{{ asset('js/brio.js') }}?v={{ time() }}"></script>
     <script src="{{ asset('js/roleo_long.js') }}?v={{ time() }}"></script>
     <script src="{{ asset('js/descriptionpart.js') }}?v={{ time() }}"></script>
+
+    <style>
+        /* Ocultar la columna de acciones generada automáticamente por Orchid */
+        th[data-column="actions"],
+        td[data-column="actions"] {
+            display: none;
+        }
+    </style>
 @endpush
 
 

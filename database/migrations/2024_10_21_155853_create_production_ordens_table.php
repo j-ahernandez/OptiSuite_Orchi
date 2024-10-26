@@ -9,18 +9,16 @@ return new class extends Migration {
     {
         Schema::create('production_ordens', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('idDescriptionParts');  // Clave foránea
-            $table->string('description', 255)->nullable();  // Descripción, permitiendo nulos
-            $table->integer('quantity');  // Cantidad a producir
+            $table->string('numero_orden', 20);
             $table->unsignedBigInteger('status_id')->default(1);  // Clave foránea para el estado con valor predeterminado
-            $table->date('production_date');  // Campo para la fecha de producción, permitiendo nulos
+            $table->dateTime('production_date');  // Campo para la fecha de producción
             $table->timestamps();
 
-            // Relación con description_parts
-            $table->foreign('idDescriptionParts')->references('id')->on('description_parts')->onDelete('cascade');
-
             // Relación con statuses
-            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
+            $table
+                ->foreign('status_id')
+                ->references('id')
+                ->on('statuses');
         });
     }
 
