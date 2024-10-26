@@ -4,8 +4,10 @@ namespace App\Orchid\Screens\Production;
 
 use App\Models\ProductionOrden;
 use App\Orchid\Layouts\Production\ProductionOrdenListLayout;
+use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Toast;
+use Orchid\Support\Color;
 
 class ProductionOrdenListScren extends Screen
 {
@@ -61,12 +63,15 @@ class ProductionOrdenListScren extends Screen
      *
      * @return \Orchid\Screen\Action[]
      */
-    /*     public function commandBar(): iterable
-        {
-            return [
-                Button::make('Go print')->method('print'),
-            ];
-        } */
+    public function commandBar(): iterable
+    {
+        return [
+            Button::make(__('Crear'))
+                ->route('platform.production.orders.create')  // Cambiado a la ruta de creación
+                ->type(Color::PRIMARY)
+                ->icon('bs.plus'),
+        ];
+    }
 
     /**
      * The screen's layout elements.

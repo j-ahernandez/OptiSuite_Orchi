@@ -3,7 +3,9 @@
 use App\Http\Controllers\BujeLCController;
 use App\Http\Controllers\BujeLLController;
 use App\Http\Controllers\TipoHojaVehiculoController;
+use App\Orchid\Screens\Production\ProductionOrdenCreateScreen;
 use App\Orchid\Screens\Production\ProductionOrdenDetailListScren;
+use App\Orchid\Screens\Production\ProductionOrdenEditScreen;
 use App\Orchid\Screens\Production\ProductionOrdenListScren;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,14 +39,28 @@ Route::get('/obtener-nombre-corto-vehiculo/{id}', [CodigoHojaController::class, 
 
 // web.php
 
-// Ruta para la lista de órdenes de producción
+// Platform > Ordenes de Producción
 Route::screen('/production-orders', ProductionOrdenListScren::class)
     ->name('platform.production.orders')
     ->breadcrumbs(fn(Trail $trail) => $trail
         ->push('Inicio', route('platform.main'))  // Enlace a la pantalla principal
         ->push('Órdenes de Producción', route('platform.production.orders')));  // Nombre de la lista
 
-// Ruta para el detalle de una orden de producción específica
+// Platform > Ordenes de Producción > Edit
+Route::screen('production-orders/{order}/edit', ProductionOrdenEditScreen::class)
+    ->name('platform.production.orders.edit')
+    ->breadcrumbs(fn(Trail $trail, $order) => $trail
+        ->parent('platform.production.orders')
+        ->push('Editar', route('platform.production.orders.edit', $order)));
+
+// Platform > Ordenes de Producción > Create
+Route::screen('production-orders/create', ProductionOrdenEditScreen::class)
+    ->name('platform.production.orders.create')
+    ->breadcrumbs(fn(Trail $trail) => $trail
+        ->parent('platform.production.orders')
+        ->push(__('Create'), route('platform.production.orders.create')));
+
+// Platform > Ordenes de Producción > Detalle Ordenes de Producción
 Route::screen('/production-orders/{id}', ProductionOrdenDetailListScren::class)
     ->name('platform.production.orders.detail')
     ->breadcrumbs(fn(Trail $trail, $id) => $trail

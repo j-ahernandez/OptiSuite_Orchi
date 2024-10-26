@@ -72,6 +72,9 @@ class ProductionOrdenListLayout extends Table
                             Link::make('Ver Detalles')
                                 ->route('platform.production.orders.detail', ['id' => $model->id])
                                 ->icon('eye'),
+                            Link::make('Editar')
+                                ->route('platform.production.orders.edit', ['order' => $model->id])
+                                ->icon('pencil'),
                             Button::make('Procesar')
                                 ->method('process')
                                 ->confirm('¿Estás seguro de que deseas procesar este registro?')

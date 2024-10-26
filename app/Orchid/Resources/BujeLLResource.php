@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Orchid\Crud\Resource;
+use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\DropDown;
+use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Select;
@@ -127,6 +130,28 @@ class BujeLLResource extends Resource
             TD::make('updated_at', 'Update date')
                 ->render(function ($model) {
                     return $model->updated_at->toDateTimeString();
+                }),
+            TD::make('Acciones')
+                ->align(TD::ALIGN_CENTER)
+                ->width('100px')
+                ->render(function ($model) {
+                    return DropDown::make()
+                        ->icon('bs.three-dots-vertical')
+                        ->list([
+                            Link::make('Ver')
+                                ->route('platform.resource.view', ['resource' => 'buje-l-l-resources', 'id' => $model->id])
+                                ->icon('eye'),
+                            Link::make('Editar')
+                                ->route('platform.resource.edit', ['resource' => 'buje-l-l-resources', 'id' => $model->id])
+                                ->icon('pencil'),
+                            Button::make('Eliminar')
+                                ->method('delete')
+                                ->confirm('¿Estás seguro de que deseas eliminar este registro?')
+                                ->parameters([
+                                    'id' => $model->id,
+                                ])
+                                ->icon('trash'),
+                        ]);
                 }),
         ];
     }

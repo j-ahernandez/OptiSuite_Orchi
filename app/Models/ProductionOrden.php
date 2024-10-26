@@ -29,4 +29,15 @@ class ProductionOrden extends Model
     {
         return $this->hasMany(ProductionOrdenDetail::class, 'production_order_id');
     }
+
+    // Definir la relación con el modelo DescriptionPart
+    public function descriptionPart()
+    {
+        return $this->belongsTo(DescriptionPart::class, 'part_id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(ProductionOrdenDetail::class, 'production_order_id');
+    }
 }
