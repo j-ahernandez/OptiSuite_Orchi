@@ -11,6 +11,7 @@ use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
+use Orchid\Support\Color;
 
 class ProductionOrdenEditScreen extends Screen
 {
@@ -84,9 +85,10 @@ class ProductionOrdenEditScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Button::make(__('Save'))
+            Button::make(__('Guardar'))
                 ->icon('bs.check-circle')
-                ->method('save'),
+                ->type(Color::PRIMARY)
+                ->method('save')
         ];
     }
 
