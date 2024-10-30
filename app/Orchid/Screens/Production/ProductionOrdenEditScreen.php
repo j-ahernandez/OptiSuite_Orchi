@@ -25,32 +25,26 @@ class ProductionOrdenEditScreen extends Screen
      */
     public function query(int $order = null): iterable
     {
-        // Si se proporciona un ID de orden, recuperar la orden existente
         if ($order) {
             $productionOrder = ProductionOrden::with('details')->findOrFail($order);
-
-            // Llenar el arreglo de productos con los detalles de la orden
-            $this->products = $productionOrder->details->map(function ($detail) {
+            $products = $productionOrder->details->map(function ($detail) {
                 return [
                     'idDescriptionParts' => $detail->part_id,
                     'description' => $detail->description,
                     'quantity' => $detail->quantity,
                 ];
             })->toArray();
-            $this->productionDate = $productionOrder->production_date;  // Aquí obtienes la fecha
+
+            // Formatear la fecha de producción solo a 'Y-m-d'
+            $productionDate = Carbon::parse($productionOrder->production_date)->format('Y-m-d');
         } else {
-            // Si no hay ID de orden, inicializar un arreglo vacío
-            $this->products = [];
-            $this->productionDate = now()->format('Y-m-d');  // Valor por defecto si no hay orden
+            $products = [];
+            $productionDate = now()->format('Y-m-d');
         }
 
-        // Puedes usar dd aquí para depurar
-        // dd($this->productionDate);
-
-        // Retornar los datos como antes
         return [
-            'products' => $this->products,
-            'production_date' => $this->productionDate,
+            'products' => $products,
+            'production_date' => $productionDate,
         ];
     }
 
@@ -105,8 +99,7 @@ class ProductionOrdenEditScreen extends Screen
     {
         return [
             Layout::block([
-                // ProductionOrdenEditLayout::class,
-                new ProductionOrdenEditLayout($this->products, $this->productionDate),
+                ProductionOrdenEditLayout::class,
             ])
                 ->title('Órdenes de Producción')
                 ->description('La orden de producción es un conjunto de instrucciones y recursos necesarios para la fabricación de un producto específico. Permite planificar, organizar y controlar cada etapa del proceso de producción.')

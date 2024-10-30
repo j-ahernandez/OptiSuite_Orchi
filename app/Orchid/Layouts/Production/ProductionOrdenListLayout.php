@@ -77,12 +77,12 @@ class ProductionOrdenListLayout extends Table
                                 ->icon('pencil'),
                             Button::make('Procesar')
                                 ->method('process')
-                                ->confirm('¿Estás seguro de que deseas procesar este registro?')
+                                ->confirm("¿Estás seguro de que deseas procesar la orden #{$model->numero_orden}?")
                                 ->parameters(['id' => $model->id])
                                 ->icon('check'),
                             Button::make('Cancelar')
                                 ->method('cancel')
-                                ->confirm('¿Estás seguro de que deseas cancelar este registro?')
+                                ->confirm("¿Estás seguro de que deseas cancelar la orden #{$model->numero_orden}?")
                                 ->parameters(['id' => $model->id])
                                 ->icon('trash'),
                         ]);

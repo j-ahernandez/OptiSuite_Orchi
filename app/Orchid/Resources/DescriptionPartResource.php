@@ -13,7 +13,6 @@ use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Sight;
@@ -67,7 +66,7 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'form-select'),
-                Relation::make('modelid')
+                Select::make('modelid')
                     ->fromModel(ModeloVehiculo::class, 'modelo_detalle', 'id')
                     ->displayAppend('vehiculo_y_modelo')  // Usa el nuevo atributo
                     ->title('Seleccione un Vehículo con su Modelo')
@@ -86,7 +85,7 @@ class DescriptionPartResource extends Resource
             ]),
             // Fila 2
             Group::make([
-                Relation::make('yearid')
+                Select::make('yearid')
                     ->fromModel(YearVehiculo::class, 'year_vh', 'id')  // Usar el modelo YearVehiculo
                     ->title('Seleccione un año')
                     ->id('yearidInput')
@@ -95,7 +94,7 @@ class DescriptionPartResource extends Resource
                     ->set('class', 'form-select')
                     ->disabled()
                     ->help('Por favor seleccione un año.'),
-                Relation::make('positionid')
+                Select::make('positionid')
                     ->fromModel(PosicionVehiculo::class, 'posicion', 'id')  // Usar el modelo PosicionVehiculo
                     ->title('Seleccione una posición')
                     ->id('positionidInput')
@@ -126,8 +125,8 @@ class DescriptionPartResource extends Resource
                     ->autocomplete('off')
                     ->readonly()
                     ->placeholder('Identidad'),
-                Relation::make('refauxid')
-                    ->fromModel(RefTensadoVehiculo::class, 'Descripcion', 'id')  // Cambia a tu modelo correspondiente
+                Select::make('refauxid')
+                    ->fromModel(RefTensadoVehiculo::class, 'Descripcion', 'id')
                     ->title('Seleccione un Ref/Aux')
                     ->id('refauxidInput')
                     ->empty('Seleccione una Ref/Aux')

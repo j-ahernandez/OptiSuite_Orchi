@@ -3,7 +3,6 @@
 namespace App\Orchid\Resources;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\Rule;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;

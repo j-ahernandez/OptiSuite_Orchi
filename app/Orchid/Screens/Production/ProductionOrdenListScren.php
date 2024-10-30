@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens\Production;
 
 use App\Models\ProductionOrden;
+use App\Models\Status;
 use App\Orchid\Layouts\Production\ProductionOrdenListLayout;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
@@ -110,12 +111,24 @@ class ProductionOrdenListScren extends Screen
      */
     public function cancel(int $id)
     {
-        // Aquí puedes implementar la lógica para cancelar la orden.
+        // Obtener el ID del estado "Cancelado" de la tabla statuses
+        $canceladoStatusId = Status::where('name', 'Cancelado')->value('id');
 
-        // Mostrar un mensaje toast de éxito
-        Toast::info("Orden de producción #{$id} cancelada con éxito.");
+        // Actualizar la orden al nuevo estado
+        $orden = ProductionOrden::find($id);
 
-        // Redirigir a la misma página o a otra según sea necesario
+        if ($orden) {
+            $orden->status_id = $canceladoStatusId;
+            $orden->save();
+
+            // Mostrar el número de orden en el mensaje de éxito
+            Toast::info("Orden de producción #{$orden->numero_orden} cancelada con éxito.");
+        } else {
+            // Mostrar un mensaje de error si la orden no se encuentra
+            Toast::error("La orden de producción #{$id} no fue encontrada.");
+        }
+
+        // Redirigir a la página de órdenes de producción
         return redirect()->route('platform.production.orders');
     }
 }
