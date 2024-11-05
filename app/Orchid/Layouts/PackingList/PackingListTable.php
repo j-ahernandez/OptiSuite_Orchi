@@ -78,16 +78,6 @@ class PackingListTable extends Table
                             Link::make('Editar')
                                 ->route('platform.packing.list.edit', ['pkglist' => $model->id])
                                 ->icon('pencil'),
-                            Button::make('Procesar')
-                                ->method('process')
-                                ->confirm("¿Estás seguro de que deseas procesar la orden #{$model->numero_orden}?")
-                                ->parameters(['id' => $model->id])
-                                ->icon('check'),
-                            Button::make('Cancelar')
-                                ->method('cancel')
-                                ->confirm("¿Estás seguro de que deseas cancelar la orden #{$model->numero_orden}?")
-                                ->parameters(['id' => $model->id])
-                                ->icon('trash'),
                         ]);
                 }),
         ];

@@ -13,5 +13,5 @@ class pkglist extends Model
     use HasFactory, AsSource, Filterable, Attachable;
 
     // Dejar $guarded vacío significa que todos los campos son asignables en masa
-    protected $guarded = [''];
+    protected $guarded = [];
 }

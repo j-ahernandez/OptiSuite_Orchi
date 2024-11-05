@@ -19,32 +19,21 @@ class PackingListScreenLegend extends Screen
      */
     public function query(int $pkglist = null): iterable
     {
-        $pkgListSelect = [
-            'no_contact' => null,
-            'steel_grande' => null,
-            'pkg_Standard' => null,
-            'DIA' => null,
-            'pkg_Lenght' => null,
-            'pkg_Weight' => null,
-            'pkg_Bars' => null,
-            'pkg_Bundles' => null,
-        ];
+        // Obtener el registro de pkglist. Si no se encuentra, devolver null.
+        $pkglistData = pkglist::find($pkglist);
 
-        if ($pkglist) {
-            try {
-                // Obtener el registro de pkglist por su ID
-                $pkgListValue = pkglist::findOrFail($pkglist);
-                // Combinar los datos obtenidos con el array base
-                $pkgListSelect = array_merge($pkgListSelect, $pkgListValue->toArray());
-            } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-                // Manejo del error si el registro no es encontrado
-                Toast::error(__('Error: El registro no fue encontrado.'));
-                // Puedes retornar el array inicial o algún valor por defecto si lo prefieres
-            }
+        // Si no se encuentra el registro, puedes manejarlo según sea necesario.
+        // Por ejemplo, podrías lanzar una excepción o simplemente devolver un arreglo vacío.
+        if (!$pkglistData) {
+            // Manejo del caso donde el pkglist no existe
+            return [
+                'pkglist' => null,  // O puedes retornar un arreglo vacío
+            ];
         }
 
-        // Retorna el array con la clave 'packingList'
-        return ['packingList' => $pkgListSelect];
+        return [
+            'pkglist' => $pkglistData,
+        ];
     }
 
     /**
@@ -72,28 +61,22 @@ class PackingListScreenLegend extends Screen
      */
     public function commandBar(): iterable
     {
-        // El ID ya está disponible aquí
-        /*$pkglistId = request()->route('pkglist');  // O, si ya lo tienes en otra forma, puedes acceder a él directamente
+        // Obtener el ID del pkglist desde la ruta
+        $pkglistId = request()->route('pkglist');
 
-        if ($pkglistId === null) {
-            dd('pkglist es null');  // Mensaje para depuración
+        // Verificar que el ID no sea nulo
+        if ($pkglistId !== null) {
+            return [
+                Button::make(__('Editar'))
+                    ->icon('bs.check-circle')
+                    ->type(Color::PRIMARY)
+                    ->method('editRecord', [
+                        'id' => $pkglistId  // Enviando el ID del modelo
+                    ])
+            ];
         }
 
-        return [
-            Button::make(__('Editar'))
-                ->icon('bs.check-circle')
-                ->type(Color::PRIMARY)
-                ->method('editRecord', [
-                    'id' => $pkglistId  // Enviando el ID del modelo
-                ]),
-            Button::make(__('Eliminar'))
-                ->icon('bs.check-circle')
-                ->type(Color::PRIMARY)
-                ->method('deleteRecord', [
-                    'id' => $pkglistId  // Enviando el ID del modelo
-                ]),
-        ];*/
-
+        // Retornar un arreglo vacío si no hay ID
         return [];
     }
 
@@ -105,7 +88,8 @@ class PackingListScreenLegend extends Screen
     public function layout(): array
     {
         return [
-            /*Layout::legend('packingList', [
+            // Leyenda con los detalles del pkglist
+            Layout::legend('pkglist', [
                 Sight::make('no_contact', 'No Contacto'),
                 Sight::make('steel_grande', 'Steel Grande'),
                 Sight::make('pkg_Standard', 'Paquete Estándar'),
@@ -114,7 +98,7 @@ class PackingListScreenLegend extends Screen
                 Sight::make('pkg_Weight', 'Peso del Paquete'),
                 Sight::make('pkg_Bars', 'Barras en el Paquete'),
                 Sight::make('pkg_Bundles', 'Paquetes'),
-            ]),*/
+            ]),
         ];
     }
 
@@ -125,18 +109,7 @@ class PackingListScreenLegend extends Screen
      */
     public function editRecord(int $id)
     {
-        // Mostrar mensaje de éxito
-        Toast::info(__('Bienvenido a Editar con el id ' . $id));
-    }
-
-    /**
-     * Delete record method.
-     *
-     * @param int $id
-     */
-    public function deleteRecord(int $id)
-    {
-        // Mostrar mensaje de éxito
-        Toast::info(__('Bienvenido a Eliminar con el id ' . $id));
+        // Redirigir a la ruta de edición con el ID del registro
+        return redirect()->route('platform.packing.list.edit', ['pkglist' => $id]);
     }
 }
