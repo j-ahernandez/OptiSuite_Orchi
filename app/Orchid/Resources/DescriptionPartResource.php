@@ -172,19 +172,19 @@ class DescriptionPartResource extends Resource
                     ->disabled()
                     ->help('Por favor seleccione un Material.'),
                 Input::make('anchomm')
-                    ->title('Ancho MM')
+                    ->title('Ancho (MM)')
                     ->type(value: 'text')
                     ->id('anchommInput')
                     ->autocomplete('off')
                     ->readonly()
-                    ->placeholder('Ancho MM'),
+                    ->placeholder('Ancho (MM)'),
                 Input::make('gruesomm')
-                    ->title('Grueso MM')
+                    ->title('Grueso (MM)')
                     ->type(value: 'text')
                     ->id('gruesommInput')
                     ->autocomplete('off')
                     ->readonly()
-                    ->placeholder('Grueso MM'),
+                    ->placeholder('Grueso (MM)'),
             ]),
             // Fila 5
             Group::make([
@@ -194,7 +194,7 @@ class DescriptionPartResource extends Resource
                     ->id('longitInput')
                     ->autocomplete('off')
                     ->readonly()
-                    ->placeholder('Longit MM'),
+                    ->placeholder('Longit (MM)'),
                 /* ->rules('required|numeric|min:10|max:180') */
                 // Añade las reglas de validación aquí,
                 Input::make('description')

@@ -149,6 +149,7 @@ class ProductionOrdenEditScreen extends Screen
             $productionOrden->details()->create([
                 'part_id' => $product['idDescriptionParts'],  // Usar la clave foránea correcta para 'part_id'
                 'quantity' => $product['quantity'],  // Cantidad del producto
+                'quantity_weight' => 0,  // Cantidad del producto en pesos (medida)
                 'description' => $product['description'],  // Descripción del producto
             ]);
         }
@@ -179,7 +180,7 @@ class ProductionOrdenEditScreen extends Screen
         return [
             'production_date' => 'required|date',  // Requerido, debe ser una fecha válida
             'numero_orden' => [
-                'nullable',  // Cambiar de 'required' a 'nullable'
+                'nullable',
                 'string',
                 'max:20',
                 Rule::unique('production_ordens')->ignore($model ? $model->id : null),

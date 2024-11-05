@@ -14,4 +14,10 @@ class Status extends Model
 
     // Dejar $guarded vacío significa que todos los campos son asignables en masa
     protected $guarded = [];
+
+    // Relación inversa con ProductionOrden
+    public function productionOrdens()
+    {
+        return $this->hasMany(ProductionOrden::class);
+    }
 }

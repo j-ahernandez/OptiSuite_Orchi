@@ -64,12 +64,6 @@ class ModeloVehiculoResource extends Resource
                 ->render(function ($model) {
                     return $model->vehiculo ? $model->vehiculo->descripcionvehiculo : 'N/A';
                 }),
-            TD::make('vehiculo.descripcionvehiculo', 'Nombre del Vehículo')
-                ->sort()
-                ->filter(Input::make())
-                ->render(function ($model) {
-                    return $model->vehiculo->descripcionvehiculo;
-                }),
             TD::make('modelo_detalle')
                 ->sort()
                 ->filter(Input::make()),
@@ -77,13 +71,13 @@ class ModeloVehiculoResource extends Resource
                 ->sort()
                 ->filter(Input::make())
                 ->render(function ($model) {
-                    return $model->created_at->toDateTimeString();
+                    return $model->created_at ? $model->created_at->toDateTimeString() : 'N/A';
                 }),
             TD::make('updated_at', 'Fecha de actualización')
                 ->sort()
                 ->filter(Input::make())
                 ->render(function ($model) {
-                    return $model->updated_at->toDateTimeString();
+                    return $model->updated_at ? $model->updated_at->toDateTimeString() : 'N/A';
                 }),
             TD::make('Acciones')
                 ->align(TD::ALIGN_CENTER)
