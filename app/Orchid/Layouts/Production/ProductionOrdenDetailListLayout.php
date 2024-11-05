@@ -45,6 +45,9 @@ class ProductionOrdenDetailListLayout extends Table
             TD::make('quantity', 'Cantidad')
                 ->sort()
                 ->filter(Input::make()),
+            TD::make('quantity_weight', 'Cantidad (Medida)')
+                ->sort()
+                ->filter(Input::make()),
             TD::make('created_at', __('Created'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
