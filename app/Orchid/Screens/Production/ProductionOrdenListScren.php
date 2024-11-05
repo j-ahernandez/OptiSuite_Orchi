@@ -5,7 +5,9 @@ namespace App\Orchid\Screens\Production;
 use App\Models\ProductionOrden;
 use App\Models\Status;
 use App\Orchid\Layouts\Production\ProductionOrdenListLayout;
+use Carbon\Carbon;
 use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Toast;
 use Orchid\Support\Color;
@@ -17,10 +19,22 @@ class ProductionOrdenListScren extends Screen
      *
      * @return array
      */
+    /*   public function query(): iterable
+      {
+          return [
+              'productionOrders' => ProductionOrden::paginate(10),  // Paginación de 10 órdenes por página
+          ];
+      } */
+
     public function query(): iterable
     {
+        $startDate = Carbon::now()->subMonth();  // Fecha de inicio (hace un mes)
+        $endDate = Carbon::now();  // Fecha de fin (hoy)
+
         return [
-            'productionOrders' => ProductionOrden::paginate(10),  // Paginación de 10 órdenes por página
+            'productionOrders' => ProductionOrden::whereBetween('production_date', [$startDate, $endDate])
+                ->orderBy('production_date', 'desc')  // Orden descendente por fecha de producción
+                ->paginate(10),  // Paginación de 10 órdenes por página
         ];
     }
 
@@ -68,9 +82,9 @@ class ProductionOrdenListScren extends Screen
     {
         return [
             Button::make(__('Crear'))
-                ->route('platform.production.orders.create')  // Cambiado a la ruta de creación
+                ->icon('bs.check-circle')
                 ->type(Color::PRIMARY)
-                ->icon('bs.plus'),
+                ->method('createOrder'),
         ];
     }
 
@@ -87,6 +101,21 @@ class ProductionOrdenListScren extends Screen
     }
 
     /**
+     * Redirige a la pantalla de creación de una nueva orden de producción.
+     *
+     * Este método se utiliza para navegar a la página donde se puede crear
+     * una nueva orden de producción dentro del sistema. Al ser invocado,
+     * redirige al usuario a la ruta definida para la creación de órdenes de
+     * producción.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function createOrder()
+    {
+        return redirect()->route('platform.production.orders.create');
+    }
+
+    /**
      * Process the production order.
      *
      * @param int $id
@@ -94,10 +123,10 @@ class ProductionOrdenListScren extends Screen
      */
     public function process(int $id)
     {
-        // Aquí puedes implementar la lógica para procesar la orden.
+        $orden = ProductionOrden::find(id: $id);
 
         // Mostrar un mensaje toast de éxito
-        Toast::info("Orden de producción #{$id} procesada con éxito.");
+        Toast::info("Orden de producción #{$orden->numero_orden} procesada con éxito.");
 
         // Redirigir a la misma página o a otra según sea necesario
         return redirect()->route('platform.production.orders');
@@ -115,7 +144,7 @@ class ProductionOrdenListScren extends Screen
         $canceladoStatusId = Status::where('name', 'Cancelado')->value('id');
 
         // Actualizar la orden al nuevo estado
-        $orden = ProductionOrden::find($id);
+        $orden = ProductionOrden::find(id: $id);
 
         if ($orden) {
             $orden->status_id = $canceladoStatusId;

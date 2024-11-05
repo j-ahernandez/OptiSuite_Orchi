@@ -7,6 +7,7 @@ use App\Orchid\Layouts\Production\ProductionOrdenEditLayout;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
@@ -15,10 +16,6 @@ use Orchid\Support\Color;
 
 class ProductionOrdenEditScreen extends Screen
 {
-    // Propiedades protegidas para almacenar datos
-    protected array $products = [];
-    protected string $productionDate;
-
     /**
      * Fetch data to be displayed on the screen.
      *
@@ -115,7 +112,7 @@ class ProductionOrdenEditScreen extends Screen
      * @param \App\Models\ProductionOrden $productionOrden
      * @return mixed
      */
-    public function save(Request $request, ProductionOrden $productionOrden): mixed
+    public function save(Request $request, ProductionOrden $productionOrden = null): mixed
     {
         // Validar los datos del request
         $validatedData = $request->validate($this->rules($productionOrden), $this->messages());
@@ -129,9 +126,13 @@ class ProductionOrdenEditScreen extends Screen
         // Obtener la fecha de producción y establecer la hora actual
         $productionDateTime = Carbon::parse($validatedData['production_date'])->setTime(now()->hour, now()->minute);
 
+        // cosultame el numero de la tabla maestra
+
+        $numeroMaestro = 1;  // Encargado de definir en que numero comienza numeracion, a partir del primer registro
+
         // Obtener el último número de orden
         $lastOrder = ProductionOrden::orderBy('numero_orden', 'desc')->first();
-        $nextNumber = $lastOrder ? intval(substr($lastOrder->numero_orden, 2)) + 1 : 1;
+        $nextNumber = $lastOrder ? intval(substr($lastOrder->numero_orden, 2)) + 1 : $numeroMaestro;
 
         // Formar el nuevo numero_orden
         $newOrderNumber = 'OP' . str_pad($nextNumber, 5, '0', STR_PAD_LEFT);
@@ -159,6 +160,15 @@ class ProductionOrdenEditScreen extends Screen
         return redirect()->route('platform.production.orders');
     }
 
+    public function update(Request $request, ProductionOrden $productionOrden)
+    {
+        // Mostrar mensaje de éxito
+        Toast::info(__('Datos guardados exitosamente.'));
+
+        // Redirigir a la ruta deseada después de guardar
+        return redirect()->route('platform.production.orders');
+    }
+
     /**
      * Get the validation rules that apply to save/update.
      *
@@ -168,7 +178,12 @@ class ProductionOrdenEditScreen extends Screen
     {
         return [
             'production_date' => 'required|date',  // Requerido, debe ser una fecha válida
-            // Reglas para los productos en la matriz
+            'numero_orden' => [
+                'nullable',  // Cambiar de 'required' a 'nullable'
+                'string',
+                'max:20',
+                Rule::unique('production_ordens')->ignore($model ? $model->id : null),
+            ],
             'products.*.idDescriptionParts' => 'required|exists:description_parts,id',  // Requerido, debe existir en la tabla description_parts
             'products.*.description' => 'nullable|string|max:255',  // Opcional, cadena de texto, máximo 255 caracteres
             'products.*.quantity' => 'required|integer|min:1',  // Requerido, debe ser un número entero mayor o igual a 1

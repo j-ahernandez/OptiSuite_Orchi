@@ -2,7 +2,10 @@
 
 namespace App\Orchid\Resources;
 
+use App\Orchid\Filters\DateRangeFilter;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Orchid\Crud\Filters\DefaultSorted;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
@@ -11,6 +14,7 @@ use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
+use \App\Models\YearVehiculo;
 
 class YearVehiculoResource extends Resource
 {
@@ -19,7 +23,7 @@ class YearVehiculoResource extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\YearVehiculo::class;
+    public static $model = YearVehiculo::class;
 
     /**
      * Get the fields displayed by the resource.
@@ -119,7 +123,20 @@ class YearVehiculoResource extends Resource
      */
     public function filters(): array
     {
-        return [];
+        return [
+            // new DefaultSorted('created_at', 'asc'),
+            DateRangeFilter::class,
+        ];
+    }
+
+    /**
+     * Get the number of models to return per page
+     *
+     * @return int
+     */
+    public static function perPage(): int
+    {
+        return 10;
     }
 
     /**
@@ -289,16 +306,6 @@ class YearVehiculoResource extends Resource
         return __('Eliminar :resource', [
             'resource' => static::singular()
         ]);
-    }
-
-    /**
-     * Get the number of models to return per page
-     *
-     * @return int
-     */
-    public static function perPage(): int
-    {
-        return 30;
     }
 
     /**

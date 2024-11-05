@@ -119,7 +119,7 @@ $(() => {
     $('#yearidInput').on('change', handleYearChange);
     $('#positionidInput').on('change', handlePositionChange);
 
-    $.get('/obtener-csrf-token', function(responseToken) {
+    $.get('/admin/obtener-csrf-token', function(responseToken) {
         const csrfToken = responseToken.csrfToken;
 
         $('#typeidInput').on('change', function() {
@@ -131,7 +131,7 @@ $(() => {
             }
 
             $.ajax({
-                url: `/obtener-codigo-tipo-vehiculo/${selectedValue}`,
+                url: `/admin/obtener-codigo-tipo-vehiculo/${selectedValue}`,
                 method: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
@@ -163,7 +163,7 @@ $(() => {
             }
 
             $.ajax({
-                url: `/obtener-nombre-corto-vehiculo/${selectedValue}`,
+                url: `/admin/obtener-nombre-corto-vehiculo/${selectedValue}`,
                 method: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
@@ -204,8 +204,6 @@ $(() => {
 
             _yearId = $(this).val();
             _year = $('#yearidInput option:selected').text();
-    
-            console.log('year ' + _year);
 
             if(selectedValue === '0'){
                 $('#descriptionInput').val(_nombreCorto + ' ' + _modeloVehiculo + ' a' + _year.slice(-2));
@@ -316,7 +314,7 @@ $(() => {
             var selectedValue = $(this).val();
 
             $.ajax({
-                url: `/obtener-material-combinado-material/${selectedValue}`,
+                url: `/admin/obtener-material-combinado-material/${selectedValue}`,
                 method: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
@@ -339,7 +337,7 @@ $(() => {
             var selectedValue = $(this).val();
 
             $.ajax({
-                url: `/obtener-inches-material-grapa/${selectedValue}`,
+                url: `/admin/obtener-inches-material-grapa/${selectedValue}`,
                 method: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
@@ -362,13 +360,12 @@ $(() => {
             var selectedValue = $(this).val();
 
             $.ajax({
-                url: `/obtener-imagen-tipo-hoja/${selectedValue}`,
+                url: `/admin/obtener-imagen-tipo-hoja/${selectedValue}`,
                 method: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
                 success: function(response) {
-                    console.log(response.imageUrl);
                     $('#imagePreviewTipoHoja').attr('src', response.imageUrl);
                 },
                 error: function(xhr) {
@@ -381,7 +378,7 @@ $(() => {
             var selectedValue = $(this).val();
 
             $.ajax({
-                url: `/obtener-imagen-buje-lc/${selectedValue}`,
+                url: `/admin/obtener-imagen-buje-lc/${selectedValue}`,
                 method: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': csrfToken 
@@ -399,13 +396,12 @@ $(() => {
             var selectedValue = $(this).val();
 
             $.ajax({
-                url: `/obtener-imagen-buje-ll/${selectedValue}`, 
+                url: `/admin/obtener-imagen-buje-ll/${selectedValue}`, 
                 method: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': csrfToken 
                 },
                 success: function(response) {
-                    console.log(response.imageUrl);
                     $('#imagePreviewBujeLL').attr('src', response.imageUrl); 
                 },
                 error: function(xhr) {

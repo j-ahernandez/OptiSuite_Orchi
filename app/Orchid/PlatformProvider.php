@@ -51,10 +51,11 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.production.orders')
                 ->permission('platform.production-orden')
                 ->title(__('Ordenes de Producción')),
-            Menu::make('Lista de Empaque')
+            // Packing List
+            Menu::make(__('Packing List'))
                 ->icon('fa.book')
-                ->route('platform.resource.list', ['resource' => 'pkglist-resources'])
-                ->permission('platform.pkglist')
+                ->route('platform.packing.list')
+                ->permission('platform.packing.list')
                 ->title(__('Packing List')),
             // CONFIGURACIÓN
             Menu::make('Configuración')
@@ -157,7 +158,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.configuracion', __('Configuración'))
                 ->addPermission('platform.production-orden', __('Oredenes de Producción'))
                 ->addPermission('platform.inventory', __('Inventario'))
-                ->addPermission('platform.pkglist', __('Packing List')),
+                ->addPermission('platform.packing.list', __('Packing List')),
             ItemPermission::group(__('Fast Solutions - Sub-Menus'))
                 ->addPermission('platform.descriptionpart', __('Codigo Hoja de Resortes'))
                 ->addPermission('platform.bujelc', __('Buje LC'))

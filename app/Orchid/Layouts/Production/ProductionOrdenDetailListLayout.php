@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Layouts\Production;
 
+use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
@@ -26,9 +27,9 @@ class ProductionOrdenDetailListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('id', 'ID')
-                ->sort()
-                ->filter(Input::make()),
+            /*             TD::make('id', 'ID')
+                            ->sort()
+                            ->filter(Input::make()), */
             TD::make('production_order.numero_orden', 'Número de Orden')  // Aquí se agrega la columna para el número de orden
                 ->sort()
                 ->filter(Input::make())
@@ -44,18 +45,15 @@ class ProductionOrdenDetailListLayout extends Table
             TD::make('quantity', 'Cantidad')
                 ->sort()
                 ->filter(Input::make()),
-            TD::make('created_at', 'Fecha de creación')
-                ->sort()
-                ->filter(Input::make())
-                ->render(function ($model) {
-                    return $model->created_at->toDateTimeString();
-                }),
-            TD::make('updated_at', 'Fecha de actualización')
-                ->sort()
-                ->filter(Input::make())
-                ->render(function ($model) {
-                    return $model->updated_at->toDateTimeString();
-                }),
+            TD::make('created_at', __('Created'))
+                ->usingComponent(DateTimeSplit::class)
+                ->align(TD::ALIGN_RIGHT)
+                ->defaultHidden()
+                ->sort(),
+            TD::make('updated_at', __('Last edit'))
+                ->usingComponent(DateTimeSplit::class)
+                ->align(TD::ALIGN_RIGHT)
+                ->sort(),
         ];
     }
 }

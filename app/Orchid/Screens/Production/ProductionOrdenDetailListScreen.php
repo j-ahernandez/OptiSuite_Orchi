@@ -6,7 +6,7 @@ use App\Models\ProductionOrdenDetail;
 use App\Orchid\Layouts\Production\ProductionOrdenDetailListLayout;
 use Orchid\Screen\Screen;
 
-class ProductionOrdenDetailListScren extends Screen
+class ProductionOrdenDetailListScreen extends Screen
 {
     /**
      * Fetch data to be displayed on the screen.

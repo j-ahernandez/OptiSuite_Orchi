@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
@@ -30,9 +31,9 @@ class ProductionOrdenListLayout extends Table
     public function columns(): array
     {
         return [
-            TD::make('id')
-                ->sort()
-                ->filter(Input::make()),
+            /*             TD::make('id')
+                            ->sort()
+                            ->filter(Input::make()), */
             TD::make('numero_orden', 'Número de Orden')  // Agregar columna para numero_orden
                 ->sort()  // Permitir ordenar por este campo
                 ->filter(Input::make()),  // Permitir filtrar por este campo
@@ -43,25 +44,24 @@ class ProductionOrdenListLayout extends Table
                     // Verifica si production_date es un string y conviértelo a Carbon
                     $date = is_string($model->production_date) ? Carbon::parse($model->production_date) : $model->production_date;
                     return $date->toDateTimeString();
-                }),
+                })
+                ->usingComponent(DateTimeSplit::class)
+                ->sort(),
             TD::make('status_id', 'Estado')
                 ->sort()
                 ->filter(Input::make())
                 ->render(function ($model) {
                     return $model->status ? $model->status->name : 'Desconocido';  // Obtiene el nombre del estado
                 }),
-            TD::make('created_at', 'Fecha de creación')
-                ->sort()
-                ->filter(Input::make())
-                ->render(function ($model) {
-                    return $model->created_at->toDateTimeString();
-                }),
-            TD::make('updated_at', 'Fecha de actualización')
-                ->sort()
-                ->filter(Input::make())
-                ->render(function ($model) {
-                    return $model->updated_at->toDateTimeString();
-                }),
+            TD::make('created_at', __('Created'))
+                ->usingComponent(DateTimeSplit::class)
+                ->align(TD::ALIGN_RIGHT)
+                ->defaultHidden()
+                ->sort(),
+            TD::make('updated_at', __('Last edit'))
+                ->usingComponent(DateTimeSplit::class)
+                ->align(TD::ALIGN_RIGHT)
+                ->sort(),
             TD::make('Acciones')
                 ->align(TD::ALIGN_CENTER)
                 ->width('100px')
