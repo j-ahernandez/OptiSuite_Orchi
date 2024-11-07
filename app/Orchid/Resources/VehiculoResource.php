@@ -53,12 +53,13 @@ class VehiculoResource extends Resource
                         2 => 'TRAMO RECTO (9TR -- TrR)',
                         3 => 'GRAPA',
                     ])
-                    ->title('Tipo Vehículo')
-                    ->id('typeidInput')
+                    // ->title('Tipo Vehículo')
+                    ->id('typeid')
                     ->empty('')
                     ->searchable()
                     ->required()
-                    ->set('class', 'form-select'),
+                    ->set('class', 'form-select d-none')
+                    ->value(0),
             ]),
         ];
     }
@@ -83,17 +84,17 @@ class VehiculoResource extends Resource
             TD::make('numero', 'Número')
                 ->sort()
                 ->filter(Input::make()),
-            TD::make('typeid', 'Tipo Vehículo')
-                ->sort()
-                ->filter(Input::make())
-                ->render(function ($vehiuloResource) {
-                    return [
-                        0 => 'VEHICULO (01-99)',
-                        1 => 'TRAMO TERMINADO (9T -- TrT)',
-                        2 => 'TRAMO RECTO (9TR -- TrR)',
-                        3 => 'GRAPA',
-                    ][$vehiuloResource->typeid] ?? '';
-                }),
+            // TD::make('typeid', 'Tipo Vehículo')
+            //     ->sort()
+            //     ->filter(Input::make())
+            //     ->render(function ($vehiuloResource) {
+            //         return [
+            //             0 => 'VEHICULO (01-99)',
+            //             1 => 'TRAMO TERMINADO (9T -- TrT)',
+            //             2 => 'TRAMO RECTO (9TR -- TrR)',
+            //             3 => 'GRAPA',
+            //         ][$vehiuloResource->typeid] ?? '';
+            //     }),
             TD::make(
                 'created_at',
                 'Fecha de creación',
@@ -146,15 +147,15 @@ class VehiculoResource extends Resource
             Sight::make('descripcionvehiculo', 'Descripción del Vehículo'),
             Sight::make('nombrecorto', 'Nombre corto'),
             Sight::make('numero', title: 'Número'),
-            Sight::make('typeid', title: 'Número')
-                ->render(function ($vehiuloResource) {
-                    return [
-                        0 => 'VEHICULO (01-99)',
-                        1 => 'TRAMO TERMINADO (9T -- TrT)',
-                        2 => 'TRAMO RECTO (9TR -- TrR)',
-                        3 => 'GRAPA',
-                    ][$vehiuloResource->typeid] ?? '';
-                }),
+            // Sight::make('typeid', title: 'Número')
+            //     ->render(function ($vehiuloResource) {
+            //         return [
+            //             0 => 'VEHICULO (01-99)',
+            //             1 => 'TRAMO TERMINADO (9T -- TrT)',
+            //             2 => 'TRAMO RECTO (9TR -- TrR)',
+            //             3 => 'GRAPA',
+            //         ][$vehiuloResource->typeid] ?? '';
+            //     }),
             Sight::make('created_at', 'Fecha de actualización')
                 ->render(function ($model) {
                     return $model->created_at->toDateTimeString();
@@ -187,7 +188,7 @@ class VehiculoResource extends Resource
             'descripcionvehiculo' => 'required|string|max:255',  // Requerido, cadena de texto, máximo 255 caracteres
             'nombrecorto' => 'required|string|max:10',  // Requerido, cadena de texto, máximo 10 caracteres
             'numero' => 'required|string|max:10',  // Requerido, debe ser un número entero mayor o igual a 1
-            'typeid' => 'required|integer|in:0,1,2,3',  // Requerido, debe ser uno de los valores específicos del select
+            // 'typeid' => 'required|integer|in:0,1,2,3',  // Requerido, debe ser uno de los valores específicos del select
         ];
     }
 
@@ -210,7 +211,7 @@ class VehiculoResource extends Resource
             'numero.max' => 'El campo número no puede tener más de 10 caracteres.',
             'typeid.required' => 'El campo tipo de vehículo es obligatorio.',
             'typeid.integer' => 'El campo tipo de vehículo debe ser un número válido.',
-            'typeid.in' => 'El campo tipo de vehículo debe ser uno de los valores permitidos: VEHÍCULO (01-99), TRAMO TERMINADO, TRAMO RECTO o GRAPA.',
+            // 'typeid.in' => 'El campo tipo de vehículo debe ser uno de los valores permitidos: VEHÍCULO (01-99), TRAMO TERMINADO, TRAMO RECTO o GRAPA.',
         ];
     }
 
