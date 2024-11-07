@@ -40,10 +40,14 @@ class PackingListScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Button::make(__('Crear'))
+            Button::make(__('Crear Barra Redonda'))
                 ->icon('bs.check-circle')
                 ->type(Color::PRIMARY)
-                ->method('createPackingList'),
+                ->method('createPackingListRedonda'),
+            Button::make(__('Crear Barra Plana'))
+                ->icon('bs.check-circle')
+                ->type(Color::PRIMARY)
+                ->method('createPackingListPlana'),
         ];
     }
 
@@ -69,8 +73,23 @@ class PackingListScreen extends Screen
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function createPackingList()
+    public function createPackingListRedonda()
     {
         return redirect()->route('platform.packing.list.create');
+    }
+
+    /**
+     * Redirige a la pantalla de creación de una nueva orden de producción.
+     *
+     * Este método se utiliza para navegar a la página donde se puede crear
+     * una nueva orden de producción dentro del sistema. Al ser invocado,
+     * redirige al usuario a la ruta definida para la creación de órdenes de
+     * producción.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function createPackingListPlana()
+    {
+        return redirect()->route('platform.packing.list.create.p');
     }
 }

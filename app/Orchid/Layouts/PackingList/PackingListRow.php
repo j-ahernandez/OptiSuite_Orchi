@@ -43,10 +43,7 @@ class PackingListRow extends Rows
             Input::make('pkg_Lenght')
                 ->title('Longitud del Paquete')
                 ->mask(['alias' => 'decimal', 'groupSeparator' => ',', 'radixPoint' => '.'])
-                ->required(),
-            Input::make('pkg_Weight')
-                ->title('Peso del Paquete')
-                ->type('number')  // Definir como número para el Peso
+                ->id('pkg_Lenght')
                 ->required(),
             Input::make('pkg_Bars')
                 ->title('Barras en el Paquete')
@@ -55,6 +52,12 @@ class PackingListRow extends Rows
             Input::make('pkg_Bundles')
                 ->title('Paquetes')
                 ->type('text')  // Definir como número para los Paquetes
+                ->required(),
+            Input::make('pkg_Weight')
+                ->title('Peso del Paquete')
+                ->type('number')
+                ->id('pkg_Weight')
+                ->readonly()
                 ->required(),
         ];
     }

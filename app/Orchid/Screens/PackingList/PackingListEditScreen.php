@@ -65,7 +65,7 @@ class PackingListEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Modifica los Packing List asociadas existentes en el sistema';
+        return 'Modifica los Packing List (Barra Redonda) asociadas existentes en el sistema';
     }
 
     /**
@@ -140,6 +140,8 @@ class PackingListEditScreen extends Screen
                     'pkg_Bundles' => $validatedData['pkg_Bundles'],
                 ]);
             }
+
+            // Alimentar el inventario
 
             // Mostrar mensaje de éxito
             Toast::info(__('Datos guardados exitosamente.'));

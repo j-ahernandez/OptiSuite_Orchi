@@ -12,6 +12,7 @@ use App\Orchid\Screens\Examples\ExampleGridScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\PackingList\PackingListEditBarraPlanaScreen;
 use App\Orchid\Screens\PackingList\PackingListEditScreen;
 use App\Orchid\Screens\PackingList\PackingListScreen;
 use App\Orchid\Screens\PackingList\PackingListScreenLegend;
@@ -169,7 +170,14 @@ Route::screen('packing-list/create', PackingListEditScreen::class)
     ->name('platform.packing.list.create')
     ->breadcrumbs(fn(Trail $trail) => $trail
         ->parent('platform.packing.list')
-        ->push(__('Crear'), route('platform.packing.list.create')));
+        ->push(__('Crear Barra Redonda'), route('platform.packing.list.create')));
+
+// Platform > Packing List > Crear
+Route::screen('packing-list/create_p', PackingListEditBarraPlanaScreen::class)
+    ->name('platform.packing.list.create.p')
+    ->breadcrumbs(fn(Trail $trail) => $trail
+        ->parent('platform.packing.list')
+        ->push(__('Crear Barra Plana'), route('platform.packing.list.create.p')));
 
 // Platform > Packing List > Editar
 Route::screen('packing-list/{pkglist}/edit', PackingListEditScreen::class)
