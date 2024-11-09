@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BujeLCController;
 use App\Http\Controllers\BujeLLController;
+use App\Http\Controllers\PkglistController;
 use App\Http\Controllers\TipoHojaVehiculoController;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
@@ -192,3 +193,6 @@ Route::screen('packing-list/{pkglist}/show', PackingListScreenLegend::class)
     ->breadcrumbs(fn(Trail $trail, $pkglist) => $trail
         ->parent('platform.packing.list')
         ->push('Ver', route('platform.packing.list.show', $pkglist)));
+
+// Imports & Exports
+Route::get('packing-list/export-excel', [PkglistController::class, 'export_excel'])->name('export.excel');

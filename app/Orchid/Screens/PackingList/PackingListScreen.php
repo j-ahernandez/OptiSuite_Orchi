@@ -5,7 +5,9 @@ namespace App\Orchid\Screens\PackingList;
 use App\Models\pkglist;
 use App\Orchid\Layouts\PackingList\PackingListTable;
 use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Toast;
 use Orchid\Support\Color;
 
 class PackingListScreen extends Screen
@@ -44,10 +46,10 @@ class PackingListScreen extends Screen
                 ->icon('bs.check-circle')
                 ->type(Color::PRIMARY)
                 ->method('createPackingListRedonda'),
-            Button::make(__('Crear Barra Plana'))
-                ->icon('bs.check-circle')
-                ->type(Color::PRIMARY)
-                ->method('createPackingListPlana'),
+            Link::make(__('Exportar'))
+                ->icon('bs.plus-circle')
+                ->type(Color::SUCCESS)
+                ->route('export.excel'),
         ];
     }
 
@@ -91,5 +93,14 @@ class PackingListScreen extends Screen
     public function createPackingListPlana()
     {
         return redirect()->route('platform.packing.list.create.p');
+    }
+
+    // Mostrar el Toast en la pantalla después de la redirección
+    public function onAfterRender()
+    {
+        // Verificar si hay un mensaje de éxito en la sesión y mostrarlo
+        if (session('success')) {
+            Toast::success(session('success'));
+        }
     }
 }
