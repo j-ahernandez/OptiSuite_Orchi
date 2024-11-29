@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BujeLCController;
 use App\Http\Controllers\BujeLLController;
+use App\Http\Controllers\ModeloVehiculoController;
 use App\Http\Controllers\PkglistController;
 use App\Http\Controllers\TipoHojaVehiculoController;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
@@ -196,3 +197,6 @@ Route::screen('packing-list/{pkglist}/show', PackingListScreenLegend::class)
 
 // Imports & Exports
 Route::get('packing-list/export-excel', [PkglistController::class, 'export_excel'])->name('export.excel');
+
+// Obtener el modelo del vehiculo
+Route::get('obtener-vehiculos/{vehiculoId}', [ModeloVehiculoController::class, 'getModelos']);

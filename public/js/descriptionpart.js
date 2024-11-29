@@ -1,4 +1,7 @@
 $(() => {
+    // Limpia el campo select de modelos completamente (vaciar dropdown y opciones)
+    clearRelationSelectField('modelidInput');
+    
     var _tipo = '';
     var _vehiculoId = '';
     var _vehiculo = '';
@@ -32,10 +35,10 @@ $(() => {
         if (typeValue === '0') {
             $('#CódigoInput').val('');
             $('#descriptionInput').val('');
-            enableSelect('modelidInput');
+            enableSelect('vehiculoidInput');
         } else if (typeValue === '1') {
             enableSelect('positionidInput');
-            disableSelect('modelidInput');
+            disableSelect('vehiculoidInput');
             $('#CódigoInput').val('');
             $('#descriptionInput').val('Tramo--TrT');
         } else if (typeValue === '2') {
@@ -44,7 +47,7 @@ $(() => {
             $('#lccmInput').prop('readonly', false);
             $('#abrazlongcmInput').prop('readonly', false);
 
-            disableSelect('modelidInput');
+            disableSelect('vehiculoidInput');
             enableSelect('materialidInput');
             enableSelect('porcendespunteInput');
             disableSelect('positionidInput');
@@ -53,12 +56,16 @@ $(() => {
         } else if (typeValue === '3') {
             $('#longitInput').prop('readonly', false);
             enableSelect('materialgrapaidInput');
-            disableSelect('modelidInput');
+            disableSelect('vehiculoidInput');
             $('#CódigoInput').val('');
             $('#descriptionInput').val('');
         }
     };
     
+    const handleVehiculoChange = () => {   
+        enableSelect('modelidInput');
+    };   
+
     const handleModelChange = () => {   
         $('#apodoInput').prop('readonly', false);
         enableSelect('yearidInput');
@@ -103,6 +110,7 @@ $(() => {
     }
 
     $('#typeidInput').on('change', () => {
+        $('#modelidInput').off('change', handleVehiculoChange);
         $('#modelidInput').off('change', handleModelChange);
         //$('#yearidInput').off('change', handleYearChange);
         $('#positionidInput').off('change', handlePositionChange);
@@ -115,11 +123,13 @@ $(() => {
         $('#positionidInput').on('change', handlePositionChange);
     });
 
+    $('#vehiculoidInput').on('change', handleVehiculoChange);
     $('#modelidInput').on('change', handleModelChange);
     $('#yearidInput').on('change', handleYearChange);
     $('#positionidInput').on('change', handlePositionChange);
 
     $.get('/admin/obtener-csrf-token', function(responseToken) {
+        //INICIO DEL TOKEN csrfToken, TODO EL CODIGO QUE CONSULTE DIRECTAMENTE A LARAVEL DEBE ESTAR, ESTO PERMITE QUE SU CONSULTA TENGA EXITO
         const csrfToken = responseToken.csrfToken;
 
         $('#typeidInput').on('change', function() {
@@ -410,5 +420,54 @@ $(() => {
             });
         });
 
-    });
+        // Selecciona el input donde se llenarán los modelos
+        const modeloSelect = $('#modelidInput');
+
+        // Evento para detectar cambios en el select de vehículos
+        $('#vehiculoidInput').on('change', () => {
+            const vehiculosId = $('#vehiculoidInput').val();
+            console.log('ID del vehículo seleccionado:', vehiculosId);
+        
+            // Limpia el campo select de modelos completamente (vaciar dropdown y opciones)
+            clearRelationSelectField('modelidInput');
+        
+            if (vehiculosId) {
+                $.ajax({
+                    url: `/admin/obtener-vehiculos/${vehiculosId}`,
+                    type: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                    },
+                    dataType: 'json',
+                    success: (data) => {
+                        console.log('Respuesta de la solicitud AJAX:', data);
+        
+                        const tomSelectInstance = $('#modelidInput')[0].tomselect;
+        
+                        // Asegúrate de que la instancia esté cargada
+                        if (tomSelectInstance) {
+                            // Limpia las opciones previas
+                            tomSelectInstance.clearOptions(); // Limpiar todas las opciones previas
+                            tomSelectInstance.addOption({ value: '', text: 'Seleccione una opción' }); // Agregar la opción predeterminada
+        
+                            // Agregar nuevas opciones obtenidas de AJAX
+                            data.forEach((modelo) => {
+                                tomSelectInstance.addOption({ value: modelo.id, text: modelo.modelo_detalle });
+                            });
+        
+                            // Habilitar el select si no está habilitado
+                            tomSelectInstance.enable();
+                        }
+                    },
+                    error: (xhr, status, error) => {
+                        console.error('Error en la solicitud AJAX:', status, error);
+                        alert('Hubo un error al intentar obtener los modelos. Por favor, inténtelo nuevamente.');
+                    },
+                });
+            }
+        });
+          
+          
+        //FIN DEL TOKEN csrfToken, TODO EL CODIGO QUE CONSULTE DIRECTAMENTE A LARAVEL DEBE ESTAR, ESTO PERMITE QUE SU CONSULTA TENGA EXITO
+    });         
 });

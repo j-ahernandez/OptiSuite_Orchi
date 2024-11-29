@@ -20,6 +20,7 @@ use Orchid\Screen\TD;
 use \App\Models\PosicionVehiculo;
 use \App\Models\RefTensadoVehiculo;
 use \App\Models\TipoHojaVehiculo;
+use \App\Models\Vehiculo;
 use \App\Models\YearVehiculo;
 
 class DescriptionPartResource extends Resource
@@ -51,9 +52,6 @@ class DescriptionPartResource extends Resource
                     ->readonly()
                     ->placeholder('Código')
                     ->autocomplete('off'),  // Desactivar autocompletado
-            ]),
-            // Fila 1
-            Group::make([
                 Select::make('typeid')
                     ->options([
                         0 => 'VEHICULO (01-99)',
@@ -66,15 +64,25 @@ class DescriptionPartResource extends Resource
                     ->empty('')
                     ->searchable()
                     ->set('class', 'form-select'),
-                Select::make('modelid')
-                    ->fromModel(ModeloVehiculo::class, 'modelo_detalle', 'id')
-                    ->displayAppend('vehiculo_y_modelo')  // Usa el nuevo atributo
-                    ->title('Seleccione un Vehículo con su Modelo')
-                    ->empty('Seleccione una opción')
-                    ->id('modelidInput')
-                    ->set('class', 'form-select')
-                    ->disabled()
-                    ->help('Por favor seleccione el vehículo y modelo.'),
+            ]),
+            // Fila 1
+            Group::make([
+                Select::make('vehiculosid')
+                ->fromModel(Vehiculo::class, 'descripcionvehiculo', 'id')
+                ->displayAppend('descripcionvehiculo')  // Usa el nuevo atributo
+                ->title('Seleccione un Vehículo')
+                ->empty('Seleccione una opción')
+                ->id('vehiculoidInput')
+                ->set('class', 'form-select')
+                ->help('Por favor seleccione el vehículo.'),
+            
+            Select::make('modelid')
+                ->options([]) // Comienza vacío
+                ->title('Seleccione un Vehículo con su Modelo')
+                ->empty('Seleccione una opción')
+                ->id('modelidInput')
+                ->set('class', 'form-select')
+                ->help('Por favor seleccione un modelo.'),
                 Input::make('apodo')
                     ->title('Apodo')
                     ->type(value: 'text')
@@ -577,6 +585,28 @@ class DescriptionPartResource extends Resource
     public function columns(): array
     {
         return [
+            TD::make('Acciones')
+                ->align(TD::ALIGN_CENTER)
+                ->width('100px')
+                ->render(function ($model) {
+                    return DropDown::make()
+                        ->icon('bs.three-dots-vertical')
+                        ->list([
+                            Link::make('Ver')
+                                ->route('platform.resource.view', ['resource' => 'description-part-resources', 'id' => $model->id])
+                                ->icon('eye'),
+                            Link::make('Editar')
+                                ->route('platform.resource.edit', ['resource' => 'description-part-resources', 'id' => $model->id])
+                                ->icon('pencil'),
+                            Button::make('Eliminar')
+                                ->method('delete')
+                                ->confirm('¿Estás seguro de que deseas eliminar este registro?')
+                                ->parameters([
+                                    'id' => $model->id,
+                                ])
+                                ->icon('trash'),
+                        ]);
+                }),
             TD::make('id')
                 ->sort()
                 ->filter(Input::make()),
@@ -593,6 +623,13 @@ class DescriptionPartResource extends Resource
                         2 => 'TRAMO RECTO (9TR -- TrR)',
                         3 => 'GRAPA',
                     ][$descriptionPart->typeid] ?? '';
+                }),
+            TD::make('vehiculosid', 'Vehiculo')
+                ->sort()
+                ->filter(Input::make())
+                ->render(function ($descriptionPart) {
+                    $vehiculo = Vehiculo::Find($descriptionPart->vehiculosid);
+                    return $vehiculo ? $vehiculo->descripcionvehiculo : '';
                 }),
             TD::make('modelid', 'Modelo')
                 ->sort()
@@ -890,29 +927,7 @@ class DescriptionPartResource extends Resource
                 ->filter(Input::make())
                 ->render(function ($model) {
                     return $model->updated_at->toDateTimeString();
-                }),
-            TD::make('Acciones')
-                ->align(TD::ALIGN_CENTER)
-                ->width('100px')
-                ->render(function ($model) {
-                    return DropDown::make()
-                        ->icon('bs.three-dots-vertical')
-                        ->list([
-                            Link::make('Ver')
-                                ->route('platform.resource.view', ['resource' => 'description-part-resources', 'id' => $model->id])
-                                ->icon('eye'),
-                            Link::make('Editar')
-                                ->route('platform.resource.edit', ['resource' => 'description-part-resources', 'id' => $model->id])
-                                ->icon('pencil'),
-                            Button::make('Eliminar')
-                                ->method('delete')
-                                ->confirm('¿Estás seguro de que deseas eliminar este registro?')
-                                ->parameters([
-                                    'id' => $model->id,
-                                ])
-                                ->icon('trash'),
-                        ]);
-                }),
+                })
         ];
     }
 
@@ -1178,6 +1193,7 @@ class DescriptionPartResource extends Resource
         return [
             'code' => 'required|string|max:255',
             'typeid' => 'nullable|string|max:255',
+            'vehiculosid' => 'nullable|integer',
             'modelid' => 'nullable|integer',
             'apodo' => 'nullable|string|max:255',
             'yearid' => 'nullable|integer',
@@ -1231,6 +1247,7 @@ class DescriptionPartResource extends Resource
             'code.max' => 'El código no puede tener más de 255 caracteres.',
             'typeid.string' => 'El tipo debe ser un texto.',
             'typeid.max' => 'El tipo no puede tener más de 255 caracteres.',
+            'vehiculosid.integer' => 'El ID de vehículo debe ser un número.',
             'modelid.integer' => 'El ID del modelo debe ser un número.',
             'apodo.string' => 'El apodo debe ser un texto.',
             'apodo.max' => 'El apodo no puede tener más de 255 caracteres.',
