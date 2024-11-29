@@ -68,21 +68,22 @@ class DescriptionPartResource extends Resource
             // Fila 1
             Group::make([
                 Select::make('vehiculosid')
-                ->fromModel(Vehiculo::class, 'descripcionvehiculo', 'id')
-                ->displayAppend('descripcionvehiculo')  // Usa el nuevo atributo
-                ->title('Seleccione un Vehículo')
-                ->empty('Seleccione una opción')
-                ->id('vehiculoidInput')
-                ->set('class', 'form-select')
-                ->help('Por favor seleccione el vehículo.'),
-            
-            Select::make('modelid')
-                ->options([]) // Comienza vacío
-                ->title('Seleccione un Vehículo con su Modelo')
-                ->empty('Seleccione una opción')
-                ->id('modelidInput')
-                ->set('class', 'form-select')
-                ->help('Por favor seleccione un modelo.'),
+                    ->fromModel(Vehiculo::class, 'descripcionvehiculo', 'id')
+                    ->displayAppend('descripcionvehiculo')  // Usa el nuevo atributo
+                    ->title('Seleccione un Vehículo')
+                    ->empty('Seleccione una opción')
+                    ->id('vehiculoidInput')
+                    ->set('class', 'form-select')
+                    ->disabled()
+                    ->help('Por favor seleccione el vehículo.'),
+                Select::make('modelid')
+                    ->options([])  // Comienza vacío
+                    ->title('Seleccione un Vehículo con su Modelo')
+                    ->empty('Seleccione una opción')
+                    ->id('modelidInput')
+                    ->set('class', 'form-select')
+                    ->disabled()
+                    ->help('Por favor seleccione un modelo.'),
                 Input::make('apodo')
                     ->title('Apodo')
                     ->type(value: 'text')
