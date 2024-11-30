@@ -1,7 +1,4 @@
 $(() => {
-    // Limpia el campo select de modelos completamente (vaciar dropdown y opciones)
-    clearRelationSelectField('modelidInput');
-    
     var _tipo = '';
     var _vehiculoId = '';
     var _vehiculo = '';
@@ -36,11 +33,17 @@ $(() => {
             $('#CódigoInput').val('');
             $('#descriptionInput').val('');
             enableSelect('vehiculoidInput');
+
+            // Limpia el campo select de modelos completamente (vaciar dropdown y opciones)
+            clearRelationSelectField('modelidInput');
         } else if (typeValue === '1') {
             enableSelect('positionidInput');
             disableSelect('vehiculoidInput');
             $('#CódigoInput').val('');
             $('#descriptionInput').val('Tramo--TrT');
+
+            // Limpia el campo select de modelos completamente (vaciar dropdown y opciones)
+            clearRelationSelectField('vehiculoidInput');
         } else if (typeValue === '2') {
             $('#longitInput').prop('readonly', false);
             $('#cortecmInput').prop('readonly', false);
@@ -53,12 +56,18 @@ $(() => {
             disableSelect('positionidInput');
             $('#CódigoInput').val('');
             $('#descriptionInput').val('TrR-');
+
+            // Limpia el campo select de modelos completamente (vaciar dropdown y opciones)
+            clearRelationSelectField('vehiculoidInput');
         } else if (typeValue === '3') {
             $('#longitInput').prop('readonly', false);
             enableSelect('materialgrapaidInput');
             disableSelect('vehiculoidInput');
             $('#CódigoInput').val('');
             $('#descriptionInput').val('');
+
+            // Limpia el campo select de modelos completamente (vaciar dropdown y opciones)
+            clearRelationSelectField('vehiculoidInput');
         }
     };
     
