@@ -240,3 +240,45 @@ function enableAllInputs(exceptions = []) {
         $(this).prop('readonly', false);
     });
 }
+
+/**
+ * Limpia todos los selects de Tom Select en la página, excepto el especificado.
+ *
+ * @param {string} excludeSelectId - El ID del select de Tom Select que no se debe limpiar (sin el símbolo '#').
+ * @returns {void}
+ */
+function clearAllTomSelects(excludeSelectId = null) {
+    $('select').each(function() {
+        const selectId = $(this).attr('id');
+        const tomSelectInstance = $(this)[0].tomselect;
+
+        // Asegúrate de que la instancia esté cargada y que no sea el select a excluir
+        if (tomSelectInstance && selectId !== excludeSelectId) {
+            // Limpia las opciones previas
+            tomSelectInstance.clearOptions(); // Limpiar todas las opciones previas
+            tomSelectInstance.addOption({ value: '', text: 'Seleccione una opción' }); // Agregar la opción predeterminada
+
+            // Habilitar el select si no está habilitado
+            tomSelectInstance.enable();
+        }
+    });
+}
+
+/**
+ * Deselecciona todos los selects de Tom Select en la página, excepto el especificado.
+ *
+ * @param {string} excludeSelectId - El ID del select de Tom Select que no se debe deseleccionar (sin el símbolo '#').
+ * @returns {void}
+ */
+function deselectAllTomSelects(excludeSelectId = null) {
+    $('select').each(function() {
+        const selectId = $(this).attr('id');
+        const tomSelectInstance = $(this)[0].tomselect;
+
+        // Asegúrate de que la instancia esté cargada y que no sea el select a excluir
+        if (tomSelectInstance && selectId !== excludeSelectId) {
+            // Deseleccionar el select
+            tomSelectInstance.clear(); // Deseleccionar la opción seleccionada
+        }
+    });
+}

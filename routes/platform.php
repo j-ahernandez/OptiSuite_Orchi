@@ -130,7 +130,8 @@ Route::get('obtener-codigo-tipo-vehiculo/{id}', [CodigoHojaController::class, 'o
 // Rutas para obtener la descripción en la Hoja de Resortes
 Route::get('obtener-material-combinado-material/{id}', [CodigoHojaController::class, 'obtenerMaterialCombinadoMaterial']);
 Route::get('obtener-inches-material-grapa/{id}', [CodigoHojaController::class, 'obtenerInchesMaterialGrapa']);
-Route::get('obtener-nombre-corto-vehiculo/{id}', [CodigoHojaController::class, 'obtenerNombreCortoVehiculo']);
+Route::get('obtener-codigo-vehiculo/{id}', [CodigoHojaController::class, 'obtenerNombreCortoVehiculo']);
+Route::get('obtener-codigo-vehiculo-por-nombre/{texto}', [CodigoHojaController::class, 'obtenerCodigoPorNombre']);
 
 // Platform > Órdenes de Producción > Crear
 Route::screen('production-orders/create', ProductionOrdenEditScreen::class)

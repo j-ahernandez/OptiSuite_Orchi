@@ -106,11 +106,55 @@ class CodigoHojaController extends Controller
             return response()->json([
                 'nombrecorto' => $modelo_vehiculos->vehiculo->nombrecorto,
                 'modelo_detalle' => $modelo_vehiculos->modelo_detalle,
+                'numero' => $modelo_vehiculos->vehiculo->numero,
                 'message' => 'Datos obtenidos exitosamente.'
             ]);
         }
 
         // En caso de que no se encuentre el vehículo
         return response()->json(['error' => 'Datos no encontrados'], 404);
+    }
+
+    public function obtenerCodigoPorNombre(string $texto): JsonResponse
+    {
+        // Reemplazar guiones bajos por espacios
+        $texto = str_replace('_', ' ', $texto);
+
+        // Mostrar el parámetro recibido para depuración
+        logger("Parámetro recibido: $texto");
+
+        // Validar que el parámetro no esté vacío
+        if ($texto === '') {
+            return response()->json(['error' => 'El parámetro está vacío'], 400);
+        }
+
+        try {
+            // Buscar directamente en la tabla vehiculos
+            $vehiculo = Vehiculo::where('descripcionvehiculo', $texto)->first();
+
+            // Verificar si se encontró el vehículo
+            if ($vehiculo) {
+                logger('Vehículo encontrado: ' . json_encode($vehiculo));
+                return response()->json([
+                    'nombrecorto' => $vehiculo->nombrecorto,
+                    'numero' => $vehiculo->numero,  // Asegúrate de que 'numero' sea un campo válido
+                    'message' => 'Datos obtenidos exitosamente.',
+                ]);
+            }
+
+            // En caso de que no se encuentre el vehículo
+            logger("Vehículo no encontrado para el texto: $texto");
+            return response()->json(['error' => 'Datos no encontrados'], 404);
+        } catch (\Exception $e) {
+            // Registrar el error para depuración
+            logger()->error('Error en obtenerCodigoPorNombre', ['exception' => $e]);
+
+            // Responder con un error específico dependiendo del error que se haya lanzado
+            if ($e instanceof \Illuminate\Database\QueryException) {
+                return response()->json(['error' => 'Error en la consulta de la base de datos'], 500);
+            }
+
+            return response()->json(['error' => 'Error interno del servidor'], 500);
+        }
     }
 }

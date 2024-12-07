@@ -28,7 +28,6 @@ $(() => {
 
     const handleTypeChange = () => {
         const typeValue = $('#typeidInput').val();
-           
         if (typeValue === '0') {
             $('#CódigoInput').val('');
             $('#descriptionInput').val('');
@@ -142,35 +141,61 @@ $(() => {
         const csrfToken = responseToken.csrfToken;
 
         $('#typeidInput').on('change', function() {
+            deselectAllTomSelects('typeidInput');
+
             var selectedValue = $(this).val();
-            $('#CódigoInput').val('');
-
-            if (selectedValue === '' || selectedValue === '0' || selectedValue === '3') {
-                return;
-            }
-
-            $.ajax({
-                url: `/admin/obtener-codigo-tipo-vehiculo/${selectedValue}`,
-                method: 'GET',
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                success: function(response) {                  
-                    _tipo = response.numero;
-                    $('#CódigoInput').val(_tipo + '-');
         
-                    if (selectedValue === '2') {
-                        $('#CódigoInput').val(_tipo + '-R');
+            const selectedText = $('#typeidInput option:selected').text();
+        
+            // Extraer el texto antes del primer paréntesis
+            const beforeParenthesis = selectedText.split('(')[0].trim();
+            console.log('Texto antes del paréntesis:', beforeParenthesis); // Depuración
+        
+            // Convertir las primeras letras de cada palabra a mayúsculas y eliminar los espacios
+            const formattedText = beforeParenthesis
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join('');
+            console.log('Texto formateado:', formattedText); // Depuración
+        
+            // Variable que guarda el texto procesado
+            var variable = encodeURIComponent(formattedText);
+            console.log('Texto codificado:', variable); // Depuración
+        
+            $('#CódigoInput').val('');
+        
+            if (selectedValue > 0) {
+                $.ajax({
+                    url: `/admin/obtener-codigo-vehiculo-por-nombre/${variable}`, // Enviando la palabra como parte de la URL
+                    method: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    success: function(response) {
+                        console.log('Respuesta del servidor:', response); // Depuración
+                        _numero = response.numero;
+
+                        let datos = _numero + '-';
+                        $('#CódigoInput').val(_numero + '-');
+
+                        if(selectedValue === '2') {
+                            datos = _numero + '-R';
+                        }   
+                        
+                        $('#CódigoInput').val(datos);
+                        _vehiculoId = datos;
+                        
+                        disableSelect('modelidInput');
+                    },
+                    error: function(xhr) {
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            console.error(xhr.responseJSON.error);
+                        } else {
+                            console.error('Error en la solicitud AJAX:', xhr.statusText);
+                        }
                     }
-                },                
-                error: function(xhr) {
-                    if (xhr.responseJSON && xhr.responseJSON.error) {
-                        console.error(xhr.responseJSON.error); 
-                    } else {
-                        console.error('Error en la solicitud AJAX:', xhr.statusText); 
-                    }
-                }
-            });
+                });
+            }
         });
 
         $('#modelidInput').on('change', function() {
@@ -182,7 +207,7 @@ $(() => {
             }
 
             $.ajax({
-                url: `/admin/obtener-nombre-corto-vehiculo/${selectedValue}`,
+                url: `/admin/obtener-codigo-vehiculo/${selectedValue}`,
                 method: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
@@ -190,8 +215,13 @@ $(() => {
                 success: function(response) {                  
                     _nombreCorto = response.nombrecorto;
                     _modeloVehiculo = response.modelo_detalle;
+                    _numero = response.numero;
 
+                    let datos = _numero + ' -';
                     $('#descriptionInput').val(_nombreCorto + ' ' + _modeloVehiculo + ' a');
+                    $('#CódigoInput').val(datos + ' -');
+
+                    _vehiculoId = _numero;
                 },                
                 error: function(xhr) {
                     if (xhr.responseJSON && xhr.responseJSON.error) {
@@ -203,20 +233,43 @@ $(() => {
             });
         });       
 
-        $('#modelidInput').on('change', function() {   
+        /*$('#modelidInput').on('change', function() {   
             var selectedValue = $('#typeidInput').val();
 
+            if(selectedValue > 0){
+                $.ajax({
+                    url: `/admin/obtener-codigo-vehiculo/${selectedValue}`,
+                    method: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    success: function(response) {                  
+                        _nombreCorto = response.nombrecorto;
+                        _modeloVehiculo = response.modelo_detalle;
+                        _numero = response.numero;
+
+                        $('#CódigoInput').val(_numero + ' -');
+                    },                
+                    error: function(xhr) {
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            console.error(xhr.responseJSON.error); 
+                        } else {
+                            console.error('Error en la solicitud AJAX:', xhr.statusText); 
+                        }
+                    }
+                });
+            }
             _vehiculoId = $(this).val();
             var codigo = '';
     
-            codigo = _tipo + _vehiculoId + '-';
+           codigo = _tipo + _vehiculoId + '-';
             $('#CódigoInput').val(codigo.trim());
 
             if (selectedValue === '0') {
                 codigo = _vehiculoId + '-';
                 $('#CódigoInput').val(codigo.trim());
             }
-        });
+        });*/
 
         $('#yearidInput').on('change', function() {
             var selectedValue = $('#typeidInput').val();
@@ -235,7 +288,6 @@ $(() => {
     
             var selectedValue = $('#typeidInput').val();        
 
-            _vehiculoId = $(this).val();
             var codigo = '';
     
             codigo = _tipo + _vehiculoId + _position + '-';
@@ -451,7 +503,7 @@ $(() => {
                     success: (data) => {
                         console.log('Respuesta de la solicitud AJAX:', data);
         
-                        const tomSelectInstance = $('#modelidInput')[0].tomselect;
+                     const tomSelectInstance = $('#modelidInput')[0].tomselect;
         
                         // Asegúrate de que la instancia esté cargada
                         if (tomSelectInstance) {
@@ -466,7 +518,7 @@ $(() => {
         
                             // Habilitar el select si no está habilitado
                             tomSelectInstance.enable();
-                        }
+                        }   
                     },
                     error: (xhr, status, error) => {
                         console.error('Error en la solicitud AJAX:', status, error);
