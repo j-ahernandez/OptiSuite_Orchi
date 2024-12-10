@@ -9,6 +9,9 @@ $(() => {
  * @returns {void}
  */
 function disableSelect(id) {
+    // Desactivar el evento change para evitar que se dispare automáticamente
+    $('#' + id).off('change');
+
     // Deshabilitar el campo <select> original
     $('#' + id).prop('disabled', true);
 
@@ -35,6 +38,11 @@ function disableSelect(id) {
  * @returns {void}
  */
 function enableSelect(id) {
+    // Habilitar el evento change temporalmente
+    $('#' + id).on('change', function() {
+        // Función que se dispara cuando el evento change es habilitado nuevamente
+    });
+
     // Habilitar el campo <select> original
     $('#' + id).prop('disabled', false);
 
@@ -61,6 +69,7 @@ function enableSelect(id) {
  */
 function enableAllSelects() {
     $('select').each(function() {
+
         const id = $(this).attr('id'); // Obtiene el ID del campo <select>
 
         // Habilitar el campo <select> original
