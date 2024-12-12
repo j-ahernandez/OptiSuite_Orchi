@@ -309,7 +309,9 @@ $(() => {
             $('#lccmInput').prop('readonly', false);
             enableSelect('roleolcidInput');
             enableSelect('roleollidInput');
-            enableSelect('diatcidInput');
+            enableSelect('abraztipoidInput');
+            enableSelect('abrazmasteridInput');
+            enableSelect('diatcidInput');        
             enableSelect('bujelcidInput');
             enableSelect('bujellidInput');
         }
@@ -472,7 +474,8 @@ $(() => {
     $('#tipohojaidInput').off('change').on('change', (event) => {
         const selectedValue = $(event.target).val();
         let tipohojaidInput = $('#tipohojaidInput option:selected').text();
-    
+        const typeidInput = $('#typeidInput').val();
+
         if (selectedValue === undefined || selectedValue === null || selectedValue === '') {
             return;
         }
@@ -486,68 +489,96 @@ $(() => {
             success: (response) => {
                 $('#imagePreviewTipoHoja').attr('src', response.imageUrl);
 
-                if (positionidInput === 'Standard' || positionidInput === 'Berlin' || positionidInput === 'Lisa' || positionidInput === 'Parabolica' || positionidInput === 'Tra' || positionidInput === 'Reverso') {
-                    // HABILITAMOS
-                    enableSelect('roleolcidInput');
-                    enableSelect('roleollidInput');
-    
-                    // DESHABILITAMOS
-                    $('#2roleolcInput').prop('readonly', true);
-                    $('#2roleollcmInput').prop('readonly', true);
-                    disableSelect('2porcenroleoInput');
-                    disableSelect('diambocadoidInput');
-                    disableSelect('anchoteidInput');
-                    disableSelect('destajeidInput');
-                    disableSelect('porcendespunteInput');
-                } else if (positionidInput === 'Camello') {
-                    // HABILITAMOS
-                    enableSelect('diambocadoidInput');
-    
-                    // DESHABILITAMOS
-                    disableSelect('roleolcidInput');
-                    disableSelect('roleollidInput');
-                    $('#2roleolcInput').prop('readonly', true);
-                    $('#2roleollcmInput').prop('readonly', true);
-                    disableSelect('2porcenroleoInput');
-                    disableSelect('anchoteidInput');
-                    disableSelect('destajeidInput');
-                    disableSelect('porcendespunteInput');
-                } else if (positionidInput === 'Cam Te') {
-                    // HABILITAMOS
-                    enableSelect('anchoteidInput');
-    
-                    // DESHABILITAMOS
-                    disableSelect('roleolcidInput');
-                    disableSelect('diambocadoidInput');
-                    disableSelect('roleollidInput');
-                    $('#2roleolcInput').prop('readonly', true);
-                    $('#2roleollcmInput').prop('readonly', true);
-                    disableSelect('2porcenroleoInput');
-                    disableSelect('destajeidInput');
-                    disableSelect('porcendespunteInput');
-                } else if (positionidInput === 'Otros') {
-                    // HABILITAMOS
-                    enableSelect('roleolcidInput');
-                    enableSelect('roleollidInput');
-                    $('#2roleolcInput').prop('readonly', false);
-                    $('#2roleollcmInput').prop('readonly', false);
-                    enableSelect('2porcenroleoInput');
-                    enableSelect('diambocadoidInput');
-                    enableSelect('anchoteidInput');
-                    enableSelect('destajeidInput');
-                    enableSelect('porcendespunteInput');
-                } else {
-                    // DESHABILITAMOS TODO SI NO COINCIDE CON NINGUNO
-                    disableSelect('roleolcidInput');
-                    disableSelect('roleollidInput');
-                    $('#2roleolcInput').prop('readonly', true);
-                    $('#2roleollcmInput').prop('readonly', true);
-                    disableSelect('2porcenroleoInput');
-                    disableSelect('diambocadoidInput');
-                    disableSelect('anchoteidInput');
-                    disableSelect('destajeidInput');
-                    disableSelect('porcendespunteInput');
+                if(typeidInput === '0' ){
+                    if (positionidInput === 'Standard' || positionidInput === 'Berlin' || positionidInput === 'Lisa' || positionidInput === 'Parabolica' || positionidInput === 'Tra' || positionidInput === 'Reverso') {
+                        // HABILITAMOS
+                        enableSelect('roleolcidInput');
+                        enableSelect('roleollidInput');
+        
+                        // DESHABILITAMOS
+                        $('#2roleolcInput').prop('readonly', true);
+                        $('#2roleollcmInput').prop('readonly', true);
+                        disableSelect('2porcenroleoInput');
+                        disableSelect('diambocadoidInput');
+                        disableSelect('anchoteidInput');
+                        disableSelect('destajeidInput');
+                        disableSelect('porcendespunteInput');
+                    } else if (positionidInput === 'Camello') {
+                        // HABILITAMOS
+                        enableSelect('diambocadoidInput');
+        
+                        // DESHABILITAMOS
+                        disableSelect('roleolcidInput');
+                        disableSelect('roleollidInput');
+                        $('#2roleolcInput').prop('readonly', true);
+                        $('#2roleollcmInput').prop('readonly', true);
+                        disableSelect('2porcenroleoInput');
+                        disableSelect('anchoteidInput');
+                        disableSelect('destajeidInput');
+                        disableSelect('porcendespunteInput');
+                    } else if (positionidInput === 'Cam Te') {
+                        // HABILITAMOS
+                        enableSelect('anchoteidInput');
+        
+                        // DESHABILITAMOS
+                        disableSelect('roleolcidInput');
+                        disableSelect('diambocadoidInput');
+                        disableSelect('roleollidInput');
+                        $('#2roleolcInput').prop('readonly', true);
+                        $('#2roleollcmInput').prop('readonly', true);
+                        disableSelect('2porcenroleoInput');
+                        disableSelect('destajeidInput');
+                        disableSelect('porcendespunteInput');
+                    } else if (positionidInput === 'Otros') {
+                        // HABILITAMOS
+                        enableSelect('roleolcidInput');
+                        enableSelect('roleollidInput');
+                        $('#2roleolcInput').prop('readonly', false);
+                        $('#2roleollcmInput').prop('readonly', false);
+                        enableSelect('2porcenroleoInput');
+                        enableSelect('diambocadoidInput');
+                        enableSelect('anchoteidInput');
+                        enableSelect('destajeidInput');
+                        enableSelect('porcendespunteInput');
+                    } else {
+                        // DESHABILITAMOS TODO SI NO COINCIDE CON NINGUNO
+                        disableSelect('roleolcidInput');
+                        disableSelect('roleollidInput');
+                        $('#2roleolcInput').prop('readonly', true);
+                        $('#2roleollcmInput').prop('readonly', true);
+                        disableSelect('2porcenroleoInput');
+                        disableSelect('diambocadoidInput');
+                        disableSelect('anchoteidInput');
+                        disableSelect('destajeidInput');
+                        disableSelect('porcendespunteInput');
+                    }
                 }
+
+                if(typeidInput === '1' ){
+                    if (positionidInput === 'CAMELLO') {                        
+                        enableSelect('diambocadoidInput');
+                    }else if (positionidInput === 'Cam Te') {
+                        enableSelect('anchoteidInput');
+                    }else if (positionidInput === 'Otros') {
+                        $('#2roleolcInput').prop('readonly', false);
+                        $('#2roleollcmInput').prop('readonly', false);
+                        enableSelect('2porcenroleoInput');
+                        enableSelect('diambocadoidInput');
+                        enableSelect('anchoteidInput');
+                        enableSelect('destajeidInput');
+                        enableSelect('porcendespunteInput');
+                    } else {
+                        // DESHABILITAMOS TODO SI NO COINCIDE CON NINGUNO
+                        $('#2roleolcInput').prop('readonly', true);
+                        $('#2roleollcmInput').prop('readonly', true);
+                        disableSelect('2porcenroleoInput');
+                        disableSelect('diambocadoidInput');
+                        disableSelect('anchoteidInput');
+                        disableSelect('destajeidInput');
+                        disableSelect('porcendespunteInput');
+                    }
+
+                }                
             },
             error: (xhr) => {
                 console.error("Error al cargar la imagen");
