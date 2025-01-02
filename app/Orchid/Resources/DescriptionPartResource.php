@@ -78,7 +78,7 @@ class DescriptionPartResource extends Resource
                     ->help('Por favor seleccione el vehículo.'),
                 Select::make('modelid')
                     ->options([])  // Comienza vacío
-                    ->title('Seleccione un Vehículo con su Modelo')
+                    ->title('Seleccione un Modelo')
                     ->empty('Seleccione una opción')
                     ->id('modelidInput')
                     ->set('class', 'form-select')
